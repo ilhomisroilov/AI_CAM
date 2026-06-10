@@ -1,24 +1,28 @@
 """
 ============================================================
-ocr_worker.py  —  EasyOCR fon (background) navbat ishchisi
+ocr_worker.py  —  PaddleOCR fon (background) navbat ishchisi
 ============================================================
 Maqsad: YOLO bergan crop'lardan VIN ni YUQORI ANIQLIK bilan o'qish,
 ishonch chegaralarini boshqarish, va live oqim lag bermasligi uchun
 tezlikni nazorat qilish.
 
+OCR engine: PaddleOCR (EasyOCR dan ko'chirildi). Tashqi interfeys
+o'zgarmagan — OCRWorker, submit/start/stop/get_stats, on_result, va VIN
+tekshirish funksiyalari avvalgidek. Faqat OCR engine almashtirildi.
+
 Asoslar (lector652 VIN-OCR metodologiyasi):
-  * EasyOCR (Tesseract EMAS) — dot-peen (nuqtali) etched VIN uchun.
   * OCR ALOHIDA fon threadida navbat (Queue) orqali — kamera FPS tushmaydi.
   * Anti-duplicate: bir xil VIN duplicate_window_sec ichida qayta yozilmaydi.
   * VIN validatsiya: 17 belgi, I/O/Q yo'q.
 
-Aniqlik uchun (yangi):
+Aniqlik uchun:
   * Crop -> grayscale -> CLAHE -> kattalashtirish (upscale) -> yengil sharpen.
-  * readtext: allowlist (VIN charset) + beamsearch + tuned thresholds + mag_ratio.
+  * PaddleOCR (det+rec yoki rec-only) -> (box, text, conf) bo'laklar.
   * Bo'laklar bbox X bo'yicha CHAPDAN-O'NGGA tartiblanadi (to'g'ri ketma-ketlik).
+  * VIN charset (A-Z0-9, I/O/Q yo'q) post-filter orqali (normalize_vin).
   * Per-fragment va umumiy ishonch chegaralari.
 
-Tezlik / nazorat (yangi):
+Tezlik / nazorat:
   * Drop-oldest navbat (eng eski crop tashlanadi).
   * min_interval_sec throttle (ixtiyoriy).
   * Runtime stats (get_stats) + dinamik boshqaruv (set_enabled / set_min_confidence).
@@ -35,14 +39,11 @@ from typing import Callable, List, Optional, Tuple
 import cv2
 import numpy as np
 
-from ..config import OCR, VIN_ALLOWED, VIN_INVALID_CHARS, VIN_LENGTH
+from ..config import OCR
 from ..logger import log
 
 # on_result(vin: str, confidence: float, crop_bgr: np.ndarray)
 ResultCallback = Callable[[str, float, np.ndarray], None]
-
-# VIN ruxsat etilgan belgilaridan EasyOCR allowlist (I/O/Q yo'q)
-_ALLOWLIST = "".join(sorted(VIN_ALLOWED))
 
 # Standart avtomobil VIN strukturasi: aniq 17 belgi, alfanumerik,
 # I, O, Q HARFLARI YO'Q (ISO 3779). Regex bilan qat'iy tekshiramiz.
@@ -71,11 +72,89 @@ def is_valid_vin(vin: str) -> bool:
 
 
 def _fragment_left_x(box) -> float:
-    """EasyOCR bbox (4 nuqta) dan eng chap X koordinatani oladi (tartiblash uchun)."""
+    """OCR bbox (4 nuqta) dan eng chap X koordinatani oladi (tartiblash uchun)."""
     try:
         return float(min(pt[0] for pt in box))
     except Exception:
         return 0.0
+
+
+# Synthetic box (rec-only rejim uchun — bitta qator, tartib ahamiyatsiz)
+_FULL_BOX = [[0, 0], [1, 0], [1, 1], [0, 1]]
+
+
+class _PaddleEngine:
+    """
+    PaddleOCR wrapper. read(img) -> [(box, text, conf), ...] — EasyOCR bilan
+    AYNAN bir xil chiqish shakli, shu sababdan OCRWorker mantig'i o'zgarmaydi.
+
+    Versiyalararo bardoshli: init va natija parsing eski (2.x) va yangi (3.x)
+    PaddleOCR API larini qo'llab-quvvatlaydi.
+    """
+
+    def __init__(self) -> None:
+        from paddleocr import PaddleOCR
+        self.det = bool(OCR.paddle_det)
+        gpu = OCRWorker._resolve_gpu()
+
+        # PaddleOCR konstruktori versiyalar bo'yicha farq qiladi — bardoshli init
+        common = dict(lang=OCR.lang)
+        try:
+            # 2.x API: use_angle_cls + use_gpu + show_log
+            self._ocr = PaddleOCR(
+                use_angle_cls=OCR.use_angle_cls,
+                use_gpu=gpu,
+                drop_score=OCR.drop_score,
+                rec_batch_num=OCR.rec_batch_num,
+                det_limit_side_len=OCR.det_limit_side_len,
+                show_log=False,
+                **common,
+            )
+        except TypeError:
+            # 3.x API: use_textline_orientation + device (use_gpu/show_log olib tashlangan)
+            self._ocr = PaddleOCR(
+                use_textline_orientation=OCR.use_angle_cls,
+                device=("gpu" if gpu else "cpu"),
+                **common,
+            )
+        self.gpu = gpu
+
+    def read(self, img: np.ndarray) -> List[Tuple[list, str, float]]:
+        # PaddleOCR 3 kanalli (BGR) kutadi — grayscale bo'lsa o'tkazamiz
+        if img.ndim == 2:
+            img = cv2.cvtColor(img, cv2.COLOR_GRAY2BGR)
+        try:
+            res = self._ocr.ocr(img, det=self.det, cls=OCR.use_angle_cls)
+        except TypeError:
+            # Yangi API .ocr() imzosi (det/cls argsiz)
+            res = self._ocr.ocr(img)
+        return self._parse(res)
+
+    @staticmethod
+    def _parse(res) -> List[Tuple[list, str, float]]:
+        """PaddleOCR natijasini (box, text, conf) ro'yxatiga keltiradi."""
+        out: List[Tuple[list, str, float]] = []
+        if not res:
+            return out
+        page = res[0] if isinstance(res, (list, tuple)) and len(res) > 0 else res
+        if not page:
+            return out
+        for line in page:
+            try:
+                # det+rec:  line = [box(4 nuqta), (text, score)]
+                # rec-only: line = (text, score)
+                if (isinstance(line, (list, tuple)) and len(line) == 2
+                        and isinstance(line[0], (list, tuple)) and line[0]
+                        and isinstance(line[0][0], (list, tuple))):
+                    box = line[0]
+                    text, score = line[1][0], line[1][1]
+                else:
+                    text, score = line[0], line[1]
+                    box = _FULL_BOX
+                out.append((box, str(text), float(score)))
+            except Exception:
+                continue
+        return out
 
 
 class OCRWorker:
@@ -86,7 +165,7 @@ class OCRWorker:
         self._queue: "queue.Queue" = queue.Queue(maxsize=OCR.queue_maxsize)
         self._thread: Optional[threading.Thread] = None
         self._running = False
-        self._reader = None                      # EasyOCR Reader (lazy)
+        self._engine: Optional[_PaddleEngine] = None   # PaddleOCR engine (lazy)
 
         # Dinamik boshqaruv
         self._enabled = True
@@ -123,7 +202,7 @@ class OCRWorker:
         self._running = True
         self._thread = threading.Thread(target=self._loop, name="ocr-worker", daemon=True)
         self._thread.start()
-        log.info("OCR worker ishga tushdi (EasyOCR, fon navbat, beamsearch).")
+        log.info("OCR worker ishga tushdi (PaddleOCR, fon navbat).")
 
     def stop(self) -> None:
         self._running = False
@@ -181,7 +260,7 @@ class OCRWorker:
                 pass
 
     # ===============================================================
-    # EasyOCR Reader (lazy)
+    # PaddleOCR engine (lazy)
     # ===============================================================
     @staticmethod
     def _resolve_gpu() -> bool:
@@ -195,23 +274,22 @@ class OCRWorker:
             import torch
             if torch.cuda.is_available():
                 return True
-            log.warning("OCR.use_gpu=True, lekin CUDA topilmadi — EasyOCR CPU da ishlaydi.")
+            log.warning("OCR.use_gpu=True, lekin CUDA topilmadi — PaddleOCR CPU da ishlaydi.")
             return False
         except Exception:
             return False
 
     def _ensure_reader(self) -> bool:
-        if self._reader is not None:
+        if self._engine is not None:
             return True
         try:
-            import easyocr
-            gpu = self._resolve_gpu()
-            log.info(f"EasyOCR modeli yuklanmoqda... (gpu={gpu}, birinchi marta sekin).")
-            self._reader = easyocr.Reader(OCR.languages, gpu=gpu)
-            log.info(f"EasyOCR tayyor (gpu={gpu}, decoder={OCR.decoder}).")
+            log.info("PaddleOCR modeli yuklanmoqda... (birinchi marta sekin/yuklab oladi).")
+            self._engine = _PaddleEngine()
+            log.info(f"PaddleOCR tayyor (gpu={self._engine.gpu}, det={self._engine.det}, "
+                     f"lang={OCR.lang}).")
             return True
         except Exception as exc:
-            log.error(f"EasyOCR yuklanmadi: {exc}")
+            log.error(f"PaddleOCR yuklanmadi: {exc}")
             return False
 
     def _loop(self) -> None:
@@ -258,21 +336,8 @@ class OCRWorker:
     # OCR
     # ===============================================================
     def _read(self, img: np.ndarray) -> List[Tuple[list, str, float]]:
-        """EasyOCR readtext — VIN uchun sozlangan parametrlar bilan."""
-        return self._reader.readtext(
-            img,
-            detail=1,
-            allowlist=_ALLOWLIST,
-            decoder=OCR.decoder,
-            beamWidth=OCR.beam_width,
-            text_threshold=OCR.text_threshold,
-            low_text=OCR.low_text,
-            link_threshold=OCR.link_threshold,
-            mag_ratio=OCR.mag_ratio,
-            contrast_ths=OCR.contrast_ths,
-            adjust_contrast=OCR.adjust_contrast,
-            paragraph=False,
-        )
+        """PaddleOCR -> (box, text, conf) bo'laklar (EasyOCR bilan bir xil shakl)."""
+        return self._engine.read(img)
 
     def _process(self, crop_bgr: np.ndarray) -> None:
         t0 = time.perf_counter()
@@ -280,7 +345,7 @@ class OCRWorker:
         try:
             results = self._read(img)
         except Exception as exc:
-            log.error(f"EasyOCR readtext xatosi: {exc}")
+            log.error(f"PaddleOCR xatosi: {exc}")
             return
 
         dt_ms = (time.perf_counter() - t0) * 1000.0

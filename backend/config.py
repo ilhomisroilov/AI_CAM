@@ -84,9 +84,9 @@ class DetectionConfig:
 
 @dataclass
 class OCRConfig:
-    """EasyOCR sozlamalari (dot-peen VIN uchun, yuqori aniqlik + tezlik nazorati)."""
-    languages: list = field(default_factory=lambda: ["en"])
-    # True -> EasyOCR GPU (NVIDIA/CUDA) bilan ishlaydi. Ubuntu+NVIDIA serverda
+    """PaddleOCR sozlamalari (engraved/etched metal VIN uchun, aniqlik + tezlik)."""
+    lang: str = "en"
+    # True -> PaddleOCR GPU (NVIDIA/CUDA) bilan ishlaydi. Ubuntu+NVIDIA serverda
     # tavsiya etiladi. CUDA topilmasa avtomatik CPU ga qaytadi (xavfsiz).
     use_gpu: bool = True
 
@@ -98,15 +98,15 @@ class OCRConfig:
                                        # (0 = o'chiq). Kichik etched belgilar uchun muhim.
     sharpen: bool = True               # yengil unsharp mask (chekka aniqligi)
 
-    # --- EasyOCR readtext parametrlari (aniqlik) ---
-    decoder: str = "beamsearch"        # 'greedy' (tez) | 'beamsearch' (aniq)
-    beam_width: int = 10               # beamsearch kengligi
-    text_threshold: float = 0.7        # matn ishonch chegarasi (detektor)
-    low_text: float = 0.4              # past-matn chegarasi
-    link_threshold: float = 0.4        # belgilarni bog'lash chegarasi
-    mag_ratio: float = 1.5             # ichki kattalashtirish (kichik matn uchun)
-    contrast_ths: float = 0.1          # past kontrastli matnni qayta o'qish chegarasi
-    adjust_contrast: float = 0.7       # past kontrast bo'lsa moslashtirish
+    # --- PaddleOCR parametrlari ---
+    # paddle_det=True -> detektor+recognizer (EasyOCR kabi, ko'p qatorli/paddingli
+    #   croplar uchun xavfsiz). False -> faqat recognizer (rec-only): YOLO bergan
+    #   bitta qatorli tor crop uchun TEZROQ va ko'pincha aniqroq.
+    paddle_det: bool = True
+    use_angle_cls: bool = False        # burchak klassifikatori (metall matn tik -> o'chiq, tez)
+    drop_score: float = 0.30           # PaddleOCR shu balldan past natijalarni tashlaydi
+    rec_batch_num: int = 6             # recognizer batch (tezlik)
+    det_limit_side_len: int = 960      # detektor maksimal tomon uzunligi (det rejimida)
 
     # --- Ishonch chegaralari ---
     min_char_confidence: float = 0.30  # har bir bo'lak (fragment) uchun minimal ishonch

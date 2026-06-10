@@ -1,6 +1,6 @@
 # YOLOv8n Training Guide — VIN Plate Detection
 
-A practical, step-by-step tutorial to train `yolov8n` to detect the **metal VIN plate** on car bodies coming down your conveyor. The goal is a single-class detector (`vin_plate`) whose crops feed the EasyOCR stage.
+A practical, step-by-step tutorial to train `yolov8n` to detect the **metal VIN plate** on car bodies coming down your conveyor. The goal is a single-class detector (`vin_plate`) whose crops feed the PaddleOCR stage.
 
 > You only need YOLO to **find and box the plate** — not to read it. Keep the task simple (one class) and the model stays fast and accurate on the Mini PC.
 
@@ -143,4 +143,4 @@ YOLO accuracy and OCR accuracy are separate. For the **99% read target** on dot-
 1. **Lighting is everything.** Your own notes concluded **raking light (10–30° grazing angle)** beats IR/UV for etched/dot-peen metal — it casts shadows in the engraving. Install that first; it does more than any software tweak.
 2. **Tighten the crop** (`crop_padding`) so OCR sees mostly characters.
 3. Keep preprocessing **light** (CLAHE only) — heavy thresholding destroyed dot-peen dots in past tests.
-4. Collect misreads from the `crops/` folder and **fine-tune** EasyOCR on them if needed.
+4. Collect misreads from the `crops/` folder and **fine-tune** PaddleOCR on them if needed.

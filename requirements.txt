@@ -24,10 +24,14 @@ torchvision==0.27.0
 # --- Computer Vision / AI ---
 ultralytics==8.2.58          # YOLOv8 (best.pt) — loaded via weights_only shim
 opencv-python==4.10.0.84     # rasmga ishlov berish, MJPEG kodlash
-easyocr==1.7.2               # dot-peen VIN uchun tanlangan OCR
 Pillow==10.4.0
 
-# numpy MUST stay on the 1.x line: opencv, torch and easyocr are built against
+# --- OCR: PaddleOCR (EasyOCR dan ko'chirildi) ---
+# PaddleOCR engine + PaddlePaddle runtime. CPU build (default).
+paddleocr==2.7.3
+paddlepaddle==2.6.1          # CPU. GPU uchun pastdagi izohga qarang.
+
+# numpy MUST stay on the 1.x line: opencv, torch, paddlepaddle are built against
 # numpy 1.x — numpy 2.x causes ABI/runtime errors.
 numpy==1.26.4
 
@@ -35,13 +39,14 @@ numpy==1.26.4
 openpyxl==3.1.5              # Excel (.xlsx) eksport
 
 # ------------------------------------------------------------
-# DUPLICATE OPENCV FIX (run once after install):
-# easyocr pulls in 'opencv-python-headless', which can coexist with
-# 'opencv-python' at a DIFFERENT version and cause cv2 conflicts.
-# Keep only the full build:
-#   pip uninstall -y opencv-python-headless
-#   pip install --force-reinstall opencv-python==4.10.0.84
+# GPU (Ubuntu + NVIDIA) — TAVSIYA ETILADI:
+#   pip uninstall -y paddlepaddle
+#   # CUDA 11.8 misol (o'z CUDA versiyangizga moslang):
+#   pip install paddlepaddle-gpu==2.6.1 -i https://www.paddlepaddle.org.cn/packages/stable/cu118/
+# So'ng backend/config.py da OCR.use_gpu=True (default) — _resolve_gpu avtomatik
+# CUDA ni tekshiradi. YOLO uchun DETECTION.device="auto" (cuda:0 ni tanlaydi).
 #
-# GPU (optional): NVIDIA + CUDA -> install CUDA torch build from pytorch.org,
-# then set DETECTION.device="cuda:0" and OCR.use_gpu=True in backend/config.py.
+# OFFLINE/SSL: PaddleOCR ham (EasyOCR kabi) ilk ishga tushganda modellarni
+# yuklab oladi. Internet/SSL cheklangan zavodda modellarni oldindan yuklab,
+# ~/.paddleocr/ ga joylashtiring (REPORT dagi izohga qarang).
 # ------------------------------------------------------------
