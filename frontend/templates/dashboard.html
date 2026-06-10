@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI_CAM — Dashboard</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <!-- ===== Header ===== -->
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo">AI</span>
+      <div>AI_CAM <small>VIN Vision MES</small></div>
+    </div>
+    <nav class="nav">
+      <a href="/dashboard" class="active">Dashboard</a>
+      <a href="/history">History</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <!-- ===== Control buttons ===== -->
+    <div class="controls">
+      <div class="ip-field">
+        <label for="cameraIp">Camera IP</label>
+        <input id="cameraIp" type="text" value="192.168.1.10"
+               placeholder="192.168.1.10" autocomplete="off" spellcheck="false">
+        <span class="ip-port">: 2113</span>
+      </div>
+      <button id="btnConnect" class="btn btn-primary">🔌 Connect Camera</button>
+      <button id="btnStart" class="btn btn-accent" disabled>▶ Start Processing</button>
+      <button id="btnStop" class="btn btn-danger" disabled>⏹ Stop</button>
+      <button id="btnDisconnect" class="btn btn-ghost">⏏ Disconnect</button>
+    </div>
+
+    <div class="grid">
+      <!-- ===== Video ===== -->
+      <div class="card">
+        <div class="card-head">
+          <span>Live Stream — YOLOv8n VIN Detection</span>
+          <span><span id="camDot" class="status-dot off"></span></span>
+        </div>
+        <div class="card-body">
+          <div class="video-wrap">
+            <span id="liveBadge" class="live-badge"><span class="dot"></span>LIVE</span>
+            <img id="videoFeed" alt="">
+            <div id="videoPlaceholder" class="video-placeholder">
+              Kamera ulanmagan.<br>"Connect Camera" tugmasini bosing.
+            </div>
+          </div>
+          <div class="chips">
+            <div class="chip"><div class="label">Frames</div><div class="value" id="statFrames">0</div></div>
+            <div class="chip"><div class="label">Detections</div><div class="value" id="statDet">0</div></div>
+            <div class="chip"><div class="label">VINs saved</div><div class="value" id="statVin">0</div></div>
+            <div class="chip"><div class="label">YOLO model</div><div class="value" id="statYolo" style="font-size:15px">—</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== Log panel ===== -->
+      <div class="card">
+        <div class="card-head">
+          <span>System Logs</span>
+          <button id="btnClearLog" class="btn btn-ghost" style="padding:5px 12px;font-size:12px">Clear</button>
+        </div>
+        <div id="logPanel" class="log-panel"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/static/js/dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI_CAM — History</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo">AI</span>
+      <div>AI_CAM <small>VIN Vision MES</small></div>
+    </div>
+    <nav class="nav">
+      <a href="/dashboard">Dashboard</a>
+      <a href="/history" class="active">History</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <div class="card">
+      <div class="card-head"><span>Detected VIN Records</span></div>
+      <div class="card-body">
+        <div class="toolbar">
+          <button id="btnRefresh" class="btn btn-ghost">↻ Refresh</button>
+          <label style="color:var(--muted);font-size:13px">Auto-refresh
+            <input type="checkbox" id="autoRefresh" checked>
+          </label>
+          <span class="spacer"></span>
+          <span style="color:var(--muted);font-size:13px">Total: <b id="totalCount">0</b></span>
+          <button id="btnCsv" class="btn btn-primary">⬇ Export CSV</button>
+          <button id="btnXlsx" class="btn btn-accent">⬇ Export Excel</button>
+        </div>
+
+        <div style="max-height:70vh;overflow:auto">
+          <table id="recTable">
+            <thead>
+              <tr>
+                <th data-sort="id">#</th>
+                <th data-sort="timestamp">Timestamp ▼</th>
+                <th data-sort="detected_vin">Detected VIN</th>
+                <th data-sort="confidence">Confidence</th>
+                <th>Image</th>
+              </tr>
+            </thead>
+            <tbody id="recBody">
+              <tr><td colspan="5" class="empty">Yuklanmoqda...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/static/js/history.js"></script>
+</body>
+</html>

@@ -1,0 +1,919 @@
+[2026-06-09 17:13:33] [WARNING] Maxsus model topilmadi: D:\AI_CAM\models\yolov8n_vin.pt. Standart 'yolov8n.pt' yuklanmoqda (faqat sinov uchun). VIN plastinka uchun TRAINING_GUIDE.md bo'yicha model o'qiting.
+[2026-06-09 17:13:36] [ERROR] YOLO model yuklanmadi: Weights only load failed. This file can still be loaded, to do so you have two options, [1mdo those steps only if you trust the source of the checkpoint[0m. 
+	(1) In PyTorch 2.6, we changed the default value of the `weights_only` argument in `torch.load` from `False` to `True`. Re-running `torch.load` with `weights_only` set to `False` will likely succeed, but it can result in arbitrary code execution. Do it only if you got the file from a trusted source.
+	(2) Alternatively, to load with `weights_only=True` please check the recommended steps in the following error message.
+	WeightsUnpickler error: Unsupported global: GLOBAL ultralytics.nn.tasks.DetectionModel was not an allowed global by default. Please use `torch.serialization.add_safe_globals([ultralytics.nn.tasks.DetectionModel])` or the `torch.serialization.safe_globals([ultralytics.nn.tasks.DetectionModel])` context manager to allowlist this global if you trust this class/function.
+
+Check the documentation of torch.load to learn more about types accepted by default with weights_only https://pytorch.org/docs/stable/generated/torch.load.html.
+[2026-06-09 17:13:36] [INFO ] Ma'lumotlar bazasi tayyor: D:\AI_CAM\data\ai_cam.db
+[2026-06-09 17:13:36] [INFO ] AI_CAM server ishga tushdi.
+[2026-06-09 17:13:57] [ERROR] Kamera ulanishi muvaffaqiyatsiz (192.168.0.1:2111): timed out
+[2026-06-09 17:24:57] [WARNING] Maxsus model topilmadi: D:\AI_CAM\models\yolov8n_vin.pt. Standart 'yolov8n.pt' yuklanmoqda (faqat sinov uchun). VIN plastinka uchun TRAINING_GUIDE.md bo'yicha model o'qiting.
+[2026-06-09 17:24:57] [ERROR] YOLO model yuklanmadi: Weights only load failed. This file can still be loaded, to do so you have two options, [1mdo those steps only if you trust the source of the checkpoint[0m. 
+	(1) In PyTorch 2.6, we changed the default value of the `weights_only` argument in `torch.load` from `False` to `True`. Re-running `torch.load` with `weights_only` set to `False` will likely succeed, but it can result in arbitrary code execution. Do it only if you got the file from a trusted source.
+	(2) Alternatively, to load with `weights_only=True` please check the recommended steps in the following error message.
+	WeightsUnpickler error: Unsupported global: GLOBAL ultralytics.nn.tasks.DetectionModel was not an allowed global by default. Please use `torch.serialization.add_safe_globals([ultralytics.nn.tasks.DetectionModel])` or the `torch.serialization.safe_globals([ultralytics.nn.tasks.DetectionModel])` context manager to allowlist this global if you trust this class/function.
+
+Check the documentation of torch.load to learn more about types accepted by default with weights_only https://pytorch.org/docs/stable/generated/torch.load.html.
+[2026-06-09 17:24:57] [INFO ] Ma'lumotlar bazasi tayyor: D:\AI_CAM\data\ai_cam.db
+[2026-06-09 17:24:57] [INFO ] AI_CAM server ishga tushdi.
+[2026-06-09 17:25:09] [INFO ] Kamera IP UI dan o'rnatildi: 10.123.86.42 (CoLa 2111, BLOB 2113)
+[2026-06-09 17:25:09] [INFO ] TX -> sRN DeviceIdent
+[2026-06-09 17:25:09] [INFO ] TX -> sMN GetBlobClientConfig
+[2026-06-09 17:25:09] [INFO ] TX -> sEN ImgBlobTransfer 1
+[2026-06-09 17:25:09] [INFO ] RX <- sRA DeviceIdent 17 LECTOR652 Dynamic Focus 9 4.4.0.33R
+[2026-06-09 17:25:09] [INFO ] TX -> sEN VIStatDisp 1
+[2026-06-09 17:25:09] [INFO ] TX -> sEN VITmeStatDisp 1
+[2026-06-09 17:25:09] [INFO ] RX <- sAN GetBlobClientConfig 3 TCP C 10.123.86.42 7 0.0.0.0 841 0 0 1 400
+[2026-06-09 17:25:09] [INFO ] RX <- sEA ImgBlobTransfer 1
+[2026-06-09 17:25:09] [INFO ] RX <- sEA VIStatDisp 1
+[2026-06-09 17:25:09] [INFO ] RX <- sEA VITmeStatDisp 1
+[2026-06-09 17:25:10] [INFO ] Kamera ulandi: 10.123.86.42:2111 (CoLa-A)
+[2026-06-09 17:25:12] [ERROR] BLOB socket ulanmadi (10.123.86.42:841): [WinError 10061] No connection could be made because the target machine actively refused it
+[2026-06-09 17:25:12] [ERROR] BLOB stream ochilmadi — kamera ulanishi bekor qilindi.
+[2026-06-09 17:25:12] [INFO ] Kamera aloqasi yopildi.
+[2026-06-09 17:39:38] [WARNING] Maxsus model topilmadi: D:\AI_CAM\models\yolov8n_vin.pt. Standart 'yolov8n.pt' yuklanmoqda (faqat sinov uchun). VIN plastinka uchun TRAINING_GUIDE.md bo'yicha model o'qiting.
+[2026-06-09 17:39:38] [ERROR] YOLO model yuklanmadi: Weights only load failed. This file can still be loaded, to do so you have two options, [1mdo those steps only if you trust the source of the checkpoint[0m. 
+	(1) In PyTorch 2.6, we changed the default value of the `weights_only` argument in `torch.load` from `False` to `True`. Re-running `torch.load` with `weights_only` set to `False` will likely succeed, but it can result in arbitrary code execution. Do it only if you got the file from a trusted source.
+	(2) Alternatively, to load with `weights_only=True` please check the recommended steps in the following error message.
+	WeightsUnpickler error: Unsupported global: GLOBAL ultralytics.nn.tasks.DetectionModel was not an allowed global by default. Please use `torch.serialization.add_safe_globals([ultralytics.nn.tasks.DetectionModel])` or the `torch.serialization.safe_globals([ultralytics.nn.tasks.DetectionModel])` context manager to allowlist this global if you trust this class/function.
+
+Check the documentation of torch.load to learn more about types accepted by default with weights_only https://pytorch.org/docs/stable/generated/torch.load.html.
+[2026-06-09 17:39:38] [INFO ] Ma'lumotlar bazasi tayyor: D:\AI_CAM\data\ai_cam.db
+[2026-06-09 17:39:38] [INFO ] AI_CAM server ishga tushdi.
+[2026-06-09 17:40:00] [INFO ] Kamera IP: 10.123.86.42 (CoLa 2111, BLOB 2113)
+[2026-06-09 17:40:00] [INFO ] Control -> 10.123.86.42:2111 (urinish 1/3)
+[2026-06-09 17:40:00] [INFO ]   C->K  sMN CheckPassword 3 A89A6E74
+[2026-06-09 17:40:00] [INFO ]   K->C  sAN CheckPassword 1
+[2026-06-09 17:40:00] [INFO ]   C->K  sRN DeviceIdent
+[2026-06-09 17:40:00] [INFO ]   K->C  sRA DeviceIdent 17 LECTOR652 Dynamic Focus 9 4.4.0.33R
+[2026-06-09 17:40:00] [INFO ]   C->K  sEN DemoModeState 1
+[2026-06-09 17:40:00] [INFO ]   K->C  sEA DemoModeState 1
+[2026-06-09 17:40:00] [INFO ]   C->K  sRN DemoModeState
+[2026-06-09 17:40:00] [INFO ]   K->C  sRA DemoModeState 0
+[2026-06-09 17:40:00] [INFO ]   C->K  sMN GetBlobClientConfig
+[2026-06-09 17:40:00] [INFO ]   K->C  sAN GetBlobClientConfig 3 TCP C 10.123.86.42 7 0.0.0.0 841 0 0 1 400
+[2026-06-09 17:40:00] [INFO ]   C->K  sEN ImgBlobTransfer 1
+[2026-06-09 17:40:00] [INFO ]   K->C  sEA ImgBlobTransfer 1
+[2026-06-09 17:40:00] [INFO ]   C->K  sEN LIIsActive 1
+[2026-06-09 17:40:00] [INFO ]   K->C  sEA LIIsActive 1
+[2026-06-09 17:40:00] [INFO ]   C->K  sRN LIIsActive
+[2026-06-09 17:40:00] [INFO ]   K->C  sRA LIIsActive 0
+[2026-06-09 17:40:00] [INFO ]   C->K  sEN VIStatDisp 1
+[2026-06-09 17:40:00] [INFO ]   K->C  sEA VIStatDisp 1
+[2026-06-09 17:40:00] [INFO ]   C->K  sRN VIStatDisp
+[2026-06-09 17:40:00] [INFO ]   K->C  sRA VIStatDisp 0 0 0 00000000
+[2026-06-09 17:40:00] [INFO ]   C->K  sEN VITmeStatDisp 1
+[2026-06-09 17:40:00] [INFO ]   K->C  sEA VITmeStatDisp 1
+[2026-06-09 17:40:00] [INFO ]   C->K  sRN VITmeStatDisp
+[2026-06-09 17:40:00] [INFO ]   K->C  sRA VITmeStatDisp 0
+[2026-06-09 17:40:00] [INFO ]   C->K  sMN mDIGetEffImgSize
+[2026-06-09 17:40:00] [INFO ]   K->C  sAN mDIGetEffImgSize 800 440
+[2026-06-09 17:40:00] [INFO ] Effektiv rasm o'lchami: sAN mDIGetEffImgSize 800 440
+[2026-06-09 17:40:00] [INFO ] Blob -> 10.123.86.42:2113
+[2026-06-09 17:40:00] [INFO ] Kamera tayyor.
+[2026-06-09 17:40:00] [INFO ] Live streaming boshlanyapti (mLIStart 0)...
+[2026-06-09 17:40:00] [INFO ]   C->K  sMN mLIStart 0
+[2026-06-09 17:40:00] [INFO ]   K->C  sAN mLIStart 0
+[2026-06-09 17:40:00] [INFO ] mLIStart javob: sAN mLIStart 0
+[2026-06-09 17:40:00] [INFO ] Kamera frame yuborishni boshlaydi (35-47 fps kutilmoqda).
+[2026-06-09 17:40:41] [INFO ] OCR worker ishga tushdi (EasyOCR, fon navbat).
+[2026-06-09 17:40:41] [INFO ] AI ishlov berish yoqildi (YOLO + OCR).
+[2026-06-09 17:40:46] [INFO ] EasyOCR modeli yuklanmoqda... (birinchi marta sekin bo'lishi mumkin)
+[2026-06-09 17:40:49] [INFO ] EasyOCR tayyor.
+[2026-06-09 17:43:38] [INFO ] OCR worker to'xtatildi.
+[2026-06-09 17:43:38] [INFO ] AI ishlov berish o'chirildi (xom video davom etadi).
+[2026-06-09 17:43:40] [INFO ]   C->K  sMN mLIStop
+[2026-06-09 17:43:40] [INFO ]   K->C  sAN mLIStop
+[2026-06-09 17:43:40] [INFO ] mLIStop javob: sAN mLIStop
+[2026-06-09 17:43:40] [INFO ]   C->K  sEN VITmeStatDisp 0
+[2026-06-09 17:43:40] [INFO ]   K->C  sEA VITmeStatDisp 0
+[2026-06-09 17:43:40] [INFO ]   C->K  sEN VIStatDisp 0
+[2026-06-09 17:43:40] [INFO ]   K->C  sEA VIStatDisp 0
+[2026-06-09 17:43:40] [INFO ]   C->K  sEN LIIsActive 0
+[2026-06-09 17:43:40] [INFO ]   K->C  sEA LIIsActive 0
+[2026-06-09 17:43:40] [INFO ]   C->K  sEN ImgBlobTransfer 0
+[2026-06-09 17:43:40] [INFO ]   K->C  sEA ImgBlobTransfer 0
+[2026-06-09 17:43:40] [INFO ]   C->K  sEN DemoModeState 0
+[2026-06-09 17:43:40] [INFO ]   K->C  sEA DemoModeState 0
+[2026-06-09 17:43:40] [INFO ] Ulanish yopildi.
+[2026-06-09 17:43:40] [INFO ] Kamera uzildi.
+[2026-06-09 17:50:53] [INFO ] Kamera IP: 10.123.86.42 (CoLa 2111, BLOB 2113)
+[2026-06-09 17:50:53] [INFO ] Control -> 10.123.86.42:2111 (urinish 1/3)
+[2026-06-09 17:50:53] [INFO ]   C->K  sMN CheckPassword 3 A89A6E74
+[2026-06-09 17:50:53] [INFO ]   K->C  sAN CheckPassword 1
+[2026-06-09 17:50:53] [INFO ]   C->K  sRN DeviceIdent
+[2026-06-09 17:50:53] [INFO ]   K->C  sRA DeviceIdent 17 LECTOR652 Dynamic Focus 9 4.4.0.33R
+[2026-06-09 17:50:53] [INFO ]   C->K  sEN DemoModeState 1
+[2026-06-09 17:50:53] [INFO ]   K->C  sEA DemoModeState 1
+[2026-06-09 17:50:53] [INFO ]   C->K  sRN DemoModeState
+[2026-06-09 17:50:53] [INFO ]   K->C  sRA DemoModeState 0
+[2026-06-09 17:50:53] [INFO ]   C->K  sMN GetBlobClientConfig
+[2026-06-09 17:50:53] [INFO ]   K->C  sAN GetBlobClientConfig 3 TCP C 10.123.86.42 7 0.0.0.0 841 0 0 1 400
+[2026-06-09 17:50:53] [INFO ]   C->K  sEN ImgBlobTransfer 1
+[2026-06-09 17:50:53] [INFO ]   K->C  sEA ImgBlobTransfer 1
+[2026-06-09 17:50:53] [INFO ]   C->K  sEN LIIsActive 1
+[2026-06-09 17:50:53] [INFO ]   K->C  sEA LIIsActive 1
+[2026-06-09 17:50:53] [INFO ]   C->K  sRN LIIsActive
+[2026-06-09 17:50:53] [INFO ]   K->C  sRA LIIsActive 0
+[2026-06-09 17:50:53] [INFO ]   C->K  sEN VIStatDisp 1
+[2026-06-09 17:50:53] [INFO ]   K->C  sEA VIStatDisp 1
+[2026-06-09 17:50:53] [INFO ]   C->K  sRN VIStatDisp
+[2026-06-09 17:50:53] [INFO ]   K->C  sRA VIStatDisp 0 0 0 00000000
+[2026-06-09 17:50:53] [INFO ]   C->K  sEN VITmeStatDisp 1
+[2026-06-09 17:50:53] [INFO ]   K->C  sEA VITmeStatDisp 1
+[2026-06-09 17:50:53] [INFO ]   C->K  sRN VITmeStatDisp
+[2026-06-09 17:50:53] [INFO ]   K->C  sRA VITmeStatDisp 0
+[2026-06-09 17:50:53] [INFO ]   C->K  sMN mDIGetEffImgSize
+[2026-06-09 17:50:53] [INFO ]   K->C  sAN mDIGetEffImgSize 800 440
+[2026-06-09 17:50:53] [INFO ] Effektiv rasm o'lchami: sAN mDIGetEffImgSize 800 440
+[2026-06-09 17:50:53] [INFO ] Blob -> 10.123.86.42:2113
+[2026-06-09 17:50:53] [INFO ] Kamera tayyor.
+[2026-06-09 17:50:53] [INFO ] Live streaming boshlanyapti (mLIStart 0)...
+[2026-06-09 17:50:53] [INFO ]   C->K  sMN mLIStart 0
+[2026-06-09 17:50:53] [INFO ]   K->C  sAN mLIStart 0
+[2026-06-09 17:50:53] [INFO ] mLIStart javob: sAN mLIStart 0
+[2026-06-09 17:50:53] [INFO ] Kamera frame yuborishni boshlaydi (35-47 fps kutilmoqda).
+[2026-06-09 17:50:55] [INFO ] OCR worker ishga tushdi (EasyOCR, fon navbat).
+[2026-06-09 17:50:55] [INFO ] AI ishlov berish yoqildi (YOLO + OCR).
+[2026-06-09 17:53:26] [WARNING] Maxsus model topilmadi: D:\AI_CAM\models\yolov8n_vin.pt. Standart 'yolov8n.pt' yuklanmoqda (faqat sinov uchun). VIN plastinka uchun TRAINING_GUIDE.md bo'yicha model o'qiting.
+[2026-06-09 17:53:26] [ERROR] YOLO model yuklanmadi: Weights only load failed. This file can still be loaded, to do so you have two options, [1mdo those steps only if you trust the source of the checkpoint[0m. 
+	(1) In PyTorch 2.6, we changed the default value of the `weights_only` argument in `torch.load` from `False` to `True`. Re-running `torch.load` with `weights_only` set to `False` will likely succeed, but it can result in arbitrary code execution. Do it only if you got the file from a trusted source.
+	(2) Alternatively, to load with `weights_only=True` please check the recommended steps in the following error message.
+	WeightsUnpickler error: Unsupported global: GLOBAL ultralytics.nn.tasks.DetectionModel was not an allowed global by default. Please use `torch.serialization.add_safe_globals([ultralytics.nn.tasks.DetectionModel])` or the `torch.serialization.safe_globals([ultralytics.nn.tasks.DetectionModel])` context manager to allowlist this global if you trust this class/function.
+
+Check the documentation of torch.load to learn more about types accepted by default with weights_only https://pytorch.org/docs/stable/generated/torch.load.html.
+[2026-06-09 17:53:26] [INFO ] Ma'lumotlar bazasi tayyor: D:\AI_CAM\data\ai_cam.db
+[2026-06-09 17:53:26] [INFO ] AI_CAM server ishga tushdi.
+[2026-06-09 17:53:42] [INFO ] Kamera IP: 10.123.86.42 (CoLa 2111, BLOB 2113)
+[2026-06-09 17:53:42] [INFO ] Control -> 10.123.86.42:2111 (urinish 1/3)
+[2026-06-09 17:53:50] [INFO ] [!] Timeout — 3s kutib qayta urinilmoqda...
+[2026-06-09 17:53:53] [INFO ] Control -> 10.123.86.42:2111 (urinish 2/3)
+[2026-06-09 17:54:01] [INFO ] [!] Timeout — 6s kutib qayta urinilmoqda...
+[2026-06-09 17:54:07] [INFO ] Control -> 10.123.86.42:2111 (urinish 3/3)
+[2026-06-09 17:54:15] [ERROR] Kamera ulanishi muvaffaqiyatsiz: Kamera 10.123.86.42:2111 javob bermadi (8.0s, urinish 3/3). Kamera faqat bitta ulanish qabul qiladi — SOPAS ET to'liq yopilganligini tekshiring.
+[2026-06-09 17:54:29] [INFO ] Kamera IP: 192.168.1.10 (CoLa 2111, BLOB 2113)
+[2026-06-09 17:54:29] [INFO ] Control -> 192.168.1.10:2111 (urinish 1/3)
+[2026-06-09 17:54:37] [INFO ] [!] Timeout — 3s kutib qayta urinilmoqda...
+[2026-06-09 17:54:41] [INFO ] Control -> 192.168.1.10:2111 (urinish 2/3)
+[2026-06-09 17:54:49] [INFO ] [!] Timeout — 6s kutib qayta urinilmoqda...
+[2026-06-09 17:54:55] [INFO ] Control -> 192.168.1.10:2111 (urinish 3/3)
+[2026-06-09 17:55:03] [ERROR] Kamera ulanishi muvaffaqiyatsiz: Kamera 192.168.1.10:2111 javob bermadi (8.0s, urinish 3/3). Kamera faqat bitta ulanish qabul qiladi — SOPAS ET to'liq yopilganligini tekshiring.
+[2026-06-09 18:00:16] [WARNING] Maxsus model topilmadi: D:\AI_CAM\models\yolov8n_vin.pt. Standart 'yolov8n.pt' yuklanmoqda (faqat sinov uchun). VIN plastinka uchun TRAINING_GUIDE.md bo'yicha model o'qiting.
+[2026-06-09 18:00:16] [ERROR] YOLO model yuklanmadi: Weights only load failed. This file can still be loaded, to do so you have two options, [1mdo those steps only if you trust the source of the checkpoint[0m. 
+	(1) In PyTorch 2.6, we changed the default value of the `weights_only` argument in `torch.load` from `False` to `True`. Re-running `torch.load` with `weights_only` set to `False` will likely succeed, but it can result in arbitrary code execution. Do it only if you got the file from a trusted source.
+	(2) Alternatively, to load with `weights_only=True` please check the recommended steps in the following error message.
+	WeightsUnpickler error: Unsupported global: GLOBAL ultralytics.nn.tasks.DetectionModel was not an allowed global by default. Please use `torch.serialization.add_safe_globals([ultralytics.nn.tasks.DetectionModel])` or the `torch.serialization.safe_globals([ultralytics.nn.tasks.DetectionModel])` context manager to allowlist this global if you trust this class/function.
+
+Check the documentation of torch.load to learn more about types accepted by default with weights_only https://pytorch.org/docs/stable/generated/torch.load.html.
+[2026-06-09 18:00:16] [INFO ] Ma'lumotlar bazasi tayyor: D:\AI_CAM\data\ai_cam.db
+[2026-06-09 18:00:16] [INFO ] AI_CAM server ishga tushdi.
+[2026-06-09 18:00:51] [INFO ] Kamera IP: 10.123.86.42 (CoLa 2111, BLOB 2113)
+[2026-06-09 18:00:51] [INFO ] Control -> 10.123.86.42:2111 (urinish 1/3)
+[2026-06-09 18:00:59] [INFO ] [!] Timeout — 3s kutib qayta urinilmoqda...
+[2026-06-09 18:01:02] [INFO ] Control -> 10.123.86.42:2111 (urinish 2/3)
+[2026-06-09 18:01:10] [INFO ] [!] Timeout — 6s kutib qayta urinilmoqda...
+[2026-06-09 18:01:16] [INFO ] Control -> 10.123.86.42:2111 (urinish 3/3)
+[2026-06-10 09:00:17] [WARNING] Maxsus model topilmadi: D:\AI_CAM\models\yolov8n_vin.pt. Standart 'yolov8n.pt' yuklanmoqda (faqat sinov uchun). VIN plastinka uchun TRAINING_GUIDE.md bo'yicha model o'qiting.
+[2026-06-10 09:00:17] [ERROR] YOLO model yuklanmadi: Weights only load failed. This file can still be loaded, to do so you have two options, [1mdo those steps only if you trust the source of the checkpoint[0m. 
+	(1) In PyTorch 2.6, we changed the default value of the `weights_only` argument in `torch.load` from `False` to `True`. Re-running `torch.load` with `weights_only` set to `False` will likely succeed, but it can result in arbitrary code execution. Do it only if you got the file from a trusted source.
+	(2) Alternatively, to load with `weights_only=True` please check the recommended steps in the following error message.
+	WeightsUnpickler error: Unsupported global: GLOBAL ultralytics.nn.tasks.DetectionModel was not an allowed global by default. Please use `torch.serialization.add_safe_globals([ultralytics.nn.tasks.DetectionModel])` or the `torch.serialization.safe_globals([ultralytics.nn.tasks.DetectionModel])` context manager to allowlist this global if you trust this class/function.
+
+Check the documentation of torch.load to learn more about types accepted by default with weights_only https://pytorch.org/docs/stable/generated/torch.load.html.
+[2026-06-10 09:00:17] [INFO ] Ma'lumotlar bazasi tayyor: D:\AI_CAM\data\ai_cam.db
+[2026-06-10 09:00:17] [INFO ] AI_CAM server ishga tushdi.
+[2026-06-10 09:00:46] [INFO ] Kamera IP: 10.123.86.42 (CoLa 2111, BLOB 2113)
+[2026-06-10 09:00:46] [INFO ] Control -> 10.123.86.42:2111 (urinish 1/3)
+[2026-06-10 09:00:46] [INFO ]   C->K  sMN CheckPassword 3 A89A6E74
+[2026-06-10 09:00:46] [INFO ]   K->C  sAN CheckPassword 1
+[2026-06-10 09:00:46] [INFO ]   C->K  sRN DeviceIdent
+[2026-06-10 09:00:46] [INFO ]   K->C  sRA DeviceIdent 17 LECTOR652 Dynamic Focus 9 4.4.0.33R
+[2026-06-10 09:00:46] [INFO ]   C->K  sEN DemoModeState 1
+[2026-06-10 09:00:46] [INFO ]   K->C  sEA DemoModeState 1
+[2026-06-10 09:00:46] [INFO ]   C->K  sRN DemoModeState
+[2026-06-10 09:00:46] [INFO ]   K->C  sRA DemoModeState 0
+[2026-06-10 09:00:46] [INFO ]   C->K  sMN GetBlobClientConfig
+[2026-06-10 09:00:46] [INFO ]   K->C  sAN GetBlobClientConfig 3 TCP C 10.123.86.42 7 0.0.0.0 841 0 0 1 400
+[2026-06-10 09:00:46] [INFO ]   C->K  sEN ImgBlobTransfer 1
+[2026-06-10 09:00:46] [INFO ]   K->C  sEA ImgBlobTransfer 1
+[2026-06-10 09:00:46] [INFO ]   C->K  sEN LIIsActive 1
+[2026-06-10 09:00:46] [INFO ]   K->C  sEA LIIsActive 1
+[2026-06-10 09:00:46] [INFO ]   C->K  sRN LIIsActive
+[2026-06-10 09:00:46] [INFO ]   K->C  sRA LIIsActive 0
+[2026-06-10 09:00:46] [INFO ]   C->K  sEN VIStatDisp 1
+[2026-06-10 09:00:46] [INFO ]   K->C  sEA VIStatDisp 1
+[2026-06-10 09:00:46] [INFO ]   C->K  sRN VIStatDisp
+[2026-06-10 09:00:46] [INFO ]   K->C  sRA VIStatDisp 0 0 0 00000000
+[2026-06-10 09:00:46] [INFO ]   C->K  sEN VITmeStatDisp 1
+[2026-06-10 09:00:46] [INFO ]   K->C  sEA VITmeStatDisp 1
+[2026-06-10 09:00:46] [INFO ]   C->K  sRN VITmeStatDisp
+[2026-06-10 09:00:46] [INFO ]   K->C  sRA VITmeStatDisp 0
+[2026-06-10 09:00:46] [INFO ]   C->K  sMN mDIGetEffImgSize
+[2026-06-10 09:00:46] [INFO ]   K->C  sAN mDIGetEffImgSize 800 440
+[2026-06-10 09:00:46] [INFO ] Effektiv rasm o'lchami: sAN mDIGetEffImgSize 800 440
+[2026-06-10 09:00:46] [INFO ] Blob -> 10.123.86.42:2113
+[2026-06-10 09:00:46] [INFO ] Kamera tayyor (BLOB: 16MB buf, blocking + 2s SO_RCVTIMEO).
+[2026-06-10 09:00:46] [INFO ] Live streaming boshlanyapti (mLIStart 0)...
+[2026-06-10 09:00:46] [INFO ]   C->K  sMN mLIStart 0
+[2026-06-10 09:00:46] [INFO ]   K->C  sAN mLIStart 0
+[2026-06-10 09:00:46] [INFO ] mLIStart javob: sAN mLIStart 0
+[2026-06-10 09:00:48] [INFO ] OCR worker ishga tushdi (EasyOCR, fon navbat).
+[2026-06-10 09:00:48] [INFO ] Dataset auto-collection yoqildi -> D:\AI_CAM\dataset\collected_raw (conf>0.4)
+[2026-06-10 09:00:48] [INFO ] AI ishlov berish yoqildi (YOLO + OCR + dataset yig'ish).
+[2026-06-10 09:00:55] [INFO ] EasyOCR modeli yuklanmoqda... (birinchi marta sekin bo'lishi mumkin)
+[2026-06-10 09:01:00] [INFO ] EasyOCR tayyor.
+[2026-06-10 09:15:20] [INFO ] OCR worker to'xtatildi.
+[2026-06-10 09:15:20] [INFO ] Dataset auto-collection to'xtatildi (jami saqlangan: 0).
+[2026-06-10 09:15:20] [INFO ] AI ishlov berish o'chirildi (xom video davom etadi).
+[2026-06-10 09:15:21] [INFO ]   C->K  sMN mLIStop
+[2026-06-10 09:15:21] [INFO ]   K->C  sAN mLIStop
+[2026-06-10 09:15:21] [INFO ] mLIStop javob: sAN mLIStop
+[2026-06-10 09:15:21] [INFO ]   C->K  sEN VITmeStatDisp 0
+[2026-06-10 09:15:21] [INFO ]   K->C  sEA VITmeStatDisp 0
+[2026-06-10 09:15:21] [INFO ]   C->K  sEN VIStatDisp 0
+[2026-06-10 09:15:21] [INFO ]   K->C  sEA VIStatDisp 0
+[2026-06-10 09:15:21] [INFO ]   C->K  sEN LIIsActive 0
+[2026-06-10 09:15:21] [INFO ]   K->C  sEA LIIsActive 0
+[2026-06-10 09:15:21] [INFO ]   C->K  sEN ImgBlobTransfer 0
+[2026-06-10 09:15:21] [INFO ]   K->C  sEA ImgBlobTransfer 0
+[2026-06-10 09:15:21] [INFO ]   C->K  sEN DemoModeState 0
+[2026-06-10 09:15:21] [INFO ]   K->C  sEA DemoModeState 0
+[2026-06-10 09:15:21] [INFO ] Ulanish yopildi.
+[2026-06-10 09:15:21] [INFO ] Kamera uzildi.
+[2026-06-10 11:15:18] [INFO ] YOLO model yuklandi: D:\AI_CAM\runs\detect\vin_plate_model\weights\best.pt (device=cpu)
+[2026-06-10 11:15:18] [INFO ] Ma'lumotlar bazasi tayyor: D:\AI_CAM\data\ai_cam.db
+[2026-06-10 11:15:18] [INFO ] AI_CAM server ishga tushdi.
+[2026-06-10 11:15:41] [INFO ] Kamera IP: 10.123.86.42 (CoLa 2111, BLOB 2113)
+[2026-06-10 11:15:41] [INFO ] Control -> 10.123.86.42:2111 (urinish 1/3)
+[2026-06-10 11:15:41] [INFO ]   C->K  sMN CheckPassword 3 A89A6E74
+[2026-06-10 11:15:41] [INFO ]   K->C  sAN CheckPassword 1
+[2026-06-10 11:15:41] [INFO ]   C->K  sRN DeviceIdent
+[2026-06-10 11:15:41] [INFO ]   K->C  sRA DeviceIdent 17 LECTOR652 Dynamic Focus 9 4.4.0.33R
+[2026-06-10 11:15:41] [INFO ]   C->K  sEN DemoModeState 1
+[2026-06-10 11:15:41] [INFO ]   K->C  sEA DemoModeState 1
+[2026-06-10 11:15:41] [INFO ]   C->K  sRN DemoModeState
+[2026-06-10 11:15:41] [INFO ]   K->C  sRA DemoModeState 0
+[2026-06-10 11:15:41] [INFO ]   C->K  sMN GetBlobClientConfig
+[2026-06-10 11:15:41] [INFO ]   K->C  sAN GetBlobClientConfig 3 TCP C 10.123.86.42 7 0.0.0.0 841 0 0 1 400
+[2026-06-10 11:15:41] [INFO ]   C->K  sEN ImgBlobTransfer 1
+[2026-06-10 11:15:41] [INFO ]   K->C  sEA ImgBlobTransfer 1
+[2026-06-10 11:15:41] [INFO ]   C->K  sEN LIIsActive 1
+[2026-06-10 11:15:41] [INFO ]   K->C  sEA LIIsActive 1
+[2026-06-10 11:15:41] [INFO ]   C->K  sRN LIIsActive
+[2026-06-10 11:15:41] [INFO ]   K->C  sRA LIIsActive 0
+[2026-06-10 11:15:41] [INFO ]   C->K  sEN VIStatDisp 1
+[2026-06-10 11:15:41] [INFO ]   K->C  sEA VIStatDisp 1
+[2026-06-10 11:15:41] [INFO ]   C->K  sRN VIStatDisp
+[2026-06-10 11:15:41] [INFO ]   K->C  sRA VIStatDisp 0 0 0 00000000
+[2026-06-10 11:15:41] [INFO ]   C->K  sEN VITmeStatDisp 1
+[2026-06-10 11:15:41] [INFO ]   K->C  sEA VITmeStatDisp 1
+[2026-06-10 11:15:41] [INFO ]   C->K  sRN VITmeStatDisp
+[2026-06-10 11:15:41] [INFO ]   K->C  sRA VITmeStatDisp 0
+[2026-06-10 11:15:41] [INFO ]   C->K  sMN mDIGetEffImgSize
+[2026-06-10 11:15:41] [INFO ]   K->C  sAN mDIGetEffImgSize 800 440
+[2026-06-10 11:15:41] [INFO ] Effektiv rasm o'lchami: sAN mDIGetEffImgSize 800 440
+[2026-06-10 11:15:41] [INFO ] Blob -> 10.123.86.42:2113
+[2026-06-10 11:15:41] [INFO ] Kamera tayyor (BLOB: 16MB buf, blocking + 2s SO_RCVTIMEO).
+[2026-06-10 11:15:41] [INFO ] Live streaming boshlanyapti (mLIStart 0)...
+[2026-06-10 11:15:41] [INFO ]   C->K  sMN mLIStart 0
+[2026-06-10 11:15:41] [INFO ]   K->C  sAN mLIStart 0
+[2026-06-10 11:15:41] [INFO ] mLIStart javob: sAN mLIStart 0
+[2026-06-10 11:15:43] [INFO ] OCR worker ishga tushdi (EasyOCR, fon navbat).
+[2026-06-10 11:15:43] [INFO ] Dataset auto-collection yoqildi -> D:\AI_CAM\dataset\collected_raw (conf>0.4)
+[2026-06-10 11:15:43] [INFO ] AI ishlov berish yoqildi (YOLO + OCR + dataset yig'ish).
+[2026-06-10 11:15:47] [INFO ] EasyOCR modeli yuklanmoqda... (birinchi marta sekin bo'lishi mumkin)
+[2026-06-10 11:15:55] [INFO ] EasyOCR tayyor.
+[2026-06-10 11:17:01] [INFO ] Dataset saqlandi #1: vin_capture_20260610_111700.jpg (+1 box)
+[2026-06-10 11:17:03] [INFO ] Dataset saqlandi #2: vin_capture_20260610_111703.jpg (+1 box)
+[2026-06-10 11:17:04] [INFO ] Dataset saqlandi #3: vin_capture_20260610_111704.jpg (+1 box)
+[2026-06-10 11:17:04] [INFO ] OCR: yaroqli VIN topilmadi ('HJA1B1J440396', 3297 ms).
+[2026-06-10 11:17:06] [INFO ] Dataset saqlandi #4: vin_capture_20260610_111705.jpg (+1 box)
+[2026-06-10 11:17:07] [INFO ] Dataset saqlandi #5: vin_capture_20260610_111707.jpg (+1 box)
+[2026-06-10 11:17:07] [INFO ] OCR: yaroqli VIN topilmadi ('HJATBLJ000396', 2968 ms).
+[2026-06-10 11:17:10] [INFO ] Dataset saqlandi #6: vin_capture_20260610_111709.jpg (+1 box)
+[2026-06-10 11:17:10] [INFO ] OCR: yaroqli VIN topilmadi ('HDJA1ABTJC00396', 2793 ms).
+[2026-06-10 11:17:11] [INFO ] Dataset saqlandi #7: vin_capture_20260610_111711.jpg (+1 box)
+[2026-06-10 11:17:12] [INFO ] Dataset saqlandi #8: vin_capture_20260610_111712.jpg (+1 box)
+[2026-06-10 11:17:13] [INFO ] Dataset saqlandi #9: vin_capture_20260610_111713.jpg (+1 box)
+[2026-06-10 11:17:14] [INFO ] Dataset saqlandi #10: vin_capture_20260610_111714.jpg (+1 box)
+[2026-06-10 11:17:15] [INFO ] Dataset saqlandi #11: vin_capture_20260610_111715.jpg (+1 box)
+[2026-06-10 11:17:16] [INFO ] Dataset saqlandi #12: vin_capture_20260610_111716.jpg (+1 box)
+[2026-06-10 11:19:40] [INFO ] Kamera allaqachon ulangan.
+[2026-06-10 11:19:56] [INFO ] Dataset saqlandi #13: vin_capture_20260610_111956.jpg (+1 box)
+[2026-06-10 11:20:00] [INFO ] Dataset saqlandi #14: vin_capture_20260610_112000.jpg (+1 box)
+[2026-06-10 11:20:02] [INFO ] Dataset saqlandi #15: vin_capture_20260610_112001.jpg (+1 box)
+[2026-06-10 11:20:02] [INFO ] OCR: yaroqli VIN topilmadi ('FPST4ETJ0S9SS3', 5374 ms).
+[2026-06-10 11:20:04] [INFO ] Dataset saqlandi #16: vin_capture_20260610_112004.jpg (+1 box)
+[2026-06-10 11:20:06] [INFO ] Dataset saqlandi #17: vin_capture_20260610_112006.jpg (+1 box)
+[2026-06-10 11:20:07] [INFO ] OCR: yaroqli VIN topilmadi ('FP814ETJ0393S3', 5358 ms).
+[2026-06-10 11:20:08] [INFO ] Dataset saqlandi #18: vin_capture_20260610_112007.jpg (+1 box)
+[2026-06-10 11:20:11] [INFO ] Dataset saqlandi #19: vin_capture_20260610_112010.jpg (+1 box)
+[2026-06-10 11:20:12] [INFO ] Dataset saqlandi #20: vin_capture_20260610_112012.jpg (+1 box)
+[2026-06-10 11:20:13] [INFO ] OCR: yaroqli VIN topilmadi ('FBS14ETJ039533', 5561 ms).
+[2026-06-10 11:20:18] [INFO ] OCR: yaroqli VIN topilmadi ('FP814ETJ059333', 5313 ms).
+[2026-06-10 11:20:22] [INFO ] Dataset saqlandi #21: vin_capture_20260610_112021.jpg (+1 box)
+[2026-06-10 11:20:24] [INFO ] OCR: yaroqli VIN topilmadi ('FB814ETJ059333', 5301 ms).
+[2026-06-10 11:20:29] [INFO ] OCR: yaroqli VIN topilmadi ('FB814ETJ039333', 5603 ms).
+[2026-06-10 11:20:35] [INFO ] OCR: yaroqli VIN topilmadi ('FB814ETJ039333', 5549 ms).
+[2026-06-10 11:20:41] [INFO ] OCR: yaroqli VIN topilmadi ('FB814ETJ039333', 6074 ms).
+[2026-06-10 11:20:51] [INFO ] Dataset saqlandi #22: vin_capture_20260610_112051.jpg (+1 box)
+[2026-06-10 11:23:12] [INFO ] Dataset saqlandi #23: vin_capture_20260610_112311.jpg (+1 box)
+[2026-06-10 11:23:14] [INFO ] Dataset saqlandi #24: vin_capture_20260610_112314.jpg (+1 box)
+[2026-06-10 11:23:15] [INFO ] Dataset saqlandi #25: vin_capture_20260610_112315.jpg (+1 box)
+[2026-06-10 11:23:16] [INFO ] OCR: yaroqli VIN topilmadi ('FPST4FNJ059554', 4815 ms).
+[2026-06-10 11:23:19] [INFO ] Dataset saqlandi #26: vin_capture_20260610_112318.jpg (+1 box)
+[2026-06-10 11:23:21] [INFO ] Dataset saqlandi #27: vin_capture_20260610_112321.jpg (+1 box)
+[2026-06-10 11:23:22] [INFO ] OCR: yaroqli VIN topilmadi ('FP814EEJ039554', 5704 ms).
+[2026-06-10 11:23:25] [INFO ] Dataset saqlandi #28: vin_capture_20260610_112325.jpg (+1 box)
+[2026-06-10 11:23:27] [INFO ] Dataset saqlandi #29: vin_capture_20260610_112326.jpg (+1 box)
+[2026-06-10 11:23:27] [INFO ] OCR: yaroqli VIN topilmadi ('FP814EHJ039534', 5508 ms).
+[2026-06-10 11:23:33] [INFO ] OCR: yaroqli VIN topilmadi ('FP814ETJ039334', 5579 ms).
+[2026-06-10 11:23:38] [INFO ] OCR: yaroqli VIN topilmadi ('FPST4FTJ039334', 5545 ms).
+[2026-06-10 11:23:45] [INFO ] OCR: yaroqli VIN topilmadi ('FBST4FTJ039334', 6507 ms).
+[2026-06-10 11:23:50] [INFO ] OCR: yaroqli VIN topilmadi ('TFP814FTJ039334', 5753 ms).
+[2026-06-10 11:23:57] [INFO ] OCR: yaroqli VIN topilmadi ('FPS14ETJ039334', 6755 ms).
+[2026-06-10 11:24:03] [INFO ] OCR: yaroqli VIN topilmadi ('FPS14ETJ039334', 5748 ms).
+[2026-06-10 11:24:08] [INFO ] OCR: yaroqli VIN topilmadi ('FPST4FTJ039334', 4850 ms).
+[2026-06-10 11:25:40] [INFO ] Dataset saqlandi #30: vin_capture_20260610_112540.jpg (+1 box)
+[2026-06-10 11:25:43] [INFO ] Dataset saqlandi #31: vin_capture_20260610_112543.jpg (+1 box)
+[2026-06-10 11:25:46] [INFO ] Dataset saqlandi #32: vin_capture_20260610_112546.jpg (+1 box)
+[2026-06-10 11:25:48] [INFO ] Dataset saqlandi #33: vin_capture_20260610_112548.jpg (+1 box)
+[2026-06-10 11:25:48] [INFO ] VIN aniqlandi: NSTFB8T4ETJ039335 (conf=0.44, 8352 ms)
+[2026-06-10 11:25:48] [INFO ] DB ga yozildi #1: VIN=NSTFB8T4ETJ039335 conf=0.44
+[2026-06-10 11:25:50] [INFO ] Dataset saqlandi #34: vin_capture_20260610_112550.jpg (+1 box)
+[2026-06-10 11:25:54] [INFO ] Dataset saqlandi #35: vin_capture_20260610_112554.jpg (+1 box)
+[2026-06-10 11:25:57] [INFO ] Dataset saqlandi #36: vin_capture_20260610_112557.jpg (+1 box)
+[2026-06-10 11:25:58] [INFO ] VIN aniqlandi: NSTFBS14ETJ039333 (conf=0.32, 9466 ms)
+[2026-06-10 11:25:58] [INFO ] Dataset saqlandi #37: vin_capture_20260610_112558.jpg (+1 box)
+[2026-06-10 11:25:58] [INFO ] DB ga yozildi #2: VIN=NSTFBS14ETJ039333 conf=0.32
+[2026-06-10 11:26:01] [INFO ] Dataset saqlandi #38: vin_capture_20260610_112600.jpg (+1 box)
+[2026-06-10 11:26:04] [INFO ] Dataset saqlandi #39: vin_capture_20260610_112603.jpg (+1 box)
+[2026-06-10 11:26:05] [INFO ] Dataset saqlandi #40: vin_capture_20260610_112605.jpg (+1 box)
+[2026-06-10 11:26:05] [INFO ] VIN aniqlandi: NSTFBST4ETJ039335 (conf=0.52, 7528 ms)
+[2026-06-10 11:26:05] [INFO ] DB ga yozildi #3: VIN=NSTFBST4ETJ039335 conf=0.52
+[2026-06-10 11:26:07] [INFO ] Dataset saqlandi #41: vin_capture_20260610_112607.jpg (+1 box)
+[2026-06-10 11:26:11] [INFO ] Dataset saqlandi #42: vin_capture_20260610_112610.jpg (+1 box)
+[2026-06-10 11:26:13] [INFO ] Dataset saqlandi #43: vin_capture_20260610_112613.jpg (+1 box)
+[2026-06-10 11:26:13] [INFO ] VIN aniqlandi: NSTFBS14ETJ039335 (conf=0.79, 8015 ms)
+[2026-06-10 11:26:14] [INFO ] DB ga yozildi #4: VIN=NSTFBS14ETJ039335 conf=0.79
+[2026-06-10 11:26:17] [INFO ] Dataset saqlandi #44: vin_capture_20260610_112616.jpg (+1 box)
+[2026-06-10 11:26:20] [INFO ] Dataset saqlandi #45: vin_capture_20260610_112619.jpg (+1 box)
+[2026-06-10 11:26:21] [INFO ] Dataset saqlandi #46: vin_capture_20260610_112621.jpg (+1 box)
+[2026-06-10 11:26:22] [INFO ] VIN aniqlandi: NSTFBS14ETJ039333 (conf=0.46, 8108 ms)
+[2026-06-10 11:26:22] [INFO ] DB ga yozildi #5: VIN=NSTFBS14ETJ039333 conf=0.46
+[2026-06-10 11:26:25] [INFO ] Dataset saqlandi #47: vin_capture_20260610_112624.jpg (+1 box)
+[2026-06-10 11:26:28] [INFO ] Dataset saqlandi #48: vin_capture_20260610_112627.jpg (+1 box)
+[2026-06-10 11:26:28] [INFO ] Dataset saqlandi #49: vin_capture_20260610_112628.jpg (+1 box)
+[2026-06-10 11:26:29] [INFO ] VIN aniqlandi: NSTFBSTAETJ039335 (conf=0.44, 7181 ms)
+[2026-06-10 11:26:29] [INFO ] DB ga yozildi #6: VIN=NSTFBSTAETJ039335 conf=0.44
+[2026-06-10 11:26:32] [INFO ] Dataset saqlandi #50: vin_capture_20260610_112632.jpg (+1 box)
+[2026-06-10 11:26:34] [INFO ] Dataset saqlandi #51: vin_capture_20260610_112634.jpg (+1 box)
+[2026-06-10 11:26:36] [INFO ] Dataset saqlandi #52: vin_capture_20260610_112636.jpg (+1 box)
+[2026-06-10 11:26:36] [INFO ] VIN aniqlandi: NSTFBST4ETJ039335 (conf=0.63, 7246 ms)
+[2026-06-10 11:26:36] [INFO ] DB ga yozildi #7: VIN=NSTFBST4ETJ039335 conf=0.63
+[2026-06-10 11:26:39] [INFO ] Dataset saqlandi #53: vin_capture_20260610_112639.jpg (+1 box)
+[2026-06-10 11:26:43] [INFO ] Dataset saqlandi #54: vin_capture_20260610_112643.jpg (+1 box)
+[2026-06-10 11:26:45] [INFO ] Dataset saqlandi #55: vin_capture_20260610_112645.jpg (+1 box)
+[2026-06-10 11:26:46] [INFO ] VIN aniqlandi: NSTFBS14ETJ039335 (conf=0.59, 9562 ms)
+[2026-06-10 11:26:46] [INFO ] DB ga yozildi #8: VIN=NSTFBS14ETJ039335 conf=0.59
+[2026-06-10 11:26:56] [INFO ] DUPLICATE: 'NSTFBS14ETJ039335' yaqinda o'qilgan — e'tiborsiz qoldirildi.
+[2026-06-10 11:27:09] [INFO ] VIN aniqlandi: NSTFBST4ETJ039335 (conf=0.54, 12604 ms)
+[2026-06-10 11:27:09] [INFO ] DB ga yozildi #9: VIN=NSTFBST4ETJ039335 conf=0.54
+[2026-06-10 11:27:23] [INFO ] VIN aniqlandi: NSTFBS14ETJ039335 (conf=0.66, 13835 ms)
+[2026-06-10 11:27:23] [INFO ] DB ga yozildi #10: VIN=NSTFBS14ETJ039335 conf=0.66
+[2026-06-10 11:27:36] [INFO ] OCR: yaroqli VIN topilmadi ('NSTFBST4ETJ09335', 13197 ms).
+[2026-06-10 11:27:44] [INFO ] VIN aniqlandi: NSTFBST4ETJ039333 (conf=0.50, 8406 ms)
+[2026-06-10 11:27:44] [INFO ] DB ga yozildi #11: VIN=NSTFBST4ETJ039333 conf=0.50
+[2026-06-10 11:27:52] [INFO ] VIN aniqlandi: NSTFBS14ETJ039335 (conf=0.70, 7208 ms)
+[2026-06-10 11:27:52] [INFO ] DB ga yozildi #12: VIN=NSTFBS14ETJ039335 conf=0.70
+[2026-06-10 11:27:59] [INFO ] VIN aniqlandi: NSTFBS14ETJ039333 (conf=0.40, 7494 ms)
+[2026-06-10 11:27:59] [INFO ] DB ga yozildi #13: VIN=NSTFBS14ETJ039333 conf=0.40
+[2026-06-10 11:28:07] [INFO ] VIN aniqlandi: NSTFBST4ETJ039335 (conf=0.56, 7738 ms)
+[2026-06-10 11:28:07] [INFO ] DB ga yozildi #14: VIN=NSTFBST4ETJ039335 conf=0.56
+[2026-06-10 11:28:08] [INFO ] Kamera allaqachon ulangan.
+[2026-06-10 11:28:15] [INFO ] DUPLICATE: 'NSTFBST4ETJ039335' yaqinda o'qilgan — e'tiborsiz qoldirildi.
+[2026-06-10 11:28:22] [INFO ] OCR: ishonch past (0.22) — 'NSTFBS1AETJ089333' rad etildi.
+[2026-06-10 11:28:30] [INFO ] VIN aniqlandi: NSTFBS14ETJ039335 (conf=0.68, 7355 ms)
+[2026-06-10 11:28:30] [INFO ] DB ga yozildi #15: VIN=NSTFBS14ETJ039335 conf=0.68
+[2026-06-10 11:28:38] [INFO ] DUPLICATE: 'NSTFBS14ETJ039335' yaqinda o'qilgan — e'tiborsiz qoldirildi.
+[2026-06-10 11:28:46] [INFO ] DUPLICATE: 'NSTFBS14ETJ039335' yaqinda o'qilgan — e'tiborsiz qoldirildi.
+[2026-06-10 11:28:55] [INFO ] DUPLICATE: 'NSTFBS14ETJ039335' yaqinda o'qilgan — e'tiborsiz qoldirildi.
+[2026-06-10 11:29:03] [INFO ] VIN aniqlandi: NSTFBSTAETJ039333 (conf=0.54, 8474 ms)
+[2026-06-10 11:29:03] [INFO ] DB ga yozildi #16: VIN=NSTFBSTAETJ039333 conf=0.54
+[2026-06-10 11:29:12] [INFO ] VIN aniqlandi: NSTFBS14ETJ039335 (conf=0.76, 8785 ms)
+[2026-06-10 11:29:12] [INFO ] DB ga yozildi #17: VIN=NSTFBS14ETJ039335 conf=0.76
+[2026-06-10 11:29:23] [INFO ] VIN aniqlandi: NSTFBST4ETJ039333 (conf=0.53, 10426 ms)
+[2026-06-10 11:29:23] [INFO ] DB ga yozildi #18: VIN=NSTFBST4ETJ039333 conf=0.53
+[2026-06-10 11:29:32] [INFO ] DUPLICATE: 'NSTFBST4ETJ039333' yaqinda o'qilgan — e'tiborsiz qoldirildi.
+[2026-06-10 11:29:32] [INFO ] OCR worker to'xtatildi.
+[2026-06-10 11:29:32] [INFO ] Dataset auto-collection to'xtatildi (jami saqlangan: 55).
+[2026-06-10 11:29:32] [INFO ] AI ishlov berish o'chirildi (xom video davom etadi).
+[2026-06-10 11:29:33] [INFO ]   C->K  sMN mLIStop
+[2026-06-10 11:29:33] [INFO ]   K->C  sAN mLIStop
+[2026-06-10 11:29:33] [INFO ] mLIStop javob: sAN mLIStop
+[2026-06-10 11:29:33] [INFO ]   C->K  sEN VITmeStatDisp 0
+[2026-06-10 11:29:33] [INFO ]   K->C  sEA VITmeStatDisp 0
+[2026-06-10 11:29:33] [INFO ]   C->K  sEN VIStatDisp 0
+[2026-06-10 11:29:33] [INFO ]   K->C  sEA VIStatDisp 0
+[2026-06-10 11:29:33] [INFO ]   C->K  sEN LIIsActive 0
+[2026-06-10 11:29:33] [INFO ]   K->C  sEA LIIsActive 0
+[2026-06-10 11:29:33] [INFO ]   C->K  sEN ImgBlobTransfer 0
+[2026-06-10 11:29:33] [INFO ]   K->C  sEA ImgBlobTransfer 0
+[2026-06-10 11:29:33] [INFO ]   C->K  sEN DemoModeState 0
+[2026-06-10 11:29:33] [INFO ]   K->C  sEA DemoModeState 0
+[2026-06-10 11:29:33] [INFO ] Ulanish yopildi.
+[2026-06-10 11:29:33] [INFO ] Kamera uzildi.
+[2026-06-10 11:29:36] [INFO ] OCR: yaroqli VIN topilmadi ('NSTFBS14ETJ03935', 4116 ms).
+[2026-06-10 12:13:52] [ERROR] YOLO model yuklanmadi: Weights only load failed. This file can still be loaded, to do so you have two options, [1mdo those steps only if you trust the source of the checkpoint[0m. 
+	(1) In PyTorch 2.6, we changed the default value of the `weights_only` argument in `torch.load` from `False` to `True`. Re-running `torch.load` with `weights_only` set to `False` will likely succeed, but it can result in arbitrary code execution. Do it only if you got the file from a trusted source.
+	(2) Alternatively, to load with `weights_only=True` please check the recommended steps in the following error message.
+	WeightsUnpickler error: Unsupported global: GLOBAL ultralytics.nn.tasks.DetectionModel was not an allowed global by default. Please use `torch.serialization.add_safe_globals([ultralytics.nn.tasks.DetectionModel])` or the `torch.serialization.safe_globals([ultralytics.nn.tasks.DetectionModel])` context manager to allowlist this global if you trust this class/function.
+
+Check the documentation of torch.load to learn more about types accepted by default with weights_only https://pytorch.org/docs/stable/generated/torch.load.html.
+[2026-06-10 12:13:52] [INFO ] Ma'lumotlar bazasi tayyor: D:\AI_CAM\data\ai_cam.db
+[2026-06-10 12:13:52] [INFO ] AI_CAM server ishga tushdi.
+[2026-06-10 12:17:00] [ERROR] YOLO model yuklanmadi: Weights only load failed. This file can still be loaded, to do so you have two options, [1mdo those steps only if you trust the source of the checkpoint[0m. 
+	(1) In PyTorch 2.6, we changed the default value of the `weights_only` argument in `torch.load` from `False` to `True`. Re-running `torch.load` with `weights_only` set to `False` will likely succeed, but it can result in arbitrary code execution. Do it only if you got the file from a trusted source.
+	(2) Alternatively, to load with `weights_only=True` please check the recommended steps in the following error message.
+	WeightsUnpickler error: Unsupported global: GLOBAL torch.nn.modules.container.Sequential was not an allowed global by default. Please use `torch.serialization.add_safe_globals([torch.nn.modules.container.Sequential])` or the `torch.serialization.safe_globals([torch.nn.modules.container.Sequential])` context manager to allowlist this global if you trust this class/function.
+
+Check the documentation of torch.load to learn more about types accepted by default with weights_only https://pytorch.org/docs/stable/generated/torch.load.html.
+[2026-06-10 12:17:00] [INFO ] Ma'lumotlar bazasi tayyor: D:\AI_CAM\data\ai_cam.db
+[2026-06-10 12:17:00] [INFO ] AI_CAM server ishga tushdi.
+[2026-06-10 12:17:15] [INFO ] Kamera IP: 10.123.86.42 (CoLa 2111, BLOB 2113)
+[2026-06-10 12:17:15] [INFO ] Control -> 10.123.86.42:2111 (urinish 1/3)
+[2026-06-10 12:17:15] [INFO ]   C->K  sMN CheckPassword 3 A89A6E74
+[2026-06-10 12:17:15] [INFO ]   K->C  sAN CheckPassword 1
+[2026-06-10 12:17:15] [INFO ]   C->K  sRN DeviceIdent
+[2026-06-10 12:17:15] [INFO ]   K->C  sRA DeviceIdent 17 LECTOR652 Dynamic Focus 9 4.4.0.33R
+[2026-06-10 12:17:15] [INFO ]   C->K  sEN DemoModeState 1
+[2026-06-10 12:17:15] [INFO ]   K->C  sEA DemoModeState 1
+[2026-06-10 12:17:15] [INFO ]   C->K  sRN DemoModeState
+[2026-06-10 12:17:15] [INFO ]   K->C  sRA DemoModeState 0
+[2026-06-10 12:17:15] [INFO ]   C->K  sMN GetBlobClientConfig
+[2026-06-10 12:17:15] [INFO ]   K->C  sAN GetBlobClientConfig 3 TCP C 10.123.86.42 7 0.0.0.0 841 0 0 1 400
+[2026-06-10 12:17:15] [INFO ]   C->K  sEN ImgBlobTransfer 1
+[2026-06-10 12:17:15] [INFO ]   K->C  sEA ImgBlobTransfer 1
+[2026-06-10 12:17:15] [INFO ]   C->K  sEN LIIsActive 1
+[2026-06-10 12:17:15] [INFO ]   K->C  sEA LIIsActive 1
+[2026-06-10 12:17:15] [INFO ]   C->K  sRN LIIsActive
+[2026-06-10 12:17:15] [INFO ]   K->C  sRA LIIsActive 0
+[2026-06-10 12:17:15] [INFO ]   C->K  sEN VIStatDisp 1
+[2026-06-10 12:17:15] [INFO ]   K->C  sEA VIStatDisp 1
+[2026-06-10 12:17:15] [INFO ]   C->K  sRN VIStatDisp
+[2026-06-10 12:17:15] [INFO ]   K->C  sRA VIStatDisp 0 0 0 00000000
+[2026-06-10 12:17:15] [INFO ]   C->K  sEN VITmeStatDisp 1
+[2026-06-10 12:17:15] [INFO ]   K->C  sEA VITmeStatDisp 1
+[2026-06-10 12:17:15] [INFO ]   C->K  sRN VITmeStatDisp
+[2026-06-10 12:17:15] [INFO ]   K->C  sRA VITmeStatDisp 0
+[2026-06-10 12:17:15] [INFO ]   C->K  sMN mDIGetEffImgSize
+[2026-06-10 12:17:15] [INFO ]   K->C  sAN mDIGetEffImgSize 800 440
+[2026-06-10 12:17:15] [INFO ] Effektiv rasm o'lchami: sAN mDIGetEffImgSize 800 440
+[2026-06-10 12:17:15] [INFO ] Blob -> 10.123.86.42:2113
+[2026-06-10 12:17:15] [INFO ] Kamera tayyor (BLOB: 16MB buf, blocking + 2s SO_RCVTIMEO).
+[2026-06-10 12:17:15] [INFO ] Live streaming boshlanyapti (mLIStart 0)...
+[2026-06-10 12:17:15] [INFO ]   C->K  sMN mLIStart 0
+[2026-06-10 12:17:15] [INFO ]   K->C  sAN mLIStart 0
+[2026-06-10 12:17:15] [INFO ] mLIStart javob: sAN mLIStart 0
+[2026-06-10 12:17:21] [INFO ] OCR worker ishga tushdi (EasyOCR, fon navbat).
+[2026-06-10 12:17:21] [INFO ] Dataset auto-collection yoqildi -> D:\AI_CAM\dataset\collected_raw (conf>0.4)
+[2026-06-10 12:17:21] [INFO ] AI ishlov berish yoqildi (YOLO + OCR + dataset yig'ish).
+[2026-06-10 12:17:22] [INFO ] EasyOCR modeli yuklanmoqda... (birinchi marta sekin bo'lishi mumkin)
+[2026-06-10 12:17:22] [ERROR] EasyOCR yuklanmadi: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1006)>
+[2026-06-10 12:17:31] [INFO ] OCR worker to'xtatildi.
+[2026-06-10 12:17:31] [INFO ] Dataset auto-collection to'xtatildi (jami saqlangan: 0).
+[2026-06-10 12:17:31] [INFO ] AI ishlov berish o'chirildi (xom video davom etadi).
+[2026-06-10 12:17:37] [INFO ]   C->K  sMN mLIStop
+[2026-06-10 12:17:37] [INFO ]   K->C  sAN mLIStop
+[2026-06-10 12:17:37] [INFO ] mLIStop javob: sAN mLIStop
+[2026-06-10 12:17:37] [INFO ]   C->K  sEN VITmeStatDisp 0
+[2026-06-10 12:17:37] [INFO ]   K->C  sEA VITmeStatDisp 0
+[2026-06-10 12:17:37] [INFO ]   C->K  sEN VIStatDisp 0
+[2026-06-10 12:17:37] [INFO ]   K->C  sEA VIStatDisp 0
+[2026-06-10 12:17:37] [INFO ]   C->K  sEN LIIsActive 0
+[2026-06-10 12:17:37] [INFO ]   K->C  sEA LIIsActive 0
+[2026-06-10 12:17:37] [INFO ]   C->K  sEN ImgBlobTransfer 0
+[2026-06-10 12:17:37] [INFO ]   K->C  sEA ImgBlobTransfer 0
+[2026-06-10 12:17:37] [INFO ]   C->K  sEN DemoModeState 0
+[2026-06-10 12:17:37] [INFO ]   K->C  sEA DemoModeState 0
+[2026-06-10 12:17:37] [INFO ] Ulanish yopildi.
+[2026-06-10 12:17:37] [INFO ] Kamera uzildi.
+[2026-06-10 12:17:38] [INFO ] Kamera IP: 10.123.86.42 (CoLa 2111, BLOB 2113)
+[2026-06-10 12:17:38] [INFO ] Control -> 10.123.86.42:2111 (urinish 1/3)
+[2026-06-10 12:17:38] [INFO ]   C->K  sMN CheckPassword 3 A89A6E74
+[2026-06-10 12:17:38] [INFO ]   K->C  sAN CheckPassword 1
+[2026-06-10 12:17:38] [INFO ]   C->K  sRN DeviceIdent
+[2026-06-10 12:17:38] [INFO ]   K->C  sRA DeviceIdent 17 LECTOR652 Dynamic Focus 9 4.4.0.33R
+[2026-06-10 12:17:38] [INFO ]   C->K  sEN DemoModeState 1
+[2026-06-10 12:17:38] [INFO ]   K->C  sEA DemoModeState 1
+[2026-06-10 12:17:38] [INFO ]   C->K  sRN DemoModeState
+[2026-06-10 12:17:38] [INFO ]   K->C  sRA DemoModeState 0
+[2026-06-10 12:17:38] [INFO ]   C->K  sMN GetBlobClientConfig
+[2026-06-10 12:17:38] [INFO ]   K->C  sAN GetBlobClientConfig 3 TCP C 10.123.86.42 7 0.0.0.0 841 0 0 1 400
+[2026-06-10 12:17:38] [INFO ]   C->K  sEN ImgBlobTransfer 1
+[2026-06-10 12:17:38] [INFO ]   K->C  sEA ImgBlobTransfer 1
+[2026-06-10 12:17:38] [INFO ]   C->K  sEN LIIsActive 1
+[2026-06-10 12:17:38] [INFO ]   K->C  sEA LIIsActive 1
+[2026-06-10 12:17:38] [INFO ]   C->K  sRN LIIsActive
+[2026-06-10 12:17:38] [INFO ]   K->C  sRA LIIsActive 0
+[2026-06-10 12:17:38] [INFO ]   C->K  sEN VIStatDisp 1
+[2026-06-10 12:17:38] [INFO ]   K->C  sEA VIStatDisp 1
+[2026-06-10 12:17:38] [INFO ]   C->K  sRN VIStatDisp
+[2026-06-10 12:17:38] [INFO ]   K->C  sRA VIStatDisp 0 0 0 00000000
+[2026-06-10 12:17:38] [INFO ]   C->K  sEN VITmeStatDisp 1
+[2026-06-10 12:17:38] [INFO ]   K->C  sEA VITmeStatDisp 1
+[2026-06-10 12:17:38] [INFO ]   C->K  sRN VITmeStatDisp
+[2026-06-10 12:17:38] [INFO ]   K->C  sRA VITmeStatDisp 0
+[2026-06-10 12:17:38] [INFO ]   C->K  sMN mDIGetEffImgSize
+[2026-06-10 12:17:38] [INFO ]   K->C  sAN mDIGetEffImgSize 800 440
+[2026-06-10 12:17:38] [INFO ] Effektiv rasm o'lchami: sAN mDIGetEffImgSize 800 440
+[2026-06-10 12:17:38] [INFO ] Blob -> 10.123.86.42:2113
+[2026-06-10 12:17:38] [INFO ] Kamera tayyor (BLOB: 16MB buf, blocking + 2s SO_RCVTIMEO).
+[2026-06-10 12:17:38] [INFO ] Live streaming boshlanyapti (mLIStart 0)...
+[2026-06-10 12:17:38] [INFO ]   C->K  sMN mLIStart 0
+[2026-06-10 12:17:38] [INFO ]   K->C  sAN mLIStart 0
+[2026-06-10 12:17:38] [INFO ] mLIStart javob: sAN mLIStart 0
+[2026-06-10 12:20:27] [ERROR] YOLO model yuklanmadi: Weights only load failed. This file can still be loaded, to do so you have two options, [1mdo those steps only if you trust the source of the checkpoint[0m. 
+	(1) In PyTorch 2.6, we changed the default value of the `weights_only` argument in `torch.load` from `False` to `True`. Re-running `torch.load` with `weights_only` set to `False` will likely succeed, but it can result in arbitrary code execution. Do it only if you got the file from a trusted source.
+	(2) Alternatively, to load with `weights_only=True` please check the recommended steps in the following error message.
+	WeightsUnpickler error: Unsupported global: GLOBAL torch.nn.modules.container.Sequential was not an allowed global by default. Please use `torch.serialization.add_safe_globals([torch.nn.modules.container.Sequential])` or the `torch.serialization.safe_globals([torch.nn.modules.container.Sequential])` context manager to allowlist this global if you trust this class/function.
+
+Check the documentation of torch.load to learn more about types accepted by default with weights_only https://pytorch.org/docs/stable/generated/torch.load.html.
+[2026-06-10 12:20:27] [INFO ] Ma'lumotlar bazasi tayyor: D:\AI_CAM\data\ai_cam.db
+[2026-06-10 12:20:27] [INFO ] AI_CAM server ishga tushdi.
+[2026-06-10 12:23:05] [INFO ] Kamera IP: 10.123.86.42 (CoLa 2111, BLOB 2113)
+[2026-06-10 12:23:05] [INFO ] Control -> 10.123.86.42:2111 (urinish 1/3)
+[2026-06-10 12:23:05] [INFO ]   C->K  sMN CheckPassword 3 A89A6E74
+[2026-06-10 12:23:05] [INFO ]   K->C  sAN CheckPassword 1
+[2026-06-10 12:23:05] [INFO ]   C->K  sRN DeviceIdent
+[2026-06-10 12:23:05] [INFO ]   K->C  sRA DeviceIdent 17 LECTOR652 Dynamic Focus 9 4.4.0.33R
+[2026-06-10 12:23:05] [INFO ]   C->K  sEN DemoModeState 1
+[2026-06-10 12:23:05] [INFO ]   K->C  sEA DemoModeState 1
+[2026-06-10 12:23:05] [INFO ]   C->K  sRN DemoModeState
+[2026-06-10 12:23:05] [INFO ]   K->C  sRA DemoModeState 0
+[2026-06-10 12:23:05] [INFO ]   C->K  sMN GetBlobClientConfig
+[2026-06-10 12:23:05] [INFO ]   K->C  sAN GetBlobClientConfig 3 TCP C 10.123.86.42 7 0.0.0.0 841 0 0 1 400
+[2026-06-10 12:23:05] [INFO ]   C->K  sEN ImgBlobTransfer 1
+[2026-06-10 12:23:05] [INFO ]   K->C  sEA ImgBlobTransfer 1
+[2026-06-10 12:23:05] [INFO ]   C->K  sEN LIIsActive 1
+[2026-06-10 12:23:05] [INFO ]   K->C  sEA LIIsActive 1
+[2026-06-10 12:23:05] [INFO ]   C->K  sRN LIIsActive
+[2026-06-10 12:23:05] [INFO ]   K->C  sRA LIIsActive 0
+[2026-06-10 12:23:05] [INFO ]   C->K  sEN VIStatDisp 1
+[2026-06-10 12:23:05] [INFO ]   K->C  sEA VIStatDisp 1
+[2026-06-10 12:23:05] [INFO ]   C->K  sRN VIStatDisp
+[2026-06-10 12:23:05] [INFO ]   K->C  sRA VIStatDisp 0 0 0 00000000
+[2026-06-10 12:23:05] [INFO ]   C->K  sEN VITmeStatDisp 1
+[2026-06-10 12:23:05] [INFO ]   K->C  sEA VITmeStatDisp 1
+[2026-06-10 12:23:05] [INFO ]   C->K  sRN VITmeStatDisp
+[2026-06-10 12:23:05] [INFO ]   K->C  sRA VITmeStatDisp 0
+[2026-06-10 12:23:05] [INFO ]   C->K  sMN mDIGetEffImgSize
+[2026-06-10 12:23:05] [INFO ]   K->C  sAN mDIGetEffImgSize 800 440
+[2026-06-10 12:23:05] [INFO ] Effektiv rasm o'lchami: sAN mDIGetEffImgSize 800 440
+[2026-06-10 12:23:05] [INFO ] Blob -> 10.123.86.42:2113
+[2026-06-10 12:23:05] [INFO ] Kamera tayyor (BLOB: 16MB buf, blocking + 2s SO_RCVTIMEO).
+[2026-06-10 12:23:05] [INFO ] Live streaming boshlanyapti (mLIStart 0)...
+[2026-06-10 12:23:05] [INFO ]   C->K  sMN mLIStart 0
+[2026-06-10 12:23:05] [INFO ]   K->C  sAN mLIStart 0
+[2026-06-10 12:23:05] [INFO ] mLIStart javob: sAN mLIStart 0
+[2026-06-10 12:23:17] [INFO ] OCR worker ishga tushdi (EasyOCR, fon navbat).
+[2026-06-10 12:23:17] [INFO ] Dataset auto-collection yoqildi -> D:\AI_CAM\dataset\collected_raw (conf>0.4)
+[2026-06-10 12:23:17] [INFO ] AI ishlov berish yoqildi (YOLO + OCR + dataset yig'ish).
+[2026-06-10 12:23:18] [INFO ] OCR worker to'xtatildi.
+[2026-06-10 12:23:18] [INFO ] Dataset auto-collection to'xtatildi (jami saqlangan: 0).
+[2026-06-10 12:23:18] [INFO ] AI ishlov berish o'chirildi (xom video davom etadi).
+[2026-06-10 12:23:19] [INFO ] EasyOCR modeli yuklanmoqda... (birinchi marta sekin bo'lishi mumkin)
+[2026-06-10 12:23:19] [INFO ]   C->K  sMN mLIStop
+[2026-06-10 12:23:19] [INFO ]   K->C  sAN mLIStop
+[2026-06-10 12:23:19] [INFO ] mLIStop javob: sAN mLIStop
+[2026-06-10 12:23:19] [INFO ]   C->K  sEN VITmeStatDisp 0
+[2026-06-10 12:23:19] [INFO ]   K->C  sEA VITmeStatDisp 0
+[2026-06-10 12:23:19] [INFO ]   C->K  sEN VIStatDisp 0
+[2026-06-10 12:23:19] [INFO ]   K->C  sEA VIStatDisp 0
+[2026-06-10 12:23:19] [INFO ]   C->K  sEN LIIsActive 0
+[2026-06-10 12:23:19] [INFO ]   K->C  sEA LIIsActive 0
+[2026-06-10 12:23:19] [INFO ]   C->K  sEN ImgBlobTransfer 0
+[2026-06-10 12:23:19] [INFO ]   K->C  sEA ImgBlobTransfer 0
+[2026-06-10 12:23:19] [INFO ]   C->K  sEN DemoModeState 0
+[2026-06-10 12:23:19] [INFO ]   K->C  sEA DemoModeState 0
+[2026-06-10 12:23:19] [INFO ] Ulanish yopildi.
+[2026-06-10 12:23:19] [INFO ] Kamera uzildi.
+[2026-06-10 12:23:19] [ERROR] EasyOCR yuklanmadi: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1006)>
+[2026-06-10 14:32:26] [ERROR] YOLO model yuklanmadi: Weights only load failed. This file can still be loaded, to do so you have two options, [1mdo those steps only if you trust the source of the checkpoint[0m. 
+	(1) In PyTorch 2.6, we changed the default value of the `weights_only` argument in `torch.load` from `False` to `True`. Re-running `torch.load` with `weights_only` set to `False` will likely succeed, but it can result in arbitrary code execution. Do it only if you got the file from a trusted source.
+	(2) Alternatively, to load with `weights_only=True` please check the recommended steps in the following error message.
+	WeightsUnpickler error: Unsupported global: GLOBAL torch.nn.modules.container.Sequential was not an allowed global by default. Please use `torch.serialization.add_safe_globals([torch.nn.modules.container.Sequential])` or the `torch.serialization.safe_globals([torch.nn.modules.container.Sequential])` context manager to allowlist this global if you trust this class/function.
+
+Check the documentation of torch.load to learn more about types accepted by default with weights_only https://pytorch.org/docs/stable/generated/torch.load.html.
+[2026-06-10 14:32:26] [INFO ] Ma'lumotlar bazasi tayyor: C:\Users\II4028\Documents\Projects\AI_CAM\data\ai_cam.db
+[2026-06-10 14:32:26] [INFO ] AI_CAM server ishga tushdi.
+[2026-06-10 14:32:36] [INFO ] Kamera IP: 10.123.86.42 (CoLa 2111, BLOB 2113)
+[2026-06-10 14:32:36] [INFO ] Control -> 10.123.86.42:2111 (urinish 1/3)
+[2026-06-10 14:32:36] [INFO ]   C->K  sMN CheckPassword 3 A89A6E74
+[2026-06-10 14:32:36] [INFO ]   K->C  sAN CheckPassword 1
+[2026-06-10 14:32:36] [INFO ]   C->K  sRN DeviceIdent
+[2026-06-10 14:32:36] [INFO ]   K->C  sRA DeviceIdent 17 LECTOR652 Dynamic Focus 9 4.4.0.33R
+[2026-06-10 14:32:36] [INFO ]   C->K  sEN DemoModeState 1
+[2026-06-10 14:32:36] [INFO ]   K->C  sEA DemoModeState 1
+[2026-06-10 14:32:36] [INFO ]   C->K  sRN DemoModeState
+[2026-06-10 14:32:36] [INFO ]   K->C  sRA DemoModeState 0
+[2026-06-10 14:32:36] [INFO ]   C->K  sMN GetBlobClientConfig
+[2026-06-10 14:32:36] [INFO ]   K->C  sAN GetBlobClientConfig 3 TCP C 10.123.86.42 7 0.0.0.0 841 0 0 1 400
+[2026-06-10 14:32:36] [INFO ]   C->K  sEN ImgBlobTransfer 1
+[2026-06-10 14:32:36] [INFO ]   K->C  sEA ImgBlobTransfer 1
+[2026-06-10 14:32:36] [INFO ]   C->K  sEN LIIsActive 1
+[2026-06-10 14:32:36] [INFO ]   K->C  sEA LIIsActive 1
+[2026-06-10 14:32:36] [INFO ]   C->K  sRN LIIsActive
+[2026-06-10 14:32:36] [INFO ]   K->C  sRA LIIsActive 0
+[2026-06-10 14:32:36] [INFO ]   C->K  sEN VIStatDisp 1
+[2026-06-10 14:32:36] [INFO ]   K->C  sEA VIStatDisp 1
+[2026-06-10 14:32:36] [INFO ]   C->K  sRN VIStatDisp
+[2026-06-10 14:32:36] [INFO ]   K->C  sRA VIStatDisp 0 0 0 00000000
+[2026-06-10 14:32:36] [INFO ]   C->K  sEN VITmeStatDisp 1
+[2026-06-10 14:32:36] [INFO ]   K->C  sEA VITmeStatDisp 1
+[2026-06-10 14:32:36] [INFO ]   C->K  sRN VITmeStatDisp
+[2026-06-10 14:32:36] [INFO ]   K->C  sRA VITmeStatDisp 0
+[2026-06-10 14:32:36] [INFO ]   C->K  sMN mDIGetEffImgSize
+[2026-06-10 14:32:36] [INFO ]   K->C  sAN mDIGetEffImgSize 800 440
+[2026-06-10 14:32:36] [INFO ] Effektiv rasm o'lchami: sAN mDIGetEffImgSize 800 440
+[2026-06-10 14:32:36] [INFO ] Blob -> 10.123.86.42:2113
+[2026-06-10 14:32:36] [INFO ] Kamera tayyor (BLOB: 16MB buf, blocking + 2s SO_RCVTIMEO).
+[2026-06-10 14:32:36] [INFO ] Live streaming boshlanyapti (mLIStart 0)...
+[2026-06-10 14:32:36] [INFO ]   C->K  sMN mLIStart 0
+[2026-06-10 14:32:37] [INFO ]   K->C  sAN mLIStart 0
+[2026-06-10 14:32:37] [INFO ] mLIStart javob: sAN mLIStart 0
+[2026-06-10 14:32:45] [INFO ]   C->K  sMN mLIStop
+[2026-06-10 14:32:45] [INFO ]   K->C  sAN mLIStop
+[2026-06-10 14:32:45] [INFO ] mLIStop javob: sAN mLIStop
+[2026-06-10 14:32:45] [INFO ]   C->K  sEN VITmeStatDisp 0
+[2026-06-10 14:32:45] [INFO ]   K->C  sEA VITmeStatDisp 0
+[2026-06-10 14:32:45] [INFO ]   C->K  sEN VIStatDisp 0
+[2026-06-10 14:32:45] [INFO ]   K->C  sEA VIStatDisp 0
+[2026-06-10 14:32:45] [INFO ]   C->K  sEN LIIsActive 0
+[2026-06-10 14:32:45] [INFO ]   K->C  sEA LIIsActive 0
+[2026-06-10 14:32:45] [INFO ]   C->K  sEN ImgBlobTransfer 0
+[2026-06-10 14:32:45] [INFO ]   K->C  sEA ImgBlobTransfer 0
+[2026-06-10 14:32:45] [INFO ]   C->K  sEN DemoModeState 0
+[2026-06-10 14:32:45] [INFO ]   K->C  sEA DemoModeState 0
+[2026-06-10 14:32:45] [INFO ] Ulanish yopildi.
+[2026-06-10 14:32:45] [INFO ] Kamera uzildi.
+[2026-06-10 14:51:04] [INFO ] torch.load weights_only=False ga sozlandi (Ultralytics mosligi).
+[2026-06-10 14:51:04] [INFO ] YOLO model yuklandi: C:\Users\II4028\Documents\Projects\AI_CAM\runs\detect\vin_plate_model\weights\best.pt (device=cpu)
+[2026-06-10 14:51:04] [INFO ] Ma'lumotlar bazasi tayyor: C:\Users\II4028\Documents\Projects\AI_CAM\data\ai_cam.db
+[2026-06-10 14:51:04] [INFO ] AI_CAM server ishga tushdi.
+[2026-06-10 14:51:24] [INFO ] Kamera IP: 10.123.86.42 (CoLa 2111, BLOB 2113)
+[2026-06-10 14:51:24] [INFO ] Control -> 10.123.86.42:2111 (urinish 1/3)
+[2026-06-10 14:51:24] [INFO ]   C->K  sMN CheckPassword 3 A89A6E74
+[2026-06-10 14:51:24] [INFO ]   K->C  sAN CheckPassword 1
+[2026-06-10 14:51:24] [INFO ]   C->K  sRN DeviceIdent
+[2026-06-10 14:51:24] [INFO ]   K->C  sRA DeviceIdent 17 LECTOR652 Dynamic Focus 9 4.4.0.33R
+[2026-06-10 14:51:24] [INFO ]   C->K  sEN DemoModeState 1
+[2026-06-10 14:51:24] [INFO ]   K->C  sEA DemoModeState 1
+[2026-06-10 14:51:24] [INFO ]   C->K  sRN DemoModeState
+[2026-06-10 14:51:24] [INFO ]   K->C  sRA DemoModeState 0
+[2026-06-10 14:51:24] [INFO ]   C->K  sMN GetBlobClientConfig
+[2026-06-10 14:51:24] [INFO ]   K->C  sAN GetBlobClientConfig 3 TCP C 10.123.86.42 7 0.0.0.0 841 0 0 1 400
+[2026-06-10 14:51:24] [INFO ]   C->K  sEN ImgBlobTransfer 1
+[2026-06-10 14:51:24] [INFO ]   K->C  sEA ImgBlobTransfer 1
+[2026-06-10 14:51:24] [INFO ]   C->K  sEN LIIsActive 1
+[2026-06-10 14:51:24] [INFO ]   K->C  sEA LIIsActive 1
+[2026-06-10 14:51:24] [INFO ]   C->K  sRN LIIsActive
+[2026-06-10 14:51:24] [INFO ]   K->C  sRA LIIsActive 0
+[2026-06-10 14:51:24] [INFO ]   C->K  sEN VIStatDisp 1
+[2026-06-10 14:51:24] [INFO ]   K->C  sEA VIStatDisp 1
+[2026-06-10 14:51:24] [INFO ]   C->K  sRN VIStatDisp
+[2026-06-10 14:51:24] [INFO ]   K->C  sRA VIStatDisp 0 0 0 00000000
+[2026-06-10 14:51:24] [INFO ]   C->K  sEN VITmeStatDisp 1
+[2026-06-10 14:51:24] [INFO ]   K->C  sEA VITmeStatDisp 1
+[2026-06-10 14:51:24] [INFO ]   C->K  sRN VITmeStatDisp
+[2026-06-10 14:51:24] [INFO ]   K->C  sRA VITmeStatDisp 0
+[2026-06-10 14:51:24] [INFO ]   C->K  sMN mDIGetEffImgSize
+[2026-06-10 14:51:24] [INFO ]   K->C  sAN mDIGetEffImgSize 800 440
+[2026-06-10 14:51:24] [INFO ] Effektiv rasm o'lchami: sAN mDIGetEffImgSize 800 440
+[2026-06-10 14:51:24] [INFO ] Blob -> 10.123.86.42:2113
+[2026-06-10 14:51:24] [INFO ] Kamera tayyor (BLOB: 16MB buf, blocking + 2s SO_RCVTIMEO).
+[2026-06-10 14:51:24] [INFO ] Live streaming boshlanyapti (mLIStart 0)...
+[2026-06-10 14:51:24] [INFO ]   C->K  sMN mLIStart 0
+[2026-06-10 14:51:24] [INFO ]   K->C  sAN mLIStart 0
+[2026-06-10 14:51:24] [INFO ] mLIStart javob: sAN mLIStart 0
+[2026-06-10 14:51:26] [INFO ] OCR worker ishga tushdi (EasyOCR, fon navbat, beamsearch).
+[2026-06-10 14:51:26] [INFO ] Dataset auto-collection yoqildi -> C:\Users\II4028\Documents\Projects\AI_CAM\dataset\collected_raw (conf>0.4)
+[2026-06-10 14:51:26] [INFO ] AI ishlov berish yoqildi (YOLO + OCR + dataset yig'ish).
+[2026-06-10 14:51:34] [INFO ] EasyOCR modeli yuklanmoqda... (birinchi marta sekin).
+[2026-06-10 14:51:35] [INFO ] Dataset saqlandi #1: vin_capture_20260610_145135.jpg (+1 box)
+[2026-06-10 14:51:36] [INFO ] Dataset saqlandi #2: vin_capture_20260610_145136.jpg (+1 box)
+[2026-06-10 14:51:37] [INFO ] EasyOCR tayyor (gpu=False, decoder=beamsearch).
+[2026-06-10 14:51:37] [INFO ] Dataset saqlandi #3: vin_capture_20260610_145137.jpg (+1 box)
+[2026-06-10 14:51:40] [INFO ] VIN aniqlandi: NSTFBSTAETJ039364 (conf=0.55, 3444 ms)
+[2026-06-10 14:51:40] [INFO ] DB ga yozildi #19: VIN=NSTFBSTAETJ039364 conf=0.55
+[2026-06-10 14:51:43] [INFO ] OCR: yaroqli VIN topilmadi ('NSTFBSTAETJ09564', 3371 ms).
+[2026-06-10 14:51:47] [INFO ] VIN aniqlandi: NSTFBST4ETJ039364 (conf=0.60, 3311 ms)
+[2026-06-10 14:51:47] [INFO ] DB ga yozildi #20: VIN=NSTFBST4ETJ039364 conf=0.60
+[2026-06-10 14:51:50] [INFO ] DUPLICATE: 'NSTFBST4ETJ039364' yaqinda o'qilgan — e'tiborsiz qoldirildi.
+[2026-06-10 14:51:53] [INFO ] OCR: ishonch past (0.37<0.45) — 'NSTFBST4ETJ039364' rad etildi.
+[2026-06-10 14:51:56] [INFO ] VIN aniqlandi: NSTFPS14ETJ039364 (conf=0.62, 3219 ms)
+[2026-06-10 14:51:56] [INFO ] DB ga yozildi #21: VIN=NSTFPS14ETJ039364 conf=0.62
+[2026-06-10 14:52:00] [INFO ] OCR: ishonch past (0.41<0.45) — 'NSTFPS1AETJ039364' rad etildi.
+[2026-06-10 14:52:03] [INFO ] DUPLICATE: 'NSTFPS14ETJ039364' yaqinda o'qilgan — e'tiborsiz qoldirildi.
+[2026-06-10 14:52:06] [INFO ] DUPLICATE: 'NSTFPS14ETJ039364' yaqinda o'qilgan — e'tiborsiz qoldirildi.
+[2026-06-10 14:52:10] [INFO ] DUPLICATE: 'NSTFPS14ETJ039364' yaqinda o'qilgan — e'tiborsiz qoldirildi.
+[2026-06-10 14:52:13] [INFO ] OCR: ishonch past (0.38<0.45) — 'NSTFPBT4ETJ039364' rad etildi.
+[2026-06-10 14:52:16] [INFO ] VIN aniqlandi: NSTFPB14ETJ039364 (conf=0.53, 2968 ms)
+[2026-06-10 14:52:16] [INFO ] DB ga yozildi #22: VIN=NSTFPB14ETJ039364 conf=0.53
+[2026-06-10 14:52:20] [INFO ] VIN aniqlandi: NSTFPS1AETJ039364 (conf=0.49, 3599 ms)
+[2026-06-10 14:52:20] [INFO ] DB ga yozildi #23: VIN=NSTFPS1AETJ039364 conf=0.49
+[2026-06-10 14:52:23] [INFO ] VIN aniqlandi: NSTFPBTAETJ039364 (conf=0.50, 2418 ms)
+[2026-06-10 14:52:23] [INFO ] DB ga yozildi #24: VIN=NSTFPBTAETJ039364 conf=0.50
+[2026-06-10 14:52:25] [INFO ] OCR: yaroqli VIN topilmadi ('NCT14FT1039764', 2137 ms).
+[2026-06-10 14:52:30] [INFO ] OCR worker to'xtatildi.
+[2026-06-10 14:52:30] [INFO ] Dataset auto-collection to'xtatildi (jami saqlangan: 3).
+[2026-06-10 14:52:30] [INFO ] AI ishlov berish o'chirildi (xom video davom etadi).
+[2026-06-10 14:52:31] [INFO ]   C->K  sMN mLIStop
+[2026-06-10 14:52:31] [INFO ]   K->C  sAN mLIStop
+[2026-06-10 14:52:31] [INFO ] mLIStop javob: sAN mLIStop
+[2026-06-10 14:52:31] [INFO ]   C->K  sEN VITmeStatDisp 0
+[2026-06-10 14:52:31] [INFO ]   K->C  sEA VITmeStatDisp 0
+[2026-06-10 14:52:31] [INFO ]   C->K  sEN VIStatDisp 0
+[2026-06-10 14:52:31] [INFO ]   K->C  sEA VIStatDisp 0
+[2026-06-10 14:52:31] [INFO ]   C->K  sEN LIIsActive 0
+[2026-06-10 14:52:31] [INFO ]   K->C  sEA LIIsActive 0
+[2026-06-10 14:52:31] [INFO ]   C->K  sEN ImgBlobTransfer 0
+[2026-06-10 14:52:31] [INFO ]   K->C  sEA ImgBlobTransfer 0
+[2026-06-10 14:52:31] [INFO ]   C->K  sEN DemoModeState 0
+[2026-06-10 14:52:31] [INFO ]   K->C  sEA DemoModeState 0
+[2026-06-10 14:52:31] [INFO ] Ulanish yopildi.
+[2026-06-10 14:52:31] [INFO ] Kamera uzildi.
+[2026-06-10 14:52:32] [INFO ] Kamera IP: 10.123.86.42 (CoLa 2111, BLOB 2113)
+[2026-06-10 14:52:32] [INFO ] Control -> 10.123.86.42:2111 (urinish 1/3)
+[2026-06-10 14:52:32] [INFO ]   C->K  sMN CheckPassword 3 A89A6E74
+[2026-06-10 14:52:32] [INFO ]   K->C  sAN CheckPassword 1
+[2026-06-10 14:52:32] [INFO ]   C->K  sRN DeviceIdent
+[2026-06-10 14:52:32] [INFO ]   K->C  sRA DeviceIdent 17 LECTOR652 Dynamic Focus 9 4.4.0.33R
+[2026-06-10 14:52:32] [INFO ]   C->K  sEN DemoModeState 1
+[2026-06-10 14:52:32] [INFO ]   K->C  sEA DemoModeState 1
+[2026-06-10 14:52:32] [INFO ]   C->K  sRN DemoModeState
+[2026-06-10 14:52:32] [INFO ]   K->C  sRA DemoModeState 0
+[2026-06-10 14:52:32] [INFO ]   C->K  sMN GetBlobClientConfig
+[2026-06-10 14:52:32] [INFO ]   K->C  sAN GetBlobClientConfig 3 TCP C 10.123.86.42 7 0.0.0.0 841 0 0 1 400
+[2026-06-10 14:52:32] [INFO ]   C->K  sEN ImgBlobTransfer 1
+[2026-06-10 14:52:32] [INFO ]   K->C  sEA ImgBlobTransfer 1
+[2026-06-10 14:52:32] [INFO ]   C->K  sEN LIIsActive 1
+[2026-06-10 14:52:32] [INFO ]   K->C  sEA LIIsActive 1
+[2026-06-10 14:52:32] [INFO ]   C->K  sRN LIIsActive
+[2026-06-10 14:52:32] [INFO ]   K->C  sRA LIIsActive 0
+[2026-06-10 14:52:32] [INFO ]   C->K  sEN VIStatDisp 1
+[2026-06-10 14:52:32] [INFO ]   K->C  sEA VIStatDisp 1
+[2026-06-10 14:52:32] [INFO ]   C->K  sRN VIStatDisp
+[2026-06-10 14:52:32] [INFO ]   K->C  sRA VIStatDisp 0 0 0 00000000
+[2026-06-10 14:52:32] [INFO ]   C->K  sEN VITmeStatDisp 1
+[2026-06-10 14:52:32] [INFO ]   K->C  sEA VITmeStatDisp 1
+[2026-06-10 14:52:32] [INFO ]   C->K  sRN VITmeStatDisp
+[2026-06-10 14:52:32] [INFO ]   K->C  sRA VITmeStatDisp 0
+[2026-06-10 14:52:32] [INFO ]   C->K  sMN mDIGetEffImgSize
+[2026-06-10 14:52:32] [INFO ]   K->C  sAN mDIGetEffImgSize 800 440
+[2026-06-10 14:52:32] [INFO ] Effektiv rasm o'lchami: sAN mDIGetEffImgSize 800 440
+[2026-06-10 14:52:32] [INFO ] Blob -> 10.123.86.42:2113
+[2026-06-10 14:52:32] [INFO ] Kamera tayyor (BLOB: 16MB buf, blocking + 2s SO_RCVTIMEO).
+[2026-06-10 14:52:32] [INFO ] Live streaming boshlanyapti (mLIStart 0)...
+[2026-06-10 14:52:32] [INFO ]   C->K  sMN mLIStart 0
+[2026-06-10 14:52:32] [INFO ]   K->C  sAN mLIStart 0
+[2026-06-10 14:52:32] [INFO ] mLIStart javob: sAN mLIStart 0
+[2026-06-10 14:54:16] [INFO ] Kamera allaqachon ulangan.
+[2026-06-10 14:54:21] [INFO ] OCR worker ishga tushdi (EasyOCR, fon navbat, beamsearch).
+[2026-06-10 14:54:21] [INFO ] Dataset auto-collection yoqildi -> C:\Users\II4028\Documents\Projects\AI_CAM\dataset\collected_raw (conf>0.4)
+[2026-06-10 14:54:21] [INFO ] AI ishlov berish yoqildi (YOLO + OCR + dataset yig'ish).
+[2026-06-10 14:54:32] [INFO ] OCR worker to'xtatildi.
+[2026-06-10 14:54:32] [INFO ] Dataset auto-collection to'xtatildi (jami saqlangan: 3).
+[2026-06-10 14:54:32] [INFO ] AI ishlov berish o'chirildi (xom video davom etadi).
+[2026-06-10 14:54:37] [INFO ] OCR worker ishga tushdi (EasyOCR, fon navbat, beamsearch).
+[2026-06-10 14:54:37] [INFO ] Dataset auto-collection yoqildi -> C:\Users\II4028\Documents\Projects\AI_CAM\dataset\collected_raw (conf>0.4)
+[2026-06-10 14:54:37] [INFO ] AI ishlov berish yoqildi (YOLO + OCR + dataset yig'ish).
+[2026-06-10 14:55:12] [INFO ] Dataset saqlandi #4: vin_capture_20260610_145512.jpg (+1 box)
+[2026-06-10 14:55:14] [INFO ] Dataset saqlandi #5: vin_capture_20260610_145513.jpg (+1 box)
+[2026-06-10 14:55:15] [INFO ] Dataset saqlandi #6: vin_capture_20260610_145515.jpg (+1 box)
+[2026-06-10 14:55:15] [INFO ] OCR: yaroqli VIN topilmadi ('', 2504 ms).
+[2026-06-10 14:55:16] [INFO ] Dataset saqlandi #7: vin_capture_20260610_145516.jpg (+1 box)
+[2026-06-10 14:55:17] [INFO ] Dataset saqlandi #8: vin_capture_20260610_145517.jpg (+1 box)
+[2026-06-10 14:55:18] [INFO ] OCR: yaroqli VIN topilmadi ('', 2655 ms).
+[2026-06-10 14:55:19] [INFO ] Dataset saqlandi #9: vin_capture_20260610_145518.jpg (+1 box)
+[2026-06-10 14:55:21] [INFO ] OCR: yaroqli VIN topilmadi ('', 3210 ms).
+[2026-06-10 14:55:24] [INFO ] OCR: yaroqli VIN topilmadi ('', 3134 ms).
+[2026-06-10 14:55:27] [INFO ] OCR: yaroqli VIN topilmadi ('', 3045 ms).
+[2026-06-10 14:55:30] [INFO ] OCR: yaroqli VIN topilmadi ('', 3441 ms).
+[2026-06-10 14:55:34] [INFO ] OCR: yaroqli VIN topilmadi ('', 3199 ms).
+[2026-06-10 14:55:37] [INFO ] OCR: yaroqli VIN topilmadi ('', 3106 ms).
+[2026-06-10 14:55:40] [INFO ] OCR: yaroqli VIN topilmadi ('', 3166 ms).
+[2026-06-10 14:55:43] [INFO ] OCR: yaroqli VIN topilmadi ('', 3213 ms).
+[2026-06-10 14:55:47] [INFO ] OCR: yaroqli VIN topilmadi ('', 3441 ms).
+[2026-06-10 14:55:50] [INFO ] OCR: yaroqli VIN topilmadi ('', 3342 ms).
+[2026-06-10 14:55:53] [INFO ] OCR: ishonch past (0.39<0.45) — 'NSTFP814ETJ039S6S' rad etildi.
+[2026-06-10 14:55:56] [INFO ] OCR: yaroqli VIN topilmadi ('', 3330 ms).
+[2026-06-10 14:55:59] [INFO ] VIN aniqlandi: NSTFP814ETJ039SGS (conf=0.46, 2934 ms)
+[2026-06-10 14:55:59] [INFO ] DB ga yozildi #25: VIN=NSTFP814ETJ039SGS conf=0.46
+[2026-06-10 14:56:03] [INFO ] OCR: ishonch past (0.39<0.45) — 'NSTFPST4ETJ039565' rad etildi.
+[2026-06-10 14:56:06] [INFO ] VIN aniqlandi: NSTFB814ETJ039365 (conf=0.55, 3432 ms)
+[2026-06-10 14:56:06] [INFO ] DB ga yozildi #26: VIN=NSTFB814ETJ039365 conf=0.55
+[2026-06-10 14:56:09] [INFO ] VIN aniqlandi: NSTFP814ETJ039365 (conf=0.66, 3282 ms)
+[2026-06-10 14:56:09] [INFO ] DB ga yozildi #27: VIN=NSTFP814ETJ039365 conf=0.66
+[2026-06-10 14:56:13] [INFO ] VIN aniqlandi: NSTFR814ETJ039365 (conf=0.60, 3342 ms)
+[2026-06-10 14:56:13] [INFO ] DB ga yozildi #28: VIN=NSTFR814ETJ039365 conf=0.60
+[2026-06-10 14:56:15] [INFO ] VIN aniqlandi: NSTFB814ETJ039365 (conf=0.71, 2631 ms)
+[2026-06-10 14:56:15] [INFO ] DB ga yozildi #29: VIN=NSTFB814ETJ039365 conf=0.71
+[2026-06-10 14:56:18] [INFO ] OCR: ishonch past (0.33<0.45) — 'NSTFP8TAETJ059365' rad etildi.
+[2026-06-10 14:56:43] [INFO ] Dataset saqlandi #10: vin_capture_20260610_145643.jpg (+1 box)
+[2026-06-10 14:57:16] [INFO ] Dataset saqlandi #11: vin_capture_20260610_145716.jpg (+1 box)
+[2026-06-10 14:57:52] [INFO ] OCR worker to'xtatildi.
+[2026-06-10 14:57:52] [INFO ] Dataset auto-collection to'xtatildi (jami saqlangan: 11).
+[2026-06-10 14:57:52] [INFO ] AI ishlov berish o'chirildi (xom video davom etadi).
+[2026-06-10 14:57:53] [INFO ]   C->K  sMN mLIStop
+[2026-06-10 14:57:53] [INFO ]   K->C  sAN mLIStop
+[2026-06-10 14:57:53] [INFO ] mLIStop javob: sAN mLIStop
+[2026-06-10 14:57:53] [INFO ]   C->K  sEN VITmeStatDisp 0
+[2026-06-10 14:57:53] [INFO ]   K->C  sEA VITmeStatDisp 0
+[2026-06-10 14:57:53] [INFO ]   C->K  sEN VIStatDisp 0
+[2026-06-10 14:57:53] [INFO ]   K->C  sEA VIStatDisp 0
+[2026-06-10 14:57:53] [INFO ]   C->K  sEN LIIsActive 0
+[2026-06-10 14:57:53] [INFO ]   K->C  sEA LIIsActive 0
+[2026-06-10 14:57:53] [INFO ]   C->K  sEN ImgBlobTransfer 0
+[2026-06-10 14:57:53] [INFO ]   K->C  sEA ImgBlobTransfer 0
+[2026-06-10 14:57:53] [INFO ]   C->K  sEN DemoModeState 0
+[2026-06-10 14:57:53] [INFO ]   K->C  sEA DemoModeState 0
+[2026-06-10 14:57:53] [INFO ] Ulanish yopildi.
+[2026-06-10 14:57:53] [INFO ] Kamera uzildi.
+[2026-06-10 15:14:42] [INFO ] Kamera IP: 10.123.86.42 (CoLa 2111, BLOB 2113)
+[2026-06-10 15:14:42] [INFO ] Control -> 10.123.86.42:2111 (urinish 1/3)
+[2026-06-10 15:14:42] [INFO ]   C->K  sMN CheckPassword 3 A89A6E74
+[2026-06-10 15:14:42] [INFO ]   K->C  sAN CheckPassword 1
+[2026-06-10 15:14:42] [INFO ]   C->K  sRN DeviceIdent
+[2026-06-10 15:14:42] [INFO ]   K->C  sRA DeviceIdent 17 LECTOR652 Dynamic Focus 9 4.4.0.33R
+[2026-06-10 15:14:42] [INFO ]   C->K  sEN DemoModeState 1
+[2026-06-10 15:14:42] [INFO ]   K->C  sEA DemoModeState 1
+[2026-06-10 15:14:42] [INFO ]   C->K  sRN DemoModeState
+[2026-06-10 15:14:42] [INFO ]   K->C  sRA DemoModeState 0
+[2026-06-10 15:14:42] [INFO ]   C->K  sMN GetBlobClientConfig
+[2026-06-10 15:14:42] [INFO ]   K->C  sAN GetBlobClientConfig 3 TCP C 10.123.86.42 7 0.0.0.0 841 0 0 1 400
+[2026-06-10 15:14:42] [INFO ]   C->K  sEN ImgBlobTransfer 1
+[2026-06-10 15:14:42] [INFO ]   K->C  sEA ImgBlobTransfer 1
+[2026-06-10 15:14:42] [INFO ]   C->K  sEN LIIsActive 1
+[2026-06-10 15:14:42] [INFO ]   K->C  sEA LIIsActive 1
+[2026-06-10 15:14:42] [INFO ]   C->K  sRN LIIsActive
+[2026-06-10 15:14:42] [INFO ]   K->C  sRA LIIsActive 0
+[2026-06-10 15:14:42] [INFO ]   C->K  sEN VIStatDisp 1
+[2026-06-10 15:14:42] [INFO ]   K->C  sEA VIStatDisp 1
+[2026-06-10 15:14:42] [INFO ]   C->K  sRN VIStatDisp
+[2026-06-10 15:14:42] [INFO ]   K->C  sRA VIStatDisp 0 0 0 00000000
+[2026-06-10 15:14:42] [INFO ]   C->K  sEN VITmeStatDisp 1
+[2026-06-10 15:14:42] [INFO ]   K->C  sEA VITmeStatDisp 1
+[2026-06-10 15:14:42] [INFO ]   C->K  sRN VITmeStatDisp
+[2026-06-10 15:14:42] [INFO ]   K->C  sRA VITmeStatDisp 0
+[2026-06-10 15:14:42] [INFO ]   C->K  sMN mDIGetEffImgSize
+[2026-06-10 15:14:42] [INFO ]   K->C  sAN mDIGetEffImgSize 800 440
+[2026-06-10 15:14:42] [INFO ] Effektiv rasm o'lchami: sAN mDIGetEffImgSize 800 440
+[2026-06-10 15:14:42] [INFO ] Blob -> 10.123.86.42:2113
+[2026-06-10 15:14:42] [INFO ] Kamera tayyor (BLOB: 16MB buf, blocking + 2s SO_RCVTIMEO).
+[2026-06-10 15:14:42] [INFO ] Live streaming boshlanyapti (mLIStart 0)...
+[2026-06-10 15:14:42] [INFO ]   C->K  sMN mLIStart 0
+[2026-06-10 15:14:42] [INFO ]   K->C  sAN mLIStart 0
+[2026-06-10 15:14:42] [INFO ] mLIStart javob: sAN mLIStart 0
+[2026-06-10 15:14:43] [INFO ] OCR worker ishga tushdi (EasyOCR, fon navbat, beamsearch).
+[2026-06-10 15:14:43] [INFO ] Dataset auto-collection yoqildi -> C:\Users\II4028\Documents\Projects\AI_CAM\dataset\collected_raw (conf>0.4)
+[2026-06-10 15:14:43] [INFO ] AI ishlov berish yoqildi (YOLO + OCR + dataset yig'ish).
+[2026-06-10 15:14:51] [INFO ] Dataset saqlandi #12: vin_capture_20260610_151451.jpg (+1 box)
+[2026-06-10 15:14:52] [INFO ] Dataset saqlandi #13: vin_capture_20260610_151452.jpg (+1 box)
+[2026-06-10 15:14:53] [INFO ] OCR: yaroqli VIN topilmadi ('NSA581411', 1888 ms).
+[2026-06-10 15:14:53] [INFO ] Dataset saqlandi #14: vin_capture_20260610_151453.jpg (+1 box)
+[2026-06-10 15:14:54] [INFO ] Dataset saqlandi #15: vin_capture_20260610_151454.jpg (+1 box)
+[2026-06-10 15:14:55] [INFO ] Dataset saqlandi #16: vin_capture_20260610_151455.jpg (+1 box)
+[2026-06-10 15:14:55] [INFO ] OCR: ishonch past (0.31<0.45) — 'NSTFP814ETJ039570' rad etildi.
+[2026-06-10 15:14:58] [INFO ] Kamera allaqachon ulangan.
+[2026-06-10 15:14:58] [INFO ] VIN aniqlandi: NSTFE814E7J039570 (conf=0.47, 2737 ms)
+[2026-06-10 15:14:58] [INFO ] DB ga yozildi #30: VIN=NSTFE814E7J039570 conf=0.47
+[2026-06-10 15:15:01] [INFO ] OCR: ishonch past (0.40<0.45) — 'NSTFP814ETJ039570' rad etildi.
+[2026-06-10 15:15:04] [INFO ] VIN aniqlandi: NSTFE814ETJ039570 (conf=0.56, 2955 ms)
+[2026-06-10 15:15:04] [INFO ] DB ga yozildi #31: VIN=NSTFE814ETJ039570 conf=0.56
+[2026-06-10 15:15:07] [INFO ] OCR: ishonch past (0.36<0.45) — 'NSTFP814E1J039570' rad etildi.
+[2026-06-10 15:15:10] [INFO ] VIN aniqlandi: NSTFP814ETJ039570 (conf=0.63, 3005 ms)
+[2026-06-10 15:15:10] [INFO ] DB ga yozildi #32: VIN=NSTFP814ETJ039570 conf=0.63
+[2026-06-10 15:15:13] [INFO ] OCR: ishonch past (0.43<0.45) — 'NSTFPST4ETJ039570' rad etildi.
+[2026-06-10 15:15:16] [INFO ] VIN aniqlandi: NSTFP814LTJ039570 (conf=0.47, 3101 ms)
+[2026-06-10 15:15:16] [INFO ] DB ga yozildi #33: VIN=NSTFP814LTJ039570 conf=0.47
+[2026-06-10 15:15:19] [INFO ] VIN aniqlandi: NSTFP814ETJ039570 (conf=0.50, 2997 ms)
+[2026-06-10 15:15:19] [INFO ] DB ga yozildi #34: VIN=NSTFP814ETJ039570 conf=0.50
+[2026-06-10 15:15:22] [INFO ] VIN aniqlandi: NSTFP814LTJ039570 (conf=0.45, 2816 ms)
+[2026-06-10 15:15:22] [INFO ] DB ga yozildi #35: VIN=NSTFP814LTJ039570 conf=0.45
+[2026-06-10 15:15:25] [INFO ] VIN aniqlandi: NSTFP814ETJ039570 (conf=0.57, 3542 ms)
+[2026-06-10 15:15:25] [INFO ] DB ga yozildi #36: VIN=NSTFP814ETJ039570 conf=0.57
+[2026-06-10 15:15:29] [INFO ] VIN aniqlandi: NSTFB814ETJ039370 (conf=0.77, 3190 ms)
+[2026-06-10 15:15:29] [INFO ] DB ga yozildi #37: VIN=NSTFB814ETJ039370 conf=0.77
+[2026-06-10 15:15:32] [INFO ] DUPLICATE: 'NSTFB814ETJ039370' yaqinda o'qilgan — e'tiborsiz qoldirildi.
+[2026-06-10 15:15:35] [INFO ] OCR: ishonch past (0.33<0.45) — 'NSTFBS14ETJ039370' rad etildi.
+[2026-06-10 15:15:38] [INFO ] VIN aniqlandi: NSTFBS14ETJ039370 (conf=0.56, 2927 ms)
+[2026-06-10 15:15:38] [INFO ] DB ga yozildi #38: VIN=NSTFBS14ETJ039370 conf=0.56
+[2026-06-10 15:15:41] [INFO ] DUPLICATE: 'NSTFBS14ETJ039370' yaqinda o'qilgan — e'tiborsiz qoldirildi.
+[2026-06-10 15:15:44] [INFO ] DUPLICATE: 'NSTFBS14ETJ039370' yaqinda o'qilgan — e'tiborsiz qoldirildi.
+[2026-06-10 15:15:47] [INFO ] DUPLICATE: 'NSTFBS14ETJ039370' yaqinda o'qilgan — e'tiborsiz qoldirildi.
+[2026-06-10 15:15:49] [INFO ] DUPLICATE: 'NSTFBS14ETJ039370' yaqinda o'qilgan — e'tiborsiz qoldirildi.
+[2026-06-10 15:15:51] [INFO ] VIN aniqlandi: NGTFP814FTJ039370 (conf=0.57, 1906 ms)
+[2026-06-10 15:15:51] [INFO ] DB ga yozildi #39: VIN=NGTFP814FTJ039370 conf=0.57
+[2026-06-10 15:15:52] [INFO ] OCR: yaroqli VIN topilmadi ('', 1284 ms).

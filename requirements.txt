@@ -1,0 +1,47 @@
+# ============================================================
+# AI_CAM - Industrial VIN detection & OCR system
+# Target: Python 3.11 (Windows). Pinned to the versions verified on this machine.
+#   py -3.11 -m venv .venv
+#   .\.venv\Scripts\Activate.ps1
+#   python -m pip install --upgrade pip
+#   pip install -r requirements.txt
+# ============================================================
+
+# --- Web backend ---
+fastapi==0.111.0
+uvicorn[standard]==0.30.1
+jinja2==3.1.4
+python-multipart==0.0.9
+
+# --- Deep learning ---
+# Pinned to the build already installed & working here. ultralytics 8.2.58
+# predates PyTorch's weights_only=True default (torch>=2.6), so backend/ai/detector.py
+# applies a weights_only shim to load best.pt. (Alternatively: upgrade to
+# `ultralytics>=8.3.0` for a native fix.)
+torch==2.12.0
+torchvision==0.27.0
+
+# --- Computer Vision / AI ---
+ultralytics==8.2.58          # YOLOv8 (best.pt) — loaded via weights_only shim
+opencv-python==4.10.0.84     # rasmga ishlov berish, MJPEG kodlash
+easyocr==1.7.2               # dot-peen VIN uchun tanlangan OCR
+Pillow==10.4.0
+
+# numpy MUST stay on the 1.x line: opencv, torch and easyocr are built against
+# numpy 1.x — numpy 2.x causes ABI/runtime errors.
+numpy==1.26.4
+
+# --- Export ---
+openpyxl==3.1.5              # Excel (.xlsx) eksport
+
+# ------------------------------------------------------------
+# DUPLICATE OPENCV FIX (run once after install):
+# easyocr pulls in 'opencv-python-headless', which can coexist with
+# 'opencv-python' at a DIFFERENT version and cause cv2 conflicts.
+# Keep only the full build:
+#   pip uninstall -y opencv-python-headless
+#   pip install --force-reinstall opencv-python==4.10.0.84
+#
+# GPU (optional): NVIDIA + CUDA -> install CUDA torch build from pytorch.org,
+# then set DETECTION.device="cuda:0" and OCR.use_gpu=True in backend/config.py.
+# ------------------------------------------------------------
