@@ -37,16 +37,29 @@ class PlateDetector:
         self._load_model()
 
     def _resolve_device(self) -> str:
-        """So'ralgan device ni tekshiradi; CUDA yo'q bo'lsa CPU ga qaytadi."""
-        dev = DETECTION.device
+        """
+        device ni aniqlaydi:
+          "auto"  -> NVIDIA GPU bo'lsa "cuda:0", aks holda "cpu"
+          "cuda*" -> CUDA mavjud bo'lmasa "cpu" ga qaytadi
+        """
+        dev = str(DETECTION.device).lower()
         try:
             import torch
-            if str(dev).startswith("cuda") and not torch.cuda.is_available():
-                log.warning("CUDA mavjud emas — CPU ishlatiladi.")
-                return "cpu"
+            cuda_ok = torch.cuda.is_available()
         except Exception:
             return "cpu"
-        return dev
+
+        if dev == "auto":
+            if cuda_ok:
+                log.info("device=auto -> CUDA (NVIDIA GPU) topildi: cuda:0")
+                return "cuda:0"
+            log.info("device=auto -> GPU topilmadi, CPU ishlatiladi.")
+            return "cpu"
+
+        if dev.startswith("cuda") and not cuda_ok:
+            log.warning("CUDA mavjud emas — CPU ishlatiladi.")
+            return "cpu"
+        return DETECTION.device
 
     @staticmethod
     def _make_torch_load_safe() -> None:

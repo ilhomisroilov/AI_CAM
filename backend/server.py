@@ -28,14 +28,15 @@ import ultralytics
 # PyTorch'ga YOLO modelini xavfsiz deb tanitish
 torch.serialization.add_safe_globals([ultralytics.nn.tasks.DetectionModel])
 
-from fastapi import FastAPI, Query
+from fastapi import FastAPI, Form, Query
 from fastapi.responses import (FileResponse, HTMLResponse, JSONResponse,
                                RedirectResponse, StreamingResponse)
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from starlette.requests import Request
 
-from .config import CROPS_DIR, SERVER
+from . import auth
+from .config import AUTH, CROPS_DIR, SERVER
 from .database import db
 from .logger import log, ui_handler
 from .pipeline import pipeline
@@ -55,6 +56,63 @@ templates = Jinja2Templates(directory=str(_FRONTEND / "templates"))
 def _startup() -> None:
     db.init_db()
     log.info("AI_CAM server ishga tushdi.")
+
+
+# ===================================================================
+# Autentifikatsiya — barcha sahifa/API uchun himoya darvozasi (middleware)
+# ===================================================================
+# Login talab QILINMAYDIGAN yo'llar (login sahifasi, statik fayllar)
+_PUBLIC_PATHS = {"/login", "/favicon.ico"}
+# Login bo'lmasa 401 (redirect emas) qaytariladigan API/oqim yo'llari
+_API_PREFIXES = ("/api", "/video_feed", "/crops")
+
+
+@app.middleware("http")
+async def auth_guard(request: Request, call_next):
+    path = request.url.path
+    if (not AUTH.enabled) or path in _PUBLIC_PATHS or path.startswith("/static"):
+        return await call_next(request)
+
+    token = request.cookies.get(AUTH.cookie_name)
+    if not auth.is_valid(token):
+        # API / video so'rovlari uchun 401, sahifalar uchun login ga yo'naltirish
+        if path.startswith(_API_PREFIXES):
+            return JSONResponse({"error": "unauthorized"}, status_code=401)
+        return RedirectResponse(url="/login", status_code=303)
+    return await call_next(request)
+
+
+@app.get("/login", response_class=HTMLResponse)
+def login_get(request: Request):
+    # Allaqachon login bo'lsa — to'g'ridan-to'g'ri dashboard ga
+    if auth.is_valid(request.cookies.get(AUTH.cookie_name)):
+        return RedirectResponse(url="/dashboard", status_code=303)
+    return templates.TemplateResponse(request=request, name="login.html",
+                                      context={"error": None})
+
+
+@app.post("/login")
+def login_post(request: Request,
+               username: str = Form(...), password: str = Form(...)):
+    if auth.check_credentials(username, password):
+        token = auth.create_session()
+        resp = RedirectResponse(url="/dashboard", status_code=303)
+        resp.set_cookie(AUTH.cookie_name, token, httponly=True,
+                        samesite="lax", max_age=AUTH.session_ttl_sec)
+        log.info(f"Login muvaffaqiyatli: {username}")
+        return resp
+    log.warning(f"Login muvaffaqiyatsiz urinish: {username}")
+    return templates.TemplateResponse(
+        request=request, name="login.html",
+        context={"error": "Login yoki parol noto'g'ri."}, status_code=401)
+
+
+@app.get("/logout")
+def logout(request: Request):
+    auth.destroy(request.cookies.get(AUTH.cookie_name))
+    resp = RedirectResponse(url="/login", status_code=303)
+    resp.delete_cookie(AUTH.cookie_name)
+    return resp
 
 
 # ===================================================================

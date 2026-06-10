@@ -72,6 +72,13 @@ class Pipeline:
         self.stats = {"frames": 0, "detections": 0, "vins": 0, "fps": 0.0}
         self._ts_buf: list[float] = []     # FPS hisoblash uchun
 
+        # --- Single-shot trigger holati (debounce / state-lock) ---
+        # Bitta plastinka kadrda bir necha kadr turganda OCR FAQAT BIR MARTA
+        # ishga tushadi. Plastinka kadrdan ketganda qulf bo'shaydi (re-arm).
+        self._plate_locked = False         # True -> bu plastinka allaqachon OCR ga yuborilgan
+        self._absent_frames = 0            # ketma-ket "plastinka yo'q" kadrlar soni
+        self._last_ocr_ts = -1e9           # oxirgi OCR trigger vaqti (birinchi trigger doim o'tadi)
+
     # ===============================================================
     # Kamera ulanish (Connect Camera tugmasi) — IP UI dan dinamik
     # ===============================================================
@@ -189,11 +196,9 @@ class Pipeline:
                         # Dataset auto-collection: ASL (kesilmagan) kadr + YOLO
                         # yorliqlar. Throttle + disk yozish fon threadda — FPS tushmaydi.
                         self.collector.maybe_collect(frame, dets)
-                        best = self.detector.best_detection(dets)
-                        if best is not None:
-                            roi = self.detector.crop_roi(frame, best)
-                            if roi is not None:
-                                self.ocr.submit(roi)
+
+                    # Single-shot trigger logikasi (debounce / state-lock)
+                    self._handle_trigger(frame, dets)
 
                 # MJPEG buffer — xom yoki annotatsiyalangan kadr
                 ok, buf = cv2.imencode(
@@ -233,6 +238,52 @@ class Pipeline:
             self.client.stop_stream()
         except Exception:
             pass
+
+    # ===============================================================
+    # Single-shot trigger (debounce / state-lock)
+    # ===============================================================
+    def _handle_trigger(self, frame: np.ndarray, dets: list) -> None:
+        """
+        Bitta plastinka hodisasi uchun OCR ni FAQAT BIR MARTA ishga tushiradi.
+
+        Mantiq (tracking state):
+          * plate_present = kadrda har qanday plastinka bor (>= conf_threshold).
+            -> hisoblagichni nollaydi; plastinka hali kadrda turibdi.
+          * high = ishonchi >= ocr_trigger_conf (0.95) bo'lgan eng yaxshi aniqlov.
+          * Faqat QULF OCHIQ va cooldown o'tgan bo'lsa -> OCR ga 1 marta yuboriladi,
+            so'ng QULF YOPILADI (keyingi kadrlarda qayta yuborilmaydi).
+          * Plastinka ocr_rearm_absent_frames kadr ko'rinmasa -> QULF OCHILADI
+            (keyingi avtomobil yangi hodisa sifatida qayta trigger bo'ladi).
+        """
+        plate_present = len(dets) > 0
+
+        if plate_present:
+            self._absent_frames = 0
+            if self._plate_locked:
+                return  # bu plastinka allaqachon ishlangan — keyingi kadrlarni o'tkazamiz
+
+            high = self.detector.best_detection(dets)   # conf >= 0.95
+            if high is None:
+                return  # yuqori ishonch yo'q — hali trigger qilmaymiz
+
+            now = time.monotonic()
+            if (now - self._last_ocr_ts) < DETECTION.ocr_cooldown_sec:
+                return  # cooldown — xavfsizlik kechikishi
+
+            roi = self.detector.crop_roi(frame, high)
+            if roi is None:
+                return
+            self.ocr.submit(roi)
+            self._plate_locked = True
+            self._last_ocr_ts = now
+            log.info(f"TRIGGER (single-shot): VIN plate conf={high[4]:.2f} >= "
+                     f"{DETECTION.ocr_trigger_conf:.2f} -> OCR (1 marta).")
+        else:
+            # Kadrda plastinka yo'q — ketganini tasdiqlash uchun sanaymiz
+            self._absent_frames += 1
+            if self._plate_locked and self._absent_frames >= DETECTION.ocr_rearm_absent_frames:
+                self._plate_locked = False
+                log.info("Plastinka kadrdan ketdi — trigger qayta yoqildi (re-arm).")
 
     def _tick_fps(self) -> None:
         now = time.monotonic()

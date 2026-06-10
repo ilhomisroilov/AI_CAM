@@ -60,12 +60,20 @@ class DetectionConfig:
     # O'qitilgan model: runs/detect/vin_plate_model/weights/best.pt
     model_path: str = str(TRAINED_MODEL_PATH)
     # Past chegara: dataset yig'ish uchun nomzod box'larni ham ko'rsatadi (>0.40).
-    conf_threshold: float = 0.40       # YOLO bazaviy aniqlash chegarasi
+    conf_threshold: float = 0.40       # YOLO bazaviy aniqlash chegarasi (dataset collect)
     iou_threshold: float = 0.45
-    # Shu ishonchdan yuqori bo'lsa OCR uchun trigger bo'ladi (sifat saqlanadi)
-    ocr_trigger_conf: float = 0.70
-    device: str = "cpu"                # "cpu" yoki "cuda:0"
+    # OCR FAQAT shu ishonchdan yuqorida ishga tushadi — talab bo'yicha 0.95 (95%)
+    ocr_trigger_conf: float = 0.95
+    # "auto" -> NVIDIA GPU bo'lsa cuda:0, aks holda cpu. Yoki "cuda:0"/"cpu".
+    device: str = "auto"
     crop_padding: int = 8              # ROI atrofiga qo'shimcha piksel
+
+    # --- Single-shot trigger (debounce / state-lock) ---
+    # Bitta plastinka kadrda bir necha kadr turishi mumkin — OCR FAQAT BIR MARTA
+    # ishga tushadi. Plastinka kadrdan ketib (shu qadar kadr ko'rinmay) qaytsa,
+    # yangi avtomobil sifatida qayta trigger bo'ladi.
+    ocr_rearm_absent_frames: int = 3   # plastinka shu qadar kadr ko'rinmasa qayta yoqiladi
+    ocr_cooldown_sec: float = 2.0      # ketma-ket triggerlar orasidagi minimal vaqt (xavfsizlik)
 
     # --- Avtomatik dataset yig'ish (Data Loop) ---
     collect_enabled: bool = True
@@ -78,7 +86,9 @@ class DetectionConfig:
 class OCRConfig:
     """EasyOCR sozlamalari (dot-peen VIN uchun, yuqori aniqlik + tezlik nazorati)."""
     languages: list = field(default_factory=lambda: ["en"])
-    use_gpu: bool = False
+    # True -> EasyOCR GPU (NVIDIA/CUDA) bilan ishlaydi. Ubuntu+NVIDIA serverda
+    # tavsiya etiladi. CUDA topilmasa avtomatik CPU ga qaytadi (xavfsiz).
+    use_gpu: bool = True
 
     # --- Preprocess (aniqlik uchun) ---
     apply_clahe: bool = True           # yengil CLAHE (kontrast)
@@ -119,11 +129,22 @@ class ServerConfig:
     jpeg_quality: int = 80             # MJPEG kodlash sifati
 
 
+@dataclass
+class AuthConfig:
+    """Yengil frontend autentifikatsiya (zavod ichki tarmog'i uchun)."""
+    enabled: bool = True
+    username: str = "admin"
+    password: str = "vin_factory2026"   # zavod standart paroli — kerak bo'lsa o'zgartiring
+    cookie_name: str = "ai_cam_session"
+    session_ttl_sec: int = 12 * 3600    # 12 soat — keyin qayta login
+
+
 # --- Global yagona nusxalar ---
 CAMERA = CameraConfig()
 DETECTION = DetectionConfig()
 OCR = OCRConfig()
 SERVER = ServerConfig()
+AUTH = AuthConfig()
 
 # VIN format qoidasi: 17 belgi, I/O/Q harflari yo'q
 VIN_LENGTH = 17

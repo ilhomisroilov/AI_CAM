@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI_CAM — Login</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <div class="login-wrap">
+    <form class="login-card" method="post" action="/login" autocomplete="off">
+      <div class="login-brand">
+        <span class="logo">AI</span>
+        <div>AI_CAM <small>VIN Vision MES</small></div>
+      </div>
+      <h2>Tizimga kirish</h2>
+
+      {% if error %}
+      <div class="login-error">{{ error }}</div>
+      {% endif %}
+
+      <label for="username">Foydalanuvchi nomi</label>
+      <input id="username" name="username" type="text" required autofocus
+             placeholder="admin" spellcheck="false">
+
+      <label for="password">Parol</label>
+      <input id="password" name="password" type="password" required
+             placeholder="••••••••">
+
+      <button type="submit" class="btn btn-accent login-btn">Kirish</button>
+      <p class="login-hint">Faqat vakolatli foydalanuvchilar uchun.</p>
+    </form>
+  </div>
+</body>
+</html>

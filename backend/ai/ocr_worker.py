@@ -44,19 +44,30 @@ ResultCallback = Callable[[str, float, np.ndarray], None]
 # VIN ruxsat etilgan belgilaridan EasyOCR allowlist (I/O/Q yo'q)
 _ALLOWLIST = "".join(sorted(VIN_ALLOWED))
 
+# Standart avtomobil VIN strukturasi: aniq 17 belgi, alfanumerik,
+# I, O, Q HARFLARI YO'Q (ISO 3779). Regex bilan qat'iy tekshiramiz.
+_VIN_RE = re.compile(r"^[A-HJ-NPR-Z0-9]{17}$")
+
 
 def normalize_vin(text: str) -> str:
-    """OCR matnini VIN ko'rinishiga keltiradi: katta harf, faqat A-Z0-9."""
+    """OCR matnini tozalaydi: bo'shliq/belgilarni olib tashlaydi, katta harf, A-Z0-9."""
     return re.sub(r"[^A-Z0-9]", "", text.upper())
 
 
+def verify_vin(text: str) -> Tuple[bool, str]:
+    """
+    Standart VIN tekshiruvi.
+      1. Bo'shliq va begona belgilarni tozalaydi (normalize).
+      2. Qat'iy regex: ^[A-HJ-NPR-Z0-9]{17}$ (17 belgi, I/O/Q yo'q).
+    Qaytadi: (ok, tozalangan_vin)
+    """
+    cleaned = normalize_vin(text)
+    return bool(_VIN_RE.match(cleaned)), cleaned
+
+
 def is_valid_vin(vin: str) -> bool:
-    """VIN qoidasi: aniq 17 belgi, I/O/Q yo'q, faqat ruxsat etilgan belgilar."""
-    if len(vin) != VIN_LENGTH:
-        return False
-    if any(c in VIN_INVALID_CHARS for c in vin):
-        return False
-    return all(c in VIN_ALLOWED for c in vin)
+    """Qat'iy VIN tekshiruvi (regex asosida)."""
+    return bool(_VIN_RE.match(normalize_vin(vin)))
 
 
 def _fragment_left_x(box) -> float:
@@ -172,14 +183,32 @@ class OCRWorker:
     # ===============================================================
     # EasyOCR Reader (lazy)
     # ===============================================================
+    @staticmethod
+    def _resolve_gpu() -> bool:
+        """
+        GPU so'ralgan bo'lsa, CUDA haqiqatan mavjudligini tekshiradi.
+        Ubuntu+NVIDIA serverda True; CUDA yo'q bo'lsa xavfsiz CPU ga qaytadi.
+        """
+        if not OCR.use_gpu:
+            return False
+        try:
+            import torch
+            if torch.cuda.is_available():
+                return True
+            log.warning("OCR.use_gpu=True, lekin CUDA topilmadi — EasyOCR CPU da ishlaydi.")
+            return False
+        except Exception:
+            return False
+
     def _ensure_reader(self) -> bool:
         if self._reader is not None:
             return True
         try:
             import easyocr
-            log.info("EasyOCR modeli yuklanmoqda... (birinchi marta sekin).")
-            self._reader = easyocr.Reader(OCR.languages, gpu=OCR.use_gpu)
-            log.info(f"EasyOCR tayyor (gpu={OCR.use_gpu}, decoder={OCR.decoder}).")
+            gpu = self._resolve_gpu()
+            log.info(f"EasyOCR modeli yuklanmoqda... (gpu={gpu}, birinchi marta sekin).")
+            self._reader = easyocr.Reader(OCR.languages, gpu=gpu)
+            log.info(f"EasyOCR tayyor (gpu={gpu}, decoder={OCR.decoder}).")
             return True
         except Exception as exc:
             log.error(f"EasyOCR yuklanmadi: {exc}")

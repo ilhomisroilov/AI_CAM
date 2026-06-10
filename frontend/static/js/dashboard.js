@@ -116,16 +116,44 @@
     } catch (e) { /* sukut */ }
   }
 
+  // Backend allaqachon ishlayotgan bo'lsa, sahifa qaytganda video qayta yoqilmasligi
+  // uchun holatni kuzatamiz (model QAYTA YUKLANMAYDI — u serverda doimiy).
+  let videoOn = false;
+
   // ---------- Status / stats ----------
   async function refreshStatus() {
     try {
       const r = await fetch("/api/status");
       const s = await r.json();
+      // Statistika
       $("statFrames").textContent = s.stats.frames;
       $("statDet").textContent = s.stats.detections;
       $("statVin").textContent = s.stats.vins;
       $("statYolo").textContent = s.yolo_ready ? "Ready" : "Not loaded";
+      // --- UI ni backend HOLATIGA moslash (navigatsiyadan keyin tiklash) ---
+      syncUi(s.camera_connected, s.processing);
     } catch (e) { /* sukut */ }
+  }
+
+  // Tugmalar/video holatini backend bilan moslaydi (state restore)
+  function syncUi(camConnected, processing) {
+    if (camConnected && !videoOn) {
+      videoFeed.src = "/video_feed?ts=" + Date.now();   // bir marta yoqamiz
+      videoPlaceholder.style.display = "none";
+      camDot.className = "status-dot on";
+      liveBadge.classList.add("on");
+      videoOn = true;
+    } else if (!camConnected && videoOn) {
+      videoFeed.src = "";
+      videoPlaceholder.style.display = "block";
+      camDot.className = "status-dot off";
+      liveBadge.classList.remove("on");
+      videoOn = false;
+    }
+    btnConnect.disabled = camConnected;
+    $("cameraIp").disabled = camConnected;
+    btnStart.disabled = (!camConnected) || processing;
+    btnStop.disabled = !processing;
   }
 
   setInterval(pollLogs, 1000);
