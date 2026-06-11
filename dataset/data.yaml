@@ -1,0 +1,6 @@
+path: C:\Users\II4028\Documents\Projects\AI_CAM\dataset
+train: images/train
+val: images/val
+
+names:
+  0: vin_plate
