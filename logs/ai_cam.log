@@ -917,3 +917,8 @@ Check the documentation of torch.load to learn more about types accepted by defa
 [2026-06-10 15:15:51] [INFO ] VIN aniqlandi: NGTFP814FTJ039370 (conf=0.57, 1906 ms)
 [2026-06-10 15:15:51] [INFO ] DB ga yozildi #39: VIN=NGTFP814FTJ039370 conf=0.57
 [2026-06-10 15:15:52] [INFO ] OCR: yaroqli VIN topilmadi ('', 1284 ms).
+[2026-06-11 09:40:30] [INFO ] torch.load weights_only=False ga sozlandi (Ultralytics mosligi).
+[2026-06-11 09:40:30] [INFO ] device=auto -> GPU topilmadi, CPU ishlatiladi.
+[2026-06-11 09:40:30] [INFO ] YOLO model yuklandi: C:\Users\II4028\Documents\Projects\AI_CAM\runs\detect\vin_plate_model\weights\best.pt (device=cpu)
+[2026-06-11 09:40:30] [INFO ] Ma'lumotlar bazasi tayyor: C:\Users\II4028\Documents\Projects\AI_CAM\data\ai_cam.db
+[2026-06-11 09:40:30] [INFO ] AI_CAM server ishga tushdi.

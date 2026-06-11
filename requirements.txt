@@ -27,12 +27,22 @@ opencv-python==4.10.0.84     # rasmga ishlov berish, MJPEG kodlash
 Pillow==10.4.0
 
 # --- OCR: PaddleOCR (EasyOCR dan ko'chirildi) ---
-# PaddleOCR engine + PaddlePaddle runtime. CPU build (default).
-paddleocr==2.7.3
-paddlepaddle==2.6.1          # CPU. GPU uchun pastdagi izohga qarang.
+# IKKALA paket ham kerak: paddlepaddle (runtime) + paddleocr (OCR kutubxonasi).
+# 2.x liniyasiga bog'langan — ocr_worker._PaddleEngine .ocr() API sini ishlatadi.
+# Aniq versiya o'rniga diapazon: turli platformalarda wheel topilmaslik muammosini
+# oldini oladi (3.x API boshqacha — uni ishlatmaymiz).
+paddlepaddle>=2.5,<3.0       # CPU runtime. GPU uchun pastdagi izohga qarang.
+paddleocr>=2.7,<3.0          # OCR kutubxonasi (PP-OCRv4)
+# paddleocr 2.10 import paytida 'albumentations' ni yuklaydi. Quyidagi JUFTLIK
+# bir-biriga mos bo'lishi SHART (aks holda: "cannot import name
+# 'preserve_channel_dim' from 'albucore.utils'"). albumentations 1.4.10 eski
+# albucore (0.0.13) bilan ishlaydi; ikkalasi ham wheel — kompilyatsiya YO'Q.
+albumentations==1.4.10
+albucore==0.0.13
 
 # numpy MUST stay on the 1.x line: opencv, torch, paddlepaddle are built against
-# numpy 1.x — numpy 2.x causes ABI/runtime errors.
+# numpy 1.x — numpy 2.x causes ABI/runtime errors. PaddleOCR o'rnatishda pip uni
+# 2.x ga ko'tarishga uriniladi — shu pin buni oldini oladi.
 numpy==1.26.4
 
 # --- Export ---
