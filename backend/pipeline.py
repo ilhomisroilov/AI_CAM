@@ -33,6 +33,7 @@ from typing import Optional
 import cv2
 import numpy as np
 
+from .ai.crop_quality import quality_score
 from .ai.detector import PlateDetector
 from .ai.dataset_collector import DatasetCollector
 from .ai.ocr_worker import OCRWorker
@@ -78,6 +79,9 @@ class Pipeline:
         self._plate_locked = False         # True -> bu plastinka allaqachon OCR ga yuborilgan
         self._absent_frames = 0            # ketma-ket "plastinka yo'q" kadrlar soni
         self._last_ocr_ts = -1e9           # oxirgi OCR trigger vaqti (birinchi trigger doim o'tadi)
+        # Multi-frame fusion buferi: bitta hodisa uchun (crop, sifat_balli) lar
+        self._event_buf: list = []
+        self._confirm = 0                  # ketma-ket yuqori-ishonch kadrlar soni
 
     # ===============================================================
     # Kamera ulanish (Connect Camera tugmasi) — IP UI dan dinamik
@@ -244,46 +248,63 @@ class Pipeline:
     # ===============================================================
     def _handle_trigger(self, frame: np.ndarray, dets: list) -> None:
         """
-        Bitta plastinka hodisasi uchun OCR ni FAQAT BIR MARTA ishga tushiradi.
+        Multi-frame fusion + 2-frame gating. OCR bitta plastinka hodisasi uchun
+        FAQAT BIR MARTA, eng yaxshi kadrlar to'plamida ishga tushadi.
 
-        Mantiq (tracking state):
-          * plate_present = kadrda har qanday plastinka bor (>= conf_threshold).
-            -> hisoblagichni nollaydi; plastinka hali kadrda turibdi.
-          * high = ishonchi >= ocr_trigger_conf (0.95) bo'lgan eng yaxshi aniqlov.
-          * Faqat QULF OCHIQ va cooldown o'tgan bo'lsa -> OCR ga 1 marta yuboriladi,
-            so'ng QULF YOPILADI (keyingi kadrlarda qayta yuborilmaydi).
-          * Plastinka ocr_rearm_absent_frames kadr ko'rinmasa -> QULF OCHILADI
-            (keyingi avtomobil yangi hodisa sifatida qayta trigger bo'ladi).
+        Mantiq:
+          * Plastinka yo'q (absent) -> rearm hisoblagich; yetarli bo'lsa hodisa
+            tugaydi (qulf ochiladi, bufer tozalanadi) -> keyingi avtomobil.
+          * Yuqori ishonch (>=0.95) kadr -> margin bilan crop, sifati baholanadi,
+            buferga (eng yaxshilari) yig'iladi; confirm hisoblagich oshadi.
+          * confirm >= ocr_confirm_frames VA eng yaxshi crop sifati yetarli VA
+            cooldown o'tgan bo'lsa -> top fusion_k crop OCR ga (ovoz berish)
+            yuboriladi, qulf YOPILADI.
         """
-        plate_present = len(dets) > 0
+        if len(dets) == 0:
+            # Kadrda plastinka yo'q — hodisa tugaganini tasdiqlash uchun sanaymiz
+            self._absent_frames += 1
+            if (self._plate_locked or self._confirm > 0) \
+                    and self._absent_frames >= DETECTION.ocr_rearm_absent_frames:
+                self._reset_event()
+                log.info("Plastinka kadrdan ketdi — hodisa yopildi (re-arm).")
+            return
 
-        if plate_present:
-            self._absent_frames = 0
-            if self._plate_locked:
-                return  # bu plastinka allaqachon ishlangan — keyingi kadrlarni o'tkazamiz
+        self._absent_frames = 0
+        if self._plate_locked:
+            return  # bu hodisa uchun OCR allaqachon yuborilgan
 
-            high = self.detector.best_detection(dets)   # conf >= 0.95
-            if high is None:
-                return  # yuqori ishonch yo'q — hali trigger qilmaymiz
+        high = self.detector.best_detection(dets)   # conf >= ocr_trigger_conf (0.95)
+        if high is None:
+            return  # plastinka bor, lekin yuqori ishonch yo'q — kutamiz
 
-            now = time.monotonic()
-            if (now - self._last_ocr_ts) < DETECTION.ocr_cooldown_sec:
-                return  # cooldown — xavfsizlik kechikishi
+        # Margin bilan crop -> sifat balli -> buferga (eng yaxshilarini saqlaymiz)
+        crop = self.detector.crop_with_margin(frame, high, DETECTION.ocr_crop_margin_frac)
+        if crop is None:
+            return
+        score, _metrics = quality_score(crop, high[4])
+        self._event_buf.append((crop, score))
+        self._event_buf.sort(key=lambda x: x[1], reverse=True)
+        del self._event_buf[DETECTION.event_buffer_max:]
+        self._confirm += 1
 
-            roi = self.detector.crop_roi(frame, high)
-            if roi is None:
-                return
-            self.ocr.submit(roi)
+        # Trigger sharti: yetarli tasdiq + sifat + cooldown
+        now = time.monotonic()
+        best_q = self._event_buf[0][1]
+        if (self._confirm >= DETECTION.ocr_confirm_frames
+                and best_q >= DETECTION.min_crop_quality
+                and (now - self._last_ocr_ts) >= DETECTION.ocr_cooldown_sec):
+            top = [c for c, _ in self._event_buf[:DETECTION.fusion_k]]
+            self.ocr.submit_frames(top)
             self._plate_locked = True
             self._last_ocr_ts = now
-            log.info(f"TRIGGER (single-shot): VIN plate conf={high[4]:.2f} >= "
-                     f"{DETECTION.ocr_trigger_conf:.2f} -> OCR (1 marta).")
-        else:
-            # Kadrda plastinka yo'q — ketganini tasdiqlash uchun sanaymiz
-            self._absent_frames += 1
-            if self._plate_locked and self._absent_frames >= DETECTION.ocr_rearm_absent_frames:
-                self._plate_locked = False
-                log.info("Plastinka kadrdan ketdi — trigger qayta yoqildi (re-arm).")
+            log.info(f"TRIGGER (fusion): {self._confirm} tasdiq kadr, best_q={best_q:.2f} "
+                     f"-> top-{len(top)} crop OCR ga yuborildi.")
+
+    def _reset_event(self) -> None:
+        """Plastinka hodisasini yopadi: qulfni ochadi, buferni tozalaydi (re-arm)."""
+        self._plate_locked = False
+        self._confirm = 0
+        self._event_buf = []
 
     def _tick_fps(self) -> None:
         now = time.monotonic()

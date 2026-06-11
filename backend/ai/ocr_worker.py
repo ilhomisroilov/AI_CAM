@@ -246,14 +246,22 @@ class OCRWorker:
     # Navbat (drop-oldest — FPS himoyasi)
     # ===============================================================
     def submit(self, crop_bgr: np.ndarray) -> None:
-        if not self._enabled:
+        """Bitta crop (orqaga moslik) — ko'p-kadrli ish sifatida o'raladi."""
+        self.submit_frames([crop_bgr])
+
+    def submit_frames(self, crops: list) -> None:
+        """
+        Bitta plastinka hodisasi uchun ENG YAXSHI croplar ro'yxati (multi-frame
+        fusion). OCR ularda ovoz berib yagona VIN chiqaradi.
+        """
+        if not self._enabled or not crops:
             return
         try:
-            self._queue.put_nowait(crop_bgr)
+            self._queue.put_nowait(crops)
         except queue.Full:
             try:
                 self._queue.get_nowait()         # eng eskini tashlaymiz
-                self._queue.put_nowait(crop_bgr)
+                self._queue.put_nowait(crops)
                 with self._stats_lock:
                     self._dropped += 1
             except queue.Empty:
@@ -298,18 +306,18 @@ class OCRWorker:
             return
         while self._running:
             try:
-                crop = self._queue.get(timeout=1.0)
+                job = self._queue.get(timeout=1.0)
             except queue.Empty:
                 continue
-            if crop is None:                     # stop sentinel
+            if job is None:                      # stop sentinel
                 break
             # Throttle: ketma-ket OCR orasidagi minimal vaqt
             if OCR.min_interval_sec > 0:
                 dt = time.monotonic() - self._last_run
                 if dt < OCR.min_interval_sec:
-                    continue                     # bu crop'ni o'tkazib yuboramiz (lag himoyasi)
+                    continue                     # bu ishni o'tkazib yuboramiz (lag himoyasi)
             self._last_run = time.monotonic()
-            self._process(crop)
+            self._process_job(job)
 
     # ===============================================================
     # Preprocess — aniqlik uchun (kattalashtirish + CLAHE + sharpen)
@@ -321,6 +329,11 @@ class OCRWorker:
         if OCR.upscale_height and gray.shape[0] < OCR.upscale_height:
             scale = OCR.upscale_height / float(gray.shape[0])
             gray = cv2.resize(gray, None, fx=scale, fy=scale, interpolation=cv2.INTER_CUBIC)
+
+        # Bilateral — chekkalarni saqlab shovqin/blurni kamaytiradi (etched metal)
+        if OCR.bilateral:
+            gray = cv2.bilateralFilter(gray, OCR.bilateral_d,
+                                       OCR.bilateral_sigma, OCR.bilateral_sigma)
 
         if OCR.apply_clahe:
             gray = self._clahe.apply(gray)
@@ -335,58 +348,128 @@ class OCRWorker:
     # ===============================================================
     # OCR
     # ===============================================================
-    def _read(self, img: np.ndarray) -> List[Tuple[list, str, float]]:
-        """PaddleOCR -> (box, text, conf) bo'laklar (EasyOCR bilan bir xil shakl)."""
-        return self._engine.read(img)
-
-    def _process(self, crop_bgr: np.ndarray) -> None:
-        t0 = time.perf_counter()
-        img = self._preprocess(crop_bgr)
-        try:
-            results = self._read(img)
-        except Exception as exc:
-            log.error(f"PaddleOCR xatosi: {exc}")
-            return
-
-        dt_ms = (time.perf_counter() - t0) * 1000.0
-
-        # Past-ishonchli bo'laklarni tashlab, CHAPDAN-O'NGGA tartiblaymiz
+    def _read_vin(self, crop: np.ndarray) -> Tuple[str, float]:
+        """Bitta crop/variantni OCR qiladi -> (vin, avg_conf). Yon ta'sirsiz."""
+        img = self._preprocess(crop)
+        results = self._engine.read(img)
         frags = [(box, txt, float(conf)) for (box, txt, conf) in results
                  if float(conf) >= OCR.min_char_confidence and txt.strip()]
         frags.sort(key=lambda r: _fragment_left_x(r[0]))
+        vin = normalize_vin("".join(f[1] for f in frags))
+        conf = float(np.mean([f[2] for f in frags])) if frags else 0.0
+        return vin, conf
 
-        combined = normalize_vin("".join(f[1] for f in frags))
-        avg_conf = float(np.mean([f[2] for f in frags])) if frags else 0.0
+    def _variants(self, crop: np.ndarray):
+        """Crop variantlari: asl -> deskew -> ±burilish (retry uchun)."""
+        yield crop
+        if not OCR.retry_enabled:
+            return
+        from .crop_quality import deskew, rotate
+        gray = cv2.cvtColor(crop, cv2.COLOR_BGR2GRAY) if crop.ndim == 3 else crop
+        yield deskew(gray)
+        for ang in OCR.retry_rotations:
+            yield rotate(gray, float(ang))
+
+    def _read_with_retry(self, crop: np.ndarray, budget: int) -> Tuple[str, float, int]:
+        """
+        Crop uchun variantlarni ketma-ket sinaydi (budget chegarasida).
+        Yaroqli VIN topilsa darhol qaytaradi; aks holda eng yuqori ishonchli
+        nomzodni qaytaradi. -> (vin, conf, used_attempts)
+        """
+        used = 0
+        best = ("", 0.0)
+        for var in self._variants(crop):
+            if used >= budget:
+                break
+            try:
+                vin, conf = self._read_vin(var)
+            except Exception as exc:
+                log.error(f"PaddleOCR xatosi: {exc}")
+                used += 1
+                continue
+            used += 1
+            if vin and conf > best[1]:
+                best = (vin, conf)
+            if is_valid_vin(vin):
+                return vin, conf, used
+        return best[0], best[1], used
+
+    @staticmethod
+    def _fuse(candidates: List[Tuple[str, float, np.ndarray]]) -> Tuple[str, float, np.ndarray]:
+        """
+        Ko'p kadr natijalarini birlashtirish: KO'PCHILIK OVOZI; tenglikda — eng
+        yuqori jami ishonch. Qaytadi: (vin, conf, eng_yaxshi_crop).
+        """
+        from collections import Counter
+        votes = Counter(v for v, _, _ in candidates)
+        top_count = max(votes.values())
+        tied = [v for v, c in votes.items() if c == top_count]
+        if len(tied) > 1:
+            winner = max(tied, key=lambda vv: sum(cf for v, cf, _ in candidates if v == vv))
+        else:
+            winner = tied[0]
+        entries = [(cf, cr) for v, cf, cr in candidates if v == winner]
+        conf, crop = max(entries, key=lambda e: e[0])
+        return winner, conf, crop
+
+    def _process_job(self, crops: list) -> None:
+        """
+        Bitta plastinka hodisasi: ENG YAXSHI croplarda OCR + retry + fusion.
+        OCR chaqiruvlari max_ocr_attempts bilan cheklangan (lag himoyasi).
+        """
+        t0 = time.perf_counter()
+        candidates: List[Tuple[str, float, np.ndarray]] = []
+        attempts = 0
+        last_read = ""
+        for crop in crops:
+            if attempts >= OCR.max_ocr_attempts:
+                break
+            budget = OCR.max_ocr_attempts - attempts
+            vin, conf, used = self._read_with_retry(crop, budget)
+            attempts += used
+            if vin:
+                last_read = vin
+            if vin and is_valid_vin(vin):
+                candidates.append((vin, conf, crop))
+
+        dt_ms = (time.perf_counter() - t0) * 1000.0
 
         with self._stats_lock:
             self._processed += 1
             self._last_ms = dt_ms
             self._ms_hist.append(dt_ms)
-            self._last_vin_read = combined
-            self._last_conf = avg_conf
+            self._last_vin_read = candidates[0][0] if candidates else last_read
 
-        # --- Validatsiya + ishonch chegaralari ---
-        if not is_valid_vin(combined):
+        # --- Hech qaysi kadrdan yaroqli VIN chiqmadi ---
+        if not candidates:
             with self._stats_lock:
                 self._rejected += 1
-            log.info(f"OCR: yaroqli VIN topilmadi ('{combined}', {dt_ms:.0f} ms).")
+            log.info(f"OCR: {len(crops)} kadrdan yaroqli VIN topilmadi "
+                     f"('{last_read}', {attempts} urinish, {dt_ms:.0f} ms).")
             return
-        if avg_conf < self._min_conf:
+
+        # --- Fusion: ko'pchilik ovozi ---
+        vin, conf, best_crop = self._fuse(candidates)
+        with self._stats_lock:
+            self._last_conf = conf
+
+        if conf < self._min_conf:
             with self._stats_lock:
                 self._rejected += 1
-            log.info(f"OCR: ishonch past ({avg_conf:.2f}<{self._min_conf:.2f}) — '{combined}' rad etildi.")
+            log.info(f"OCR: ishonch past ({conf:.2f}<{self._min_conf:.2f}) — '{vin}' rad etildi.")
             return
 
         # --- Anti-duplicate ---
-        if self._is_duplicate(combined):
-            log.info(f"DUPLICATE: '{combined}' yaqinda o'qilgan — e'tiborsiz qoldirildi.")
+        if self._is_duplicate(vin):
+            log.info(f"DUPLICATE: '{vin}' yaqinda o'qilgan — e'tiborsiz qoldirildi.")
             return
 
         with self._stats_lock:
             self._accepted += 1
-        log.info(f"VIN aniqlandi: {combined} (conf={avg_conf:.2f}, {dt_ms:.0f} ms)")
+        log.info(f"VIN aniqlandi: {vin} (conf={conf:.2f}, {len(candidates)}/{len(crops)} "
+                 f"kadr rozi, {attempts} urinish, {dt_ms:.0f} ms)")
         try:
-            self.on_result(combined, avg_conf, crop_bgr)
+            self.on_result(vin, conf, best_crop)
         except Exception as exc:
             log.error(f"on_result callback xatosi: {exc}")
 

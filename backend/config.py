@@ -75,6 +75,16 @@ class DetectionConfig:
     ocr_rearm_absent_frames: int = 3   # plastinka shu qadar kadr ko'rinmasa qayta yoqiladi
     ocr_cooldown_sec: float = 2.0      # ketma-ket triggerlar orasidagi minimal vaqt (xavfsizlik)
 
+    # --- Multi-frame fusion + gating ---
+    # OCR faqat plastinka shu qadar YUQORI-ISHONCH (>=0.95) kadrida ko'ringach
+    # ishga tushadi (2-frame tasdiqlash). Har kadrda crop sifati baholanib
+    # buferga yig'iladi; ENG YAXSHI fusion_k crop OCR ga (ovoz berish) yuboriladi.
+    ocr_confirm_frames: int = 2        # OCR dan oldin kerakli yuqori-ishonch kadrlar
+    ocr_crop_margin_frac: float = 0.15  # ROI ni shu nisbatda kengaytirish (belgilar kesilmasin)
+    min_crop_quality: float = 0.45     # eng yaxshi crop sifati shundan past bo'lsa — kutamiz
+    event_buffer_max: int = 10         # bitta hodisa uchun saqlanadigan eng yaxshi croplar soni
+    fusion_k: int = 3                  # OCR ovoz berishga yuboriladigan top croplar soni
+
     # --- Avtomatik dataset yig'ish (Data Loop) ---
     collect_enabled: bool = True
     collect_conf: float = 0.40         # shu conf dan yuqori aniqlovlar saqlanadi
@@ -111,6 +121,16 @@ class OCRConfig:
     # --- Ishonch chegaralari ---
     min_char_confidence: float = 0.30  # har bir bo'lak (fragment) uchun minimal ishonch
     min_confidence: float = 0.45       # umumiy (o'rtacha) ishonch chegarasi
+
+    # --- Denoise (engraved metal uchun) ---
+    bilateral: bool = True             # chekkalarni saqlab shovqinni kamaytirish
+    bilateral_d: int = 5
+    bilateral_sigma: float = 50.0
+
+    # --- Retry + fusion (fail handling) ---
+    retry_enabled: bool = True         # OCR muvaffaqiyatsiz bo'lsa variantlarni sinash
+    retry_rotations: tuple = (-7.0, 7.0)   # qayta urinishda buriladigan gradlar (±)
+    max_ocr_attempts: int = 5          # bitta hodisa uchun jami OCR chaqiruvlari chegarasi
 
     # --- Tezlik / lag nazorati ---
     queue_maxsize: int = 50            # OCR navbati hajmi (orqaga bosim oldini olish)
