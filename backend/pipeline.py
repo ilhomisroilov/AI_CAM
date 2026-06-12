@@ -294,11 +294,12 @@ class Pipeline:
                 and best_q >= DETECTION.min_crop_quality
                 and (now - self._last_ocr_ts) >= DETECTION.ocr_cooldown_sec):
             top = [c for c, _ in self._event_buf[:DETECTION.fusion_k]]
-            self.ocr.submit_frames(top)
+            model = high[5] if len(high) > 5 else None     # QY | BL7M (YOLO sinfidan)
+            self.ocr.submit_frames(top, model)
             self._plate_locked = True
             self._last_ocr_ts = now
-            log.info(f"TRIGGER (fusion): {self._confirm} tasdiq kadr, best_q={best_q:.2f} "
-                     f"-> top-{len(top)} crop OCR ga yuborildi.")
+            log.info(f"TRIGGER (fusion): {self._confirm} tasdiq kadr, model={model}, "
+                     f"best_q={best_q:.2f} -> top-{len(top)} crop OCR ga yuborildi.")
 
     def _reset_event(self) -> None:
         """Plastinka hodisasini yopadi: qulfni ochadi, buferni tozalaydi (re-arm)."""
@@ -319,7 +320,8 @@ class Pipeline:
     # ===============================================================
     # Callback: OCR yaroqli (dublikat bo'lmagan) VIN qaytardi
     # ===============================================================
-    def _on_ocr_result(self, vin: str, confidence: float, crop: np.ndarray) -> None:
+    def _on_ocr_result(self, vin: str, confidence: float, crop: np.ndarray,
+                       raw_vin: str = None, model: str = None) -> None:
         ts = datetime.now()
         ts_iso = ts.strftime("%Y-%m-%d %H:%M:%S")
 
@@ -333,9 +335,12 @@ class Pipeline:
             log.error(f"Crop saqlanmadi: {exc}")
 
         try:
-            rec_id = db.insert_record(ts_iso, vin, confidence, rel_path)
+            # detected_vin = validated VIN; raw_vin = xom OCR (audit); model = QY/BL7M
+            rec_id = db.insert_record(ts_iso, vin, confidence, rel_path,
+                                      raw_vin=raw_vin, model=model)
             self.stats["vins"] += 1
-            log.info(f"DB ga yozildi #{rec_id}: VIN={vin} conf={confidence:.2f}")
+            log.info(f"DB ga yozildi #{rec_id}: VIN={vin} model={model} "
+                     f"xom={raw_vin} score={confidence:.2f}")
         except Exception as exc:
             log.error(f"DB yozuv xatosi: {exc}")
 

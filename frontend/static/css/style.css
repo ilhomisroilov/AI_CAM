@@ -1,3 +1,7 @@
+/* model-badge: QY/BL7M plate model chip in history table */
+.model-badge { display:inline-block; padding:2px 9px; border-radius:20px;
+  background:#1F3C88; color:#fff; font-size:11px; font-weight:700; letter-spacing:.5px; }
+
 /* ============================================================
    AI_CAM — Industrial MES theme
    Deep Blue #1F3C88 (primary) · Teal #1ABC9C (accent)

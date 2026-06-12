@@ -25,23 +25,32 @@
       $("totalCount").textContent = rows.length;
 
       if (!rows.length) {
-        recBody.innerHTML = `<tr><td colspan="5" class="empty">Hali yozuvlar yo'q.</td></tr>`;
+        recBody.innerHTML = `<tr><td colspan="7" class="empty">Hali yozuvlar yo'q.</td></tr>`;
         return;
       }
+      const esc = (s) => (s == null ? "" : String(s).replace(/[<>&]/g, ""));
       recBody.innerHTML = rows.map((r) => {
         const img = r.image_path
           ? `<img class="thumb" src="/${r.image_path}" alt="">`
           : `<span style="color:var(--muted)">—</span>`;
+        const model = r.model
+          ? `<span class="model-badge">${esc(r.model)}</span>`
+          : `<span style="color:var(--muted)">—</span>`;
+        const raw = (r.raw_vin && r.raw_vin !== r.detected_vin)
+          ? `<span style="color:var(--warn);font-family:Consolas,monospace">${esc(r.raw_vin)}</span>`
+          : `<span style="color:var(--muted)">${esc(r.raw_vin) || "—"}</span>`;
         return `<tr>
           <td>${r.id}</td>
-          <td>${r.timestamp}</td>
-          <td class="vin-cell">${r.detected_vin}</td>
+          <td>${esc(r.timestamp)}</td>
+          <td>${model}</td>
+          <td class="vin-cell">${esc(r.detected_vin)}</td>
+          <td>${raw}</td>
           <td style="display:flex;align-items:center;gap:8px">${confBar(r.confidence)}</td>
           <td>${img}</td>
         </tr>`;
       }).join("");
     } catch (e) {
-      recBody.innerHTML = `<tr><td colspan="5" class="empty">Xatolik: ${e}</td></tr>`;
+      recBody.innerHTML = `<tr><td colspan="7" class="empty">Xatolik: ${e}</td></tr>`;
     }
   }
 

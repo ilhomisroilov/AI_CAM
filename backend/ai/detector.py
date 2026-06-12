@@ -20,7 +20,7 @@ from typing import List, Optional, Tuple
 import cv2
 import numpy as np
 
-from ..config import DETECTION
+from ..config import DETECTION, VIN
 from ..logger import log
 
 # MES rang palitrasi (BGR) — bbox uchun teal aksent
@@ -153,10 +153,23 @@ class PlateDetector:
         return self.model is not None
 
     # ---------------------------------------------------------------
-    def detect(self, frame: np.ndarray) -> List[Tuple[int, int, int, int, float]]:
+    def _model_of(self, cls_id) -> str:
+        """
+        YOLO sinf id -> model nomi (QY/BL7M). Hozir YOLO 1-sinfli (vin_plate)
+        bo'lgani uchun ko'pincha VIN.default_model qaytadi. YOLO 2-sinfli
+        (QY/BL7M) qilib qayta o'qitilsa, avtomatik to'g'ri model qaytadi.
+        """
+        try:
+            names = getattr(self.model, "names", {}) or {}
+            cls_name = names.get(int(cls_id), "") if isinstance(names, dict) else ""
+        except Exception:
+            cls_name = ""
+        return VIN.class_to_model.get(cls_name, VIN.default_model)
+
+    def detect(self, frame: np.ndarray) -> List[Tuple[int, int, int, int, float, str]]:
         """
         Kadrda plastinkalarni aniqlaydi.
-        Qaytaradi: [(x1, y1, x2, y2, conf), ...]
+        Qaytaradi: [(x1, y1, x2, y2, conf, model), ...]  (model = QY | BL7M)
         """
         if self.model is None:
             return []
@@ -172,25 +185,28 @@ class PlateDetector:
             log.error(f"YOLO predict xatosi: {exc}")
             return []
 
-        dets: List[Tuple[int, int, int, int, float]] = []
+        dets: List[Tuple[int, int, int, int, float, str]] = []
         for r in results:
             if r.boxes is None:
                 continue
             for box in r.boxes:
                 x1, y1, x2, y2 = box.xyxy[0].cpu().numpy().astype(int)
                 conf = float(box.conf[0].cpu().numpy())
-                dets.append((x1, y1, x2, y2, conf))
+                cls_id = int(box.cls[0].cpu().numpy()) if box.cls is not None else 0
+                dets.append((x1, y1, x2, y2, conf, self._model_of(cls_id)))
         return dets
 
     # ---------------------------------------------------------------
     @staticmethod
-    def draw_boxes(frame: np.ndarray, dets: List[Tuple[int, int, int, int, float]]) -> np.ndarray:
+    def draw_boxes(frame: np.ndarray, dets: list) -> np.ndarray:
         """Live stream uchun bbox + ishonch yorlig'ini chizadi (real-time skeleton)."""
         out = frame.copy()
-        for (x1, y1, x2, y2, conf) in dets:
+        for det in dets:
+            x1, y1, x2, y2, conf = det[0], det[1], det[2], det[3], det[4]
+            model = det[5] if len(det) > 5 else ""
             color = _TEAL_BGR if conf >= DETECTION.ocr_trigger_conf else _BLUE_BGR
             cv2.rectangle(out, (x1, y1), (x2, y2), color, 2)
-            label = f"VIN {conf * 100:.0f}%"
+            label = f"{model} {conf * 100:.0f}%" if model else f"VIN {conf * 100:.0f}%"
             (tw, th), _ = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.6, 2)
             cv2.rectangle(out, (x1, y1 - th - 8), (x1 + tw + 6, y1), color, -1)
             cv2.putText(out, label, (x1 + 3, y1 - 5),
@@ -202,7 +218,7 @@ class PlateDetector:
     def crop_roi(frame: np.ndarray,
                  det: Tuple[int, int, int, int, float]) -> Optional[np.ndarray]:
         """ROI ni padding bilan kesib oladi (OCR uchun)."""
-        x1, y1, x2, y2, _ = det
+        x1, y1, x2, y2 = det[0], det[1], det[2], det[3]
         p = DETECTION.crop_padding
         h, w = frame.shape[:2]
         x1 = max(0, x1 - p); y1 = max(0, y1 - p)
@@ -220,7 +236,7 @@ class PlateDetector:
         belgilarni kesib qo'yadi, shuning uchun OCR uchun atrofga joy qo'shamiz.
         frac=0.15 -> har tomondan box o'lchamining 15% i qo'shiladi.
         """
-        x1, y1, x2, y2, _ = det
+        x1, y1, x2, y2 = det[0], det[1], det[2], det[3]
         bw = x2 - x1
         bh = y2 - y1
         mx = int(bw * frac)

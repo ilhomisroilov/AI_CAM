@@ -225,7 +225,7 @@ def api_records(sort_by: str = "timestamp", order: str = "DESC",
 def api_export(fmt: str = "csv"):
     """Yozuvlarni CSV yoki Excel (.xlsx) ko'rinishida eksport qiladi."""
     records = db.get_all_records()
-    headers = ["id", "timestamp", "detected_vin", "confidence", "image_path"]
+    headers = ["id", "timestamp", "detected_vin", "raw_vin", "model", "confidence", "image_path"]
 
     if fmt == "xlsx":
         try:

@@ -150,6 +150,23 @@ class ServerConfig:
 
 
 @dataclass
+class VINConfig:
+    """Model-aware VIN post-processing (QY / BL7M strukturasi)."""
+    enabled: bool = True
+    # YOLO 2-sinfli bo'lmaguncha model shu qiymatdan olinadi.
+    default_model: str = "QY"
+    # YOLO sinf nomi -> model. (vin_plate kabi nomlar default_model ga tushadi.)
+    class_to_model: dict = field(default_factory=lambda: {"QY": "QY", "BL7M": "BL7M"})
+    # Saralash og'irliklari
+    confusion_prior: float = 0.6       # chalkashlik variantining vizual ulushi
+    w_visual: float = 1.0
+    struct_bonus: float = 0.5          # strukturaga mos belgi uchun bonus
+    struct_penalty: float = 0.5        # mos kelmaganga jazo (NST/raqam uchun og'ir)
+    # Qabul chegarasi (validated VIN final_score shundan past bo'lsa rad etiladi)
+    min_final_score: float = 0.55
+
+
+@dataclass
 class AuthConfig:
     """Yengil frontend autentifikatsiya (zavod ichki tarmog'i uchun)."""
     enabled: bool = True
@@ -165,6 +182,7 @@ DETECTION = DetectionConfig()
 OCR = OCRConfig()
 SERVER = ServerConfig()
 AUTH = AuthConfig()
+VIN = VINConfig()
 
 # VIN format qoidasi: 17 belgi, I/O/Q harflari yo'q
 VIN_LENGTH = 17

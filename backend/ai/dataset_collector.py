@@ -153,7 +153,8 @@ class DatasetCollector:
 
             # YOLO format yorliqlar: "cls cx cy w h" (0..1 normalizatsiya)
             lines = []
-            for (x1, y1, x2, y2, _conf) in dets:
+            for d in dets:
+                x1, y1, x2, y2 = d[0], d[1], d[2], d[3]
                 cx = ((x1 + x2) / 2.0) / w
                 cy = ((y1 + y2) / 2.0) / h
                 bw = (x2 - x1) / w

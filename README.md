@@ -31,6 +31,7 @@ Real-time recognition of **engraved / etched 17-character VINs** stamped on meta
 - **Real-time processing** — asynchronous camera stream + background OCR queue; the live MJPEG feed never blocks on OCR.
 - **Single-shot trigger** — OCR fires **once per plate event** (confidence ≥ 0.95) with debounce/cooldown, so a plate sitting across many frames is not read repeatedly.
 - **Result validation** — strict VIN regex + per-fragment and overall confidence thresholds + anti-duplicate window.
+- **VIN-aware post-processing (QY / BL7M)** — model-specific 17-character structure rules used to validate, rank, and error-correct OCR candidates **without inventing characters**; stores raw OCR + validated VIN + model. See **`VIN_OCR_PIPELINE.md`**.
 - **Dataset auto-collection ("data loop")** — low-confidence-and-up detections auto-save frame + YOLO-format label for retraining.
 - **Web dashboard (MES style)** — live video, Connect/Start/Stop controls, dynamic camera IP, real-time logs, OCR monitoring stats.
 - **History + export** — sortable records table with **CSV / Excel** export.
@@ -90,6 +91,7 @@ Camera/Image → YOLO Detection → ROI Extraction → Image Preprocessing → P
 5. **OCR recognition** — `_PaddleEngine.read()` runs PaddleOCR (det+rec by default, or rec-only via `paddle_det = False`) and returns uniform `(box, text, conf)` fragments.
 6. **Post-processing** — fragments below `min_char_confidence = 0.30` are dropped; the rest are sorted **left-to-right by bbox-x** and concatenated; `normalize_vin()` upper-cases and strips to `A–Z0–9`.
 7. **Validation** — `verify_vin()` enforces `^[A-HJ-NPR-Z0-9]{17}$`; the mean confidence must clear `min_confidence = 0.45`; the **anti-duplicate** guard rejects the same VIN within `duplicate_window_sec = 90`. Accepted reads are written to SQLite and the crop image is saved.
+8. **VIN-aware post-processing** — when the plate model (QY/BL7M) is known, the raw OCR is run through the model's 17-position structure rules + a visual-confusion map to pick the most probable VIN (majority-voted across frames), **preserving the raw OCR**. Stored as `detected_vin` (validated) + `raw_vin` (audit) + `model`. Full design in **`VIN_OCR_PIPELINE.md`**; rules engine `backend/ai/vin_rules.py`, ranking `backend/ai/vin_postprocess.py`, tests `tests/test_vin_rules.py`.
 
 ---
 

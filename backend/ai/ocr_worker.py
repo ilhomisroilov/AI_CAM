@@ -39,11 +39,13 @@ from typing import Callable, List, Optional, Tuple
 import cv2
 import numpy as np
 
-from ..config import OCR
+from ..config import OCR, VIN
 from ..logger import log
+from . import vin_rules
+from .vin_postprocess import postprocess
 
-# on_result(vin: str, confidence: float, crop_bgr: np.ndarray)
-ResultCallback = Callable[[str, float, np.ndarray], None]
+# on_result(validated_vin, score, crop_bgr, raw_vin, model)
+ResultCallback = Callable[[str, float, np.ndarray, str, object], None]
 
 # Standart avtomobil VIN strukturasi: aniq 17 belgi, alfanumerik,
 # I, O, Q HARFLARI YO'Q (ISO 3779). Regex bilan qat'iy tekshiramiz.
@@ -245,23 +247,24 @@ class OCRWorker:
     # ===============================================================
     # Navbat (drop-oldest — FPS himoyasi)
     # ===============================================================
-    def submit(self, crop_bgr: np.ndarray) -> None:
+    def submit(self, crop_bgr: np.ndarray, model: Optional[str] = None) -> None:
         """Bitta crop (orqaga moslik) — ko'p-kadrli ish sifatida o'raladi."""
-        self.submit_frames([crop_bgr])
+        self.submit_frames([crop_bgr], model)
 
-    def submit_frames(self, crops: list) -> None:
+    def submit_frames(self, crops: list, model: Optional[str] = None) -> None:
         """
         Bitta plastinka hodisasi uchun ENG YAXSHI croplar ro'yxati (multi-frame
-        fusion). OCR ularda ovoz berib yagona VIN chiqaradi.
+        fusion) + plastinka modeli (QY/BL7M). OCR ovoz berib yagona VIN chiqaradi.
         """
         if not self._enabled or not crops:
             return
+        job = (crops, model)
         try:
-            self._queue.put_nowait(crops)
+            self._queue.put_nowait(job)
         except queue.Full:
             try:
                 self._queue.get_nowait()         # eng eskini tashlaymiz
-                self._queue.put_nowait(crops)
+                self._queue.put_nowait(job)
                 with self._stats_lock:
                     self._dropped += 1
             except queue.Empty:
@@ -317,7 +320,8 @@ class OCRWorker:
                 if dt < OCR.min_interval_sec:
                     continue                     # bu ishni o'tkazib yuboramiz (lag himoyasi)
             self._last_run = time.monotonic()
-            self._process_job(job)
+            crops, model = job
+            self._process_job(crops, model)
 
     # ===============================================================
     # Preprocess — aniqlik uchun (kattalashtirish + CLAHE + sharpen)
@@ -370,94 +374,94 @@ class OCRWorker:
         for ang in OCR.retry_rotations:
             yield rotate(gray, float(ang))
 
-    def _read_with_retry(self, crop: np.ndarray, budget: int) -> Tuple[str, float, int]:
+    def _evaluate(self, raw: str, conf: float, model) -> Tuple[str, float, bool, str]:
         """
-        Crop uchun variantlarni ketma-ket sinaydi (budget chegarasida).
-        Yaroqli VIN topilsa darhol qaytaradi; aks holda eng yuqori ishonchli
-        nomzodni qaytaradi. -> (vin, conf, used_attempts)
+        Xom OCR natijasini model qoidalariga ko'ra baholaydi.
+          -> (validated_vin, score, accepted, raw_for_audit)
+        VIN model-aware bo'lsa: vin_postprocess (saralash, never-invent).
+        Aks holda: eski qat'iy regex (is_valid_vin).
         """
-        used = 0
-        best = ("", 0.0)
-        for var in self._variants(crop):
-            if used >= budget:
-                break
-            try:
-                vin, conf = self._read_vin(var)
-            except Exception as exc:
-                log.error(f"PaddleOCR xatosi: {exc}")
-                used += 1
-                continue
-            used += 1
-            if vin and conf > best[1]:
-                best = (vin, conf)
-            if is_valid_vin(vin):
-                return vin, conf, used
-        return best[0], best[1], used
+        if VIN.enabled and vin_rules.is_supported_model(model):
+            pr = postprocess(
+                raw, model, overall_conf=conf,
+                confusion_prior=VIN.confusion_prior, w_visual=VIN.w_visual,
+                struct_bonus=VIN.struct_bonus, struct_penalty=VIN.struct_penalty,
+            )
+            accepted = (len(pr.validated_vin) == 17
+                        and pr.final_score >= VIN.min_final_score)
+            return pr.validated_vin, pr.final_score, accepted, pr.raw_vin
+        # Legacy: model noma'lum/o'chiq -> generic regex validatsiya
+        return raw, conf, is_valid_vin(raw), raw
 
     @staticmethod
-    def _fuse(candidates: List[Tuple[str, float, np.ndarray]]) -> Tuple[str, float, np.ndarray]:
+    def _fuse(candidates: List[Tuple[str, float, str, np.ndarray]]
+              ) -> Tuple[str, float, str, np.ndarray]:
         """
-        Ko'p kadr natijalarini birlashtirish: KO'PCHILIK OVOZI; tenglikda — eng
-        yuqori jami ishonch. Qaytadi: (vin, conf, eng_yaxshi_crop).
+        Ko'p kadr natijalarini birlashtirish: VALIDATED VIN bo'yicha KO'PCHILIK
+        OVOZI; tenglikda eng yuqori jami ball. -> (vin, score, raw, best_crop).
         """
         from collections import Counter
-        votes = Counter(v for v, _, _ in candidates)
+        votes = Counter(v for v, _, _, _ in candidates)
         top_count = max(votes.values())
         tied = [v for v, c in votes.items() if c == top_count]
         if len(tied) > 1:
-            winner = max(tied, key=lambda vv: sum(cf for v, cf, _ in candidates if v == vv))
+            winner = max(tied, key=lambda vv: sum(sc for v, sc, _, _ in candidates if v == vv))
         else:
             winner = tied[0]
-        entries = [(cf, cr) for v, cf, cr in candidates if v == winner]
-        conf, crop = max(entries, key=lambda e: e[0])
-        return winner, conf, crop
+        entries = [(sc, rw, cr) for v, sc, rw, cr in candidates if v == winner]
+        score, raw, crop = max(entries, key=lambda e: e[0])
+        return winner, score, raw, crop
 
-    def _process_job(self, crops: list) -> None:
+    def _process_job(self, crops: list, model) -> None:
         """
-        Bitta plastinka hodisasi: ENG YAXSHI croplarda OCR + retry + fusion.
+        Bitta plastinka hodisasi: ENG YAXSHI croplarda OCR + retry + VIN-aware
+        post-processing + fusion. Xom OCR HAR DOIM saqlanadi (audit).
         OCR chaqiruvlari max_ocr_attempts bilan cheklangan (lag himoyasi).
         """
         t0 = time.perf_counter()
-        candidates: List[Tuple[str, float, np.ndarray]] = []
+        candidates: List[Tuple[str, float, str, np.ndarray]] = []  # (validated, score, raw, crop)
         attempts = 0
-        last_read = ""
+        last_raw = ""
         for crop in crops:
             if attempts >= OCR.max_ocr_attempts:
                 break
-            budget = OCR.max_ocr_attempts - attempts
-            vin, conf, used = self._read_with_retry(crop, budget)
-            attempts += used
-            if vin:
-                last_read = vin
-            if vin and is_valid_vin(vin):
-                candidates.append((vin, conf, crop))
+            # Har crop uchun variantlarni (asl/deskew/±burilish) sinaymiz
+            for var in self._variants(crop):
+                if attempts >= OCR.max_ocr_attempts:
+                    break
+                try:
+                    raw, conf = self._read_vin(var)
+                except Exception as exc:
+                    log.error(f"PaddleOCR xatosi: {exc}")
+                    attempts += 1
+                    continue
+                attempts += 1
+                if raw:
+                    last_raw = raw
+                validated, score, accepted, raw_audit = self._evaluate(raw, conf, model)
+                if accepted:
+                    candidates.append((validated, score, raw_audit, crop))
+                    break   # bu crop yaroqli natija berdi
 
         dt_ms = (time.perf_counter() - t0) * 1000.0
-
         with self._stats_lock:
             self._processed += 1
             self._last_ms = dt_ms
             self._ms_hist.append(dt_ms)
-            self._last_vin_read = candidates[0][0] if candidates else last_read
+            self._last_vin_read = candidates[0][0] if candidates else last_raw
 
-        # --- Hech qaysi kadrdan yaroqli VIN chiqmadi ---
+        # --- Hech qaysi kadrdan qabul qilinadigan VIN chiqmadi ---
         if not candidates:
             with self._stats_lock:
                 self._rejected += 1
             log.info(f"OCR: {len(crops)} kadrdan yaroqli VIN topilmadi "
-                     f"('{last_read}', {attempts} urinish, {dt_ms:.0f} ms).")
+                     f"(xom='{last_raw}', model={model}, {attempts} urinish, {dt_ms:.0f} ms).")
             return
 
-        # --- Fusion: ko'pchilik ovozi ---
-        vin, conf, best_crop = self._fuse(candidates)
+        # --- Fusion: validated VIN bo'yicha ko'pchilik ovozi ---
+        vin, score, raw, best_crop = self._fuse(candidates)
         with self._stats_lock:
-            self._last_conf = conf
-
-        if conf < self._min_conf:
-            with self._stats_lock:
-                self._rejected += 1
-            log.info(f"OCR: ishonch past ({conf:.2f}<{self._min_conf:.2f}) — '{vin}' rad etildi.")
-            return
+            self._last_conf = score
 
         # --- Anti-duplicate ---
         if self._is_duplicate(vin):
@@ -466,10 +470,11 @@ class OCRWorker:
 
         with self._stats_lock:
             self._accepted += 1
-        log.info(f"VIN aniqlandi: {vin} (conf={conf:.2f}, {len(candidates)}/{len(crops)} "
-                 f"kadr rozi, {attempts} urinish, {dt_ms:.0f} ms)")
+        changed = " (xomdan farqli)" if raw != vin else ""
+        log.info(f"VIN aniqlandi: {vin} [model={model}, score={score:.2f}, xom='{raw}'{changed}, "
+                 f"{len(candidates)}/{len(crops)} kadr rozi, {attempts} urinish, {dt_ms:.0f} ms]")
         try:
-            self.on_result(vin, conf, best_crop)
+            self.on_result(vin, score, best_crop, raw, model)
         except Exception as exc:
             log.error(f"on_result callback xatosi: {exc}")
 
