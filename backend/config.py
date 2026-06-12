@@ -62,8 +62,8 @@ class DetectionConfig:
     # Past chegara: dataset yig'ish uchun nomzod box'larni ham ko'rsatadi (>0.40).
     conf_threshold: float = 0.40       # YOLO bazaviy aniqlash chegarasi (dataset collect)
     iou_threshold: float = 0.45
-    # OCR FAQAT shu ishonchdan yuqorida ishga tushadi — talab bo'yicha 0.95 (95%)
-    ocr_trigger_conf: float = 0.95
+    # OCR FAQAT shu ishonchdan yuqorida ishga tushadi — 0.90 (90%)
+    ocr_trigger_conf: float = 0.90
     # "auto" -> NVIDIA GPU bo'lsa cuda:0, aks holda cpu. Yoki "cuda:0"/"cpu".
     device: str = "auto"
     crop_padding: int = 8              # ROI atrofiga qo'shimcha piksel
