@@ -1,0 +1,35 @@
+{
+  "version": "0.4.36",
+  "flags": {},
+  "shapes": [
+    {
+      "label": "bl7m_vin_plate",
+      "text": "",
+      "points": [
+        [
+          387.57142857142867,
+          561.6785714285714
+        ],
+        [
+          1519.0,
+          565.9642857142857
+        ],
+        [
+          1534.7142857142856,
+          754.5357142857142
+        ],
+        [
+          384.7142857142858,
+          750.25
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "polygon",
+      "flags": {}
+    }
+  ],
+  "imagePath": "live15.bmp",
+  "imageData": null,
+  "imageHeight": 1088,
+  "imageWidth": 2048
+}

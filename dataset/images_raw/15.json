@@ -1,0 +1,35 @@
+{
+  "version": "0.4.36",
+  "flags": {},
+  "shapes": [
+    {
+      "label": "qy_vin_plate",
+      "text": "",
+      "points": [
+        [
+          354.7142857142858,
+          650.25
+        ],
+        [
+          1727.5714285714284,
+          697.3928571428572
+        ],
+        [
+          1719.0,
+          870.2500000000002
+        ],
+        [
+          354.7142857142858,
+          827.3928571428572
+        ]
+      ],
+      "group_id": null,
+      "shape_type": "polygon",
+      "flags": {}
+    }
+  ],
+  "imagePath": "15.bmp",
+  "imageData": null,
+  "imageHeight": 1088,
+  "imageWidth": 2048
+}

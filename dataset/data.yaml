@@ -1,6 +1,7 @@
 path: C:\Users\II4028\Documents\Projects\AI_CAM\dataset
-train: images/train
-val: images/val
-
+train: collected_raw/train
+val: collected_raw/val
+test: collected_raw/test
 names:
-  0: vin_plate
+  0: bl7m_vin_plate
+  1: qy_vin_plate

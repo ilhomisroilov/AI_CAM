@@ -22,7 +22,7 @@ DB_PATH = DATA_DIR / "ai_cam.db"
 DATASET_DIR = BASE_DIR / "dataset" / "collected_raw"
 # O'qitilgan YOLOv8n model (training natijasi). BASE_DIR ga nisbatan absolyut
 # yo'l — cwd qanday bo'lishidan qat'i nazar topiladi.
-TRAINED_MODEL_PATH = BASE_DIR / "runs" / "detect" / "vin_plate_model" / "weights" / "best.pt"
+TRAINED_MODEL_PATH = BASE_DIR / "runs" / "detect" / "train" / "weights" / "best.pt"
 
 # Papkalar mavjudligini ta'minlash
 for _d in (DATA_DIR, CROPS_DIR, LOGS_DIR, MODELS_DIR, DATASET_DIR):
