@@ -976,3 +976,72 @@ Check the documentation of torch.load to learn more about types accepted by defa
 [2026-06-12 11:30:45] [ERROR] PaddleOCR yuklanmadi: No module named 'paddleocr'
 [2026-06-12 11:30:45] [INFO ] Dataset auto-collection yoqildi -> C:\Users\II4028\Documents\Projects\AI_CAM\dataset\collected_raw (conf>0.4)
 [2026-06-12 11:30:45] [INFO ] AI ishlov berish yoqildi (YOLO + OCR + dataset yig'ish).
+[2026-06-12 13:02:49] [INFO ] torch.load weights_only=False ga sozlandi (Ultralytics mosligi).
+[2026-06-12 13:02:53] [INFO ] device=auto -> GPU topilmadi, CPU ishlatiladi.
+[2026-06-12 13:02:53] [INFO ] YOLO model yuklandi: C:\Users\II4028\Documents\Projects\AI_CAM\runs\detect\train\weights\best.pt (device=cpu)
+[2026-06-12 13:02:53] [INFO ] Ma'lumotlar bazasi tayyor: C:\Users\II4028\Documents\Projects\AI_CAM\data\ai_cam.db
+[2026-06-12 13:02:53] [INFO ] AI_CAM server ishga tushdi.
+[2026-06-12 13:03:00] [INFO ] Login muvaffaqiyatli: admin
+[2026-06-12 13:03:10] [INFO ] Kamera IP: 10.123.86.42 (CoLa 2111, BLOB 2113)
+[2026-06-12 13:03:10] [INFO ] Control -> 10.123.86.42:2111 (urinish 1/3)
+[2026-06-12 13:03:10] [INFO ]   C->K  sMN CheckPassword 3 A89A6E74
+[2026-06-12 13:03:10] [INFO ]   K->C  sAN CheckPassword 1
+[2026-06-12 13:03:10] [INFO ]   C->K  sRN DeviceIdent
+[2026-06-12 13:03:10] [INFO ]   K->C  sRA DeviceIdent 17 LECTOR652 Dynamic Focus 9 4.4.0.33R
+[2026-06-12 13:03:10] [INFO ]   C->K  sEN DemoModeState 1
+[2026-06-12 13:03:10] [INFO ]   K->C  sEA DemoModeState 1
+[2026-06-12 13:03:10] [INFO ]   C->K  sRN DemoModeState
+[2026-06-12 13:03:10] [INFO ]   K->C  sRA DemoModeState 0
+[2026-06-12 13:03:10] [INFO ]   C->K  sMN GetBlobClientConfig
+[2026-06-12 13:03:10] [INFO ]   K->C  sAN GetBlobClientConfig 3 TCP C 10.123.86.42 7 0.0.0.0 841 0 0 1 400
+[2026-06-12 13:03:10] [INFO ]   C->K  sEN ImgBlobTransfer 1
+[2026-06-12 13:03:10] [INFO ]   K->C  sEA ImgBlobTransfer 1
+[2026-06-12 13:03:10] [INFO ]   C->K  sEN LIIsActive 1
+[2026-06-12 13:03:10] [INFO ]   K->C  sEA LIIsActive 1
+[2026-06-12 13:03:10] [INFO ]   C->K  sRN LIIsActive
+[2026-06-12 13:03:10] [INFO ]   K->C  sRA LIIsActive 0
+[2026-06-12 13:03:10] [INFO ]   C->K  sEN VIStatDisp 1
+[2026-06-12 13:03:10] [INFO ]   K->C  sEA VIStatDisp 1
+[2026-06-12 13:03:10] [INFO ]   C->K  sRN VIStatDisp
+[2026-06-12 13:03:10] [INFO ]   K->C  sRA VIStatDisp 0 0 0 00000000
+[2026-06-12 13:03:10] [INFO ]   C->K  sEN VITmeStatDisp 1
+[2026-06-12 13:03:10] [INFO ]   K->C  sEA VITmeStatDisp 1
+[2026-06-12 13:03:10] [INFO ]   C->K  sRN VITmeStatDisp
+[2026-06-12 13:03:10] [INFO ]   K->C  sRA VITmeStatDisp 0
+[2026-06-12 13:03:10] [INFO ]   C->K  sMN mDIGetEffImgSize
+[2026-06-12 13:03:10] [INFO ]   K->C  sAN mDIGetEffImgSize 800 440
+[2026-06-12 13:03:10] [INFO ] Effektiv rasm o'lchami: sAN mDIGetEffImgSize 800 440
+[2026-06-12 13:03:10] [INFO ] Blob -> 10.123.86.42:2113
+[2026-06-12 13:03:10] [INFO ] Kamera tayyor (BLOB: 16MB buf, blocking + 2s SO_RCVTIMEO).
+[2026-06-12 13:03:10] [INFO ] Live streaming boshlanyapti (mLIStart 0)...
+[2026-06-12 13:03:10] [INFO ]   C->K  sMN mLIStart 0
+[2026-06-12 13:03:10] [INFO ]   K->C  sAN mLIStart 0
+[2026-06-12 13:03:10] [INFO ] mLIStart javob: sAN mLIStart 0
+[2026-06-12 13:03:11] [INFO ] PaddleOCR modeli yuklanmoqda... (birinchi marta sekin/yuklab oladi).
+[2026-06-12 13:03:11] [INFO ] OCR worker ishga tushdi (PaddleOCR, fon navbat).
+[2026-06-12 13:03:11] [ERROR] PaddleOCR yuklanmadi: No module named 'paddleocr'
+[2026-06-12 13:03:11] [INFO ] Dataset auto-collection yoqildi -> C:\Users\II4028\Documents\Projects\AI_CAM\dataset\collected_raw (conf>0.4)
+[2026-06-12 13:03:11] [INFO ] AI ishlov berish yoqildi (YOLO + OCR + dataset yig'ish).
+[2026-06-12 13:03:22] [INFO ] OCR worker to'xtatildi.
+[2026-06-12 13:03:22] [INFO ] Dataset auto-collection to'xtatildi (jami saqlangan: 0).
+[2026-06-12 13:03:22] [INFO ] AI ishlov berish o'chirildi (xom video davom etadi).
+[2026-06-12 13:03:23] [INFO ]   C->K  sMN mLIStop
+[2026-06-12 13:03:23] [INFO ]   K->C  sAN mLIStop
+[2026-06-12 13:03:23] [INFO ] mLIStop javob: sAN mLIStop
+[2026-06-12 13:03:23] [INFO ]   C->K  sEN VITmeStatDisp 0
+[2026-06-12 13:03:23] [INFO ]   K->C  sEA VITmeStatDisp 0
+[2026-06-12 13:03:23] [INFO ]   C->K  sEN VIStatDisp 0
+[2026-06-12 13:03:23] [INFO ]   K->C  sEA VIStatDisp 0
+[2026-06-12 13:03:23] [INFO ]   C->K  sEN LIIsActive 0
+[2026-06-12 13:03:23] [INFO ]   K->C  sEA LIIsActive 0
+[2026-06-12 13:03:23] [INFO ]   C->K  sEN ImgBlobTransfer 0
+[2026-06-12 13:03:23] [INFO ]   K->C  sEA ImgBlobTransfer 0
+[2026-06-12 13:03:23] [INFO ]   C->K  sEN DemoModeState 0
+[2026-06-12 13:03:23] [INFO ]   K->C  sEA DemoModeState 0
+[2026-06-12 13:03:23] [INFO ] Ulanish yopildi.
+[2026-06-12 13:03:23] [INFO ] Kamera uzildi.
+[2026-06-12 13:22:32] [INFO ] torch.load weights_only=False ga sozlandi (Ultralytics mosligi).
+[2026-06-12 13:22:35] [INFO ] device=auto -> GPU topilmadi, CPU ishlatiladi.
+[2026-06-12 13:22:35] [INFO ] YOLO model yuklandi: C:\Users\II4028\Documents\Projects\AI_CAM\runs\detect\train\weights\best.pt (device=cpu)
+[2026-06-12 13:22:35] [INFO ] Ma'lumotlar bazasi tayyor: C:\Users\II4028\Documents\Projects\AI_CAM\data\ai_cam.db
+[2026-06-12 13:22:35] [INFO ] AI_CAM server ishga tushdi.

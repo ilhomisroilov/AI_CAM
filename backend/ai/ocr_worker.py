@@ -99,26 +99,30 @@ class _PaddleEngine:
         self.det = bool(OCR.paddle_det)
         gpu = OCRWorker._resolve_gpu()
 
-        # PaddleOCR konstruktori versiyalar bo'yicha farq qiladi — bardoshli init
-        common = dict(lang=OCR.lang)
-        try:
-            # 2.x API: use_angle_cls + use_gpu + show_log
-            self._ocr = PaddleOCR(
-                use_angle_cls=OCR.use_angle_cls,
-                use_gpu=gpu,
-                drop_score=OCR.drop_score,
-                rec_batch_num=OCR.rec_batch_num,
-                det_limit_side_len=OCR.det_limit_side_len,
-                show_log=False,
-                **common,
-            )
-        except TypeError:
-            # 3.x API: use_textline_orientation + device (use_gpu/show_log olib tashlangan)
-            self._ocr = PaddleOCR(
-                use_textline_orientation=OCR.use_angle_cls,
-                device=("gpu" if gpu else "cpu"),
-                **common,
-            )
+        # PaddleOCR konstruktori VERSIYALAR bo'yicha qattiq farq qiladi va
+        # noma'lum argumentlarni RAD ETADI (masalan 2.10 da 'drop_score' konstruktor
+        # argumenti emas -> "Unknown argument: drop_score"). Shuning uchun eng to'liq
+        # to'plamdan minimalgacha ketma-ket sinab ko'ramiz (keng except).
+        # drop_score/rec_batch_num/det_limit_side_len konstruktorga BERILMAYDI —
+        # ular versiyalararo beqaror. drop_score natija filtri sifatida qo'llanadi.
+        attempts = [
+            dict(use_angle_cls=OCR.use_angle_cls, use_gpu=gpu, show_log=False, lang=OCR.lang),  # 2.6/2.7/2.10
+            dict(use_angle_cls=OCR.use_angle_cls, use_gpu=gpu, lang=OCR.lang),                  # show_log yo'q
+            dict(use_textline_orientation=OCR.use_angle_cls, device=("gpu" if gpu else "cpu"),
+                 lang=OCR.lang),                                                                # 3.x
+            dict(lang=OCR.lang),                                                                # minimal
+        ]
+        self._ocr = None
+        last_err = None
+        for kw in attempts:
+            try:
+                self._ocr = PaddleOCR(**kw)
+                break
+            except Exception as exc:                # ValueError/TypeError/Unknown argument...
+                last_err = exc
+                self._ocr = None
+        if self._ocr is None:
+            raise RuntimeError(f"PaddleOCR init muvaffaqiyatsiz: {last_err}")
         self.gpu = gpu
 
     def read(self, img: np.ndarray) -> List[Tuple[list, str, float]]:
@@ -153,6 +157,9 @@ class _PaddleEngine:
                 else:
                     text, score = line[0], line[1]
                     box = _FULL_BOX
+                # drop_score natija filtri (konstruktor argumenti o'rniga — versiyalararo barqaror)
+                if float(score) < OCR.drop_score:
+                    continue
                 out.append((box, str(text), float(score)))
             except Exception:
                 continue
