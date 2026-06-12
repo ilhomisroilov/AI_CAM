@@ -171,7 +171,7 @@ class AuthConfig:
     """Yengil frontend autentifikatsiya (zavod ichki tarmog'i uchun)."""
     enabled: bool = True
     username: str = "admin"
-    password: str = "vin_factory2026"   # zavod standart paroli — kerak bo'lsa o'zgartiring
+    password: str = "admin"   # zavod standart paroli — kerak bo'lsa o'zgartiring
     cookie_name: str = "ai_cam_session"
     session_ttl_sec: int = 12 * 3600    # 12 soat — keyin qayta login
 

@@ -24,9 +24,9 @@ import io
 from pathlib import Path
 import torch
 import ultralytics
-
+from ultralytics.nn.tasks import DetectionModel
 # PyTorch'ga YOLO modelini xavfsiz deb tanitish
-torch.serialization.add_safe_globals([ultralytics.nn.tasks.DetectionModel])
+torch.serialization.add_safe_globals([DetectionModel])
 
 from fastapi import FastAPI, Form, Query
 from fastapi.responses import (FileResponse, HTMLResponse, JSONResponse,
