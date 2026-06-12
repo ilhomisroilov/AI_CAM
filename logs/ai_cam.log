@@ -1045,3 +1045,75 @@ Check the documentation of torch.load to learn more about types accepted by defa
 [2026-06-12 13:22:35] [INFO ] YOLO model yuklandi: C:\Users\II4028\Documents\Projects\AI_CAM\runs\detect\train\weights\best.pt (device=cpu)
 [2026-06-12 13:22:35] [INFO ] Ma'lumotlar bazasi tayyor: C:\Users\II4028\Documents\Projects\AI_CAM\data\ai_cam.db
 [2026-06-12 13:22:35] [INFO ] AI_CAM server ishga tushdi.
+[2026-06-12 13:30:46] [INFO ] torch.load weights_only=False ga sozlandi (Ultralytics mosligi).
+[2026-06-12 13:30:48] [INFO ] device=auto -> GPU topilmadi, CPU ishlatiladi.
+[2026-06-12 13:30:48] [INFO ] YOLO model yuklandi: C:\Users\II4028\Documents\Projects\AI_CAM\runs\detect\train\weights\best.pt (device=cpu)
+[2026-06-12 13:30:48] [INFO ] Ma'lumotlar bazasi tayyor: C:\Users\II4028\Documents\Projects\AI_CAM\data\ai_cam.db
+[2026-06-12 13:30:48] [INFO ] AI_CAM server ishga tushdi.
+[2026-06-12 13:30:51] [INFO ] Login muvaffaqiyatli: admin
+[2026-06-12 13:30:56] [INFO ] Kamera IP: 10.123.86.42 (CoLa 2111, BLOB 2113)
+[2026-06-12 13:30:56] [INFO ] Control -> 10.123.86.42:2111 (urinish 1/3)
+[2026-06-12 13:30:56] [INFO ]   C->K  sMN CheckPassword 3 A89A6E74
+[2026-06-12 13:30:56] [INFO ]   K->C  sAN CheckPassword 1
+[2026-06-12 13:30:56] [INFO ]   C->K  sRN DeviceIdent
+[2026-06-12 13:30:56] [INFO ]   K->C  sRA DeviceIdent 17 LECTOR652 Dynamic Focus 9 4.4.0.33R
+[2026-06-12 13:30:56] [INFO ]   C->K  sEN DemoModeState 1
+[2026-06-12 13:30:56] [INFO ]   K->C  sEA DemoModeState 1
+[2026-06-12 13:30:56] [INFO ]   C->K  sRN DemoModeState
+[2026-06-12 13:30:56] [INFO ]   K->C  sRA DemoModeState 0
+[2026-06-12 13:30:56] [INFO ]   C->K  sMN GetBlobClientConfig
+[2026-06-12 13:30:56] [INFO ]   K->C  sAN GetBlobClientConfig 3 TCP C 10.123.86.42 7 0.0.0.0 841 0 0 1 400
+[2026-06-12 13:30:56] [INFO ]   C->K  sEN ImgBlobTransfer 1
+[2026-06-12 13:30:56] [INFO ]   K->C  sEA ImgBlobTransfer 1
+[2026-06-12 13:30:56] [INFO ]   C->K  sEN LIIsActive 1
+[2026-06-12 13:30:56] [INFO ]   K->C  sEA LIIsActive 1
+[2026-06-12 13:30:56] [INFO ]   C->K  sRN LIIsActive
+[2026-06-12 13:30:56] [INFO ]   K->C  sRA LIIsActive 0
+[2026-06-12 13:30:56] [INFO ]   C->K  sEN VIStatDisp 1
+[2026-06-12 13:30:56] [INFO ]   K->C  sEA VIStatDisp 1
+[2026-06-12 13:30:56] [INFO ]   C->K  sRN VIStatDisp
+[2026-06-12 13:30:56] [INFO ]   K->C  sRA VIStatDisp 0 0 0 00000000
+[2026-06-12 13:30:56] [INFO ]   C->K  sEN VITmeStatDisp 1
+[2026-06-12 13:30:56] [INFO ]   K->C  sEA VITmeStatDisp 1
+[2026-06-12 13:30:56] [INFO ]   C->K  sRN VITmeStatDisp
+[2026-06-12 13:30:56] [INFO ]   K->C  sRA VITmeStatDisp 0
+[2026-06-12 13:30:56] [INFO ]   C->K  sMN mDIGetEffImgSize
+[2026-06-12 13:30:56] [INFO ]   K->C  sAN mDIGetEffImgSize 800 440
+[2026-06-12 13:30:56] [INFO ] Effektiv rasm o'lchami: sAN mDIGetEffImgSize 800 440
+[2026-06-12 13:30:56] [INFO ] Blob -> 10.123.86.42:2113
+[2026-06-12 13:30:56] [INFO ] Kamera tayyor (BLOB: 16MB buf, blocking + 2s SO_RCVTIMEO).
+[2026-06-12 13:30:56] [INFO ] Live streaming boshlanyapti (mLIStart 0)...
+[2026-06-12 13:30:56] [INFO ]   C->K  sMN mLIStart 0
+[2026-06-12 13:30:56] [INFO ]   K->C  sAN mLIStart 0
+[2026-06-12 13:30:56] [INFO ] mLIStart javob: sAN mLIStart 0
+[2026-06-12 13:30:57] [INFO ] PaddleOCR modeli yuklanmoqda... (birinchi marta sekin/yuklab oladi).
+[2026-06-12 13:30:57] [INFO ] OCR worker ishga tushdi (PaddleOCR, fon navbat).
+[2026-06-12 13:30:57] [INFO ] Dataset auto-collection yoqildi -> C:\Users\II4028\Documents\Projects\AI_CAM\dataset\collected_raw (conf>0.4)
+[2026-06-12 13:30:57] [INFO ] AI ishlov berish yoqildi (YOLO + OCR + dataset yig'ish).
+[2026-06-12 13:31:04] [INFO ] Dataset saqlandi #1: vin_capture_20260612_133103.jpg (+1 box)
+[2026-06-12 13:31:07] [WARNING] OCR.use_gpu=True, lekin CUDA topilmadi — PaddleOCR CPU da ishlaydi.
+[2026-06-12 13:31:15] [INFO ] Dataset saqlandi #2: vin_capture_20260612_133115.jpg (+1 box)
+[2026-06-12 13:31:40] [INFO ] PaddleOCR tayyor (gpu=False, det=True, lang=en).
+[2026-06-12 13:32:33] [INFO ] Dataset saqlandi #3: vin_capture_20260612_133233.jpg (+1 box)
+[2026-06-12 13:32:34] [INFO ] Dataset saqlandi #4: vin_capture_20260612_133234.jpg (+1 box)
+[2026-06-12 13:32:35] [INFO ] Dataset saqlandi #5: vin_capture_20260612_133235.jpg (+1 box)
+[2026-06-12 13:32:36] [INFO ] Dataset saqlandi #6: vin_capture_20260612_133236.jpg (+1 box)
+[2026-06-12 13:32:37] [INFO ] Dataset saqlandi #7: vin_capture_20260612_133237.jpg (+1 box)
+[2026-06-12 13:32:51] [INFO ] OCR worker to'xtatildi.
+[2026-06-12 13:32:51] [INFO ] Dataset auto-collection to'xtatildi (jami saqlangan: 7).
+[2026-06-12 13:32:51] [INFO ] AI ishlov berish o'chirildi (xom video davom etadi).
+[2026-06-12 13:32:51] [INFO ]   C->K  sMN mLIStop
+[2026-06-12 13:32:51] [INFO ]   K->C  sAN mLIStop
+[2026-06-12 13:32:51] [INFO ] mLIStop javob: sAN mLIStop
+[2026-06-12 13:32:51] [INFO ]   C->K  sEN VITmeStatDisp 0
+[2026-06-12 13:32:51] [INFO ]   K->C  sEA VITmeStatDisp 0
+[2026-06-12 13:32:51] [INFO ]   C->K  sEN VIStatDisp 0
+[2026-06-12 13:32:51] [INFO ]   K->C  sEA VIStatDisp 0
+[2026-06-12 13:32:51] [INFO ]   C->K  sEN LIIsActive 0
+[2026-06-12 13:32:51] [INFO ]   K->C  sEA LIIsActive 0
+[2026-06-12 13:32:51] [INFO ]   C->K  sEN ImgBlobTransfer 0
+[2026-06-12 13:32:51] [INFO ]   K->C  sEA ImgBlobTransfer 0
+[2026-06-12 13:32:51] [INFO ]   C->K  sEN DemoModeState 0
+[2026-06-12 13:32:51] [INFO ]   K->C  sEA DemoModeState 0
+[2026-06-12 13:32:51] [INFO ] Ulanish yopildi.
+[2026-06-12 13:32:51] [INFO ] Kamera uzildi.

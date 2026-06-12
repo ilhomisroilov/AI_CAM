@@ -105,36 +105,72 @@ class _PaddleEngine:
         # to'plamdan minimalgacha ketma-ket sinab ko'ramiz (keng except).
         # drop_score/rec_batch_num/det_limit_side_len konstruktorga BERILMAYDI —
         # ular versiyalararo beqaror. drop_score natija filtri sifatida qo'llanadi.
+        # 2.10 'show_log' VA 'drop_score' ni RAD ETADI -> avval ularsiz sinaymiz.
         attempts = [
-            dict(use_angle_cls=OCR.use_angle_cls, use_gpu=gpu, show_log=False, lang=OCR.lang),  # 2.6/2.7/2.10
-            dict(use_angle_cls=OCR.use_angle_cls, use_gpu=gpu, lang=OCR.lang),                  # show_log yo'q
+            dict(use_angle_cls=OCR.use_angle_cls, use_gpu=gpu, lang=OCR.lang),                  # 2.10 (no show_log)
+            dict(use_angle_cls=OCR.use_angle_cls, use_gpu=gpu, show_log=False, lang=OCR.lang),  # eski 2.6/2.7
             dict(use_textline_orientation=OCR.use_angle_cls, device=("gpu" if gpu else "cpu"),
                  lang=OCR.lang),                                                                # 3.x
+            dict(use_gpu=gpu, lang=OCR.lang),                                                   # angle_cls siz
             dict(lang=OCR.lang),                                                                # minimal
         ]
         self._ocr = None
         last_err = None
+        used_kw = {}
         for kw in attempts:
             try:
                 self._ocr = PaddleOCR(**kw)
+                used_kw = kw
+                log.info(f"PaddleOCR init OK: {sorted(kw.keys())}")
                 break
             except Exception as exc:                # ValueError/TypeError/Unknown argument...
                 last_err = exc
                 self._ocr = None
         if self._ocr is None:
             raise RuntimeError(f"PaddleOCR init muvaffaqiyatsiz: {last_err}")
+        # 3.x bo'lsa (device/use_textline_orientation bilan ochilgan) -> .predict()
+        self._api_v3 = ("device" in used_kw or "use_textline_orientation" in used_kw)
         self.gpu = gpu
 
     def read(self, img: np.ndarray) -> List[Tuple[list, str, float]]:
         # PaddleOCR 3 kanalli (BGR) kutadi — grayscale bo'lsa o'tkazamiz
         if img.ndim == 2:
             img = cv2.cvtColor(img, cv2.COLOR_GRAY2BGR)
+        # PaddleOCR 3.x: .predict(); 2.x: .ocr()
+        if self._api_v3 and hasattr(self._ocr, "predict"):
+            try:
+                return self._parse_predict(self._ocr.predict(img))
+            except Exception:
+                pass   # 2.x .ocr() ga qaytamiz
         try:
             res = self._ocr.ocr(img, det=self.det, cls=OCR.use_angle_cls)
         except TypeError:
-            # Yangi API .ocr() imzosi (det/cls argsiz)
-            res = self._ocr.ocr(img)
+            res = self._ocr.ocr(img)               # yangi imzo (det/cls argsiz)
+        except Exception:
+            if hasattr(self._ocr, "predict"):
+                return self._parse_predict(self._ocr.predict(img))
+            raise
         return self._parse(res)
+
+    @staticmethod
+    def _parse_predict(res) -> List[Tuple[list, str, float]]:
+        """PaddleOCR 3.x .predict() natijasi (OCRResult dict) -> (box, text, conf)."""
+        out: List[Tuple[list, str, float]] = []
+        for item in (res or []):
+            try:
+                d = item if isinstance(item, dict) else item  # OCRResult dict-like
+                texts = d["rec_texts"]
+                scores = d["rec_scores"]
+                polys = d.get("rec_polys") or d.get("dt_polys") or []
+            except Exception:
+                continue
+            for i, t in enumerate(texts):
+                sc = float(scores[i]) if i < len(scores) else 0.0
+                if sc < OCR.drop_score:
+                    continue
+                box = polys[i] if i < len(polys) else _FULL_BOX
+                out.append((box, str(t), sc))
+        return out
 
     @staticmethod
     def _parse(res) -> List[Tuple[list, str, float]]:
